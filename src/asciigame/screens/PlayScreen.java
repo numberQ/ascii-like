@@ -1,6 +1,7 @@
 package asciigame.screens;
 
 import asciiPanel.AsciiPanel;
+import asciigame.ApplicationMain;
 import asciigame.World;
 import asciigame.WorldBuilder;
 
@@ -8,25 +9,23 @@ import java.awt.event.KeyEvent;
 
 public class PlayScreen implements Screen {
 
+	private int screenWidth;
+	private int screenHeight;
 	private World world;
 	private int centerX;
 	private int centerY;
-	private int screenWidth;
-	private int screenHeight;
 
 	public PlayScreen() {
-		/**
-		 * TODO
-		 * Make these not magic numbers!
-		 */
-		screenWidth = 80;
-		screenHeight = 24;
+		screenWidth = ApplicationMain.getScreenWidth();
+		screenHeight = ApplicationMain.getScreenHeight();
 		createWorld();
+		centerX = world.getWidth() / 2;
+		centerY = world.getHeight() / 2;
 	}
 
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
-		int bylineY = terminal.getHeightInCharacters() - 2;
+		int bylineY = screenHeight - 2;
 		int left = getScrollX();
 		int top = getScrollY();
 
@@ -70,21 +69,31 @@ public class PlayScreen implements Screen {
 	}
 
 	public int getScrollX() {
-		return Math.max(0, Math.min(centerX - screenWidth / 2, world.getWidth() - screenWidth));
+		int border = Math.min(centerX - (screenWidth / 2), world.getWidth() - screenWidth);
+		return Math.max(0, border);
 	}
 
 	public int getScrollY() {
-		return Math.max(0, Math.min(centerY - screenHeight / 2, world.getHeight() - screenHeight));
+		int border = Math.min(centerY - (screenHeight / 2), world.getHeight() - screenHeight);
+		return Math.max(0, border);
 	}
 
 	private void scrollBy(int scrollX, int scrollY){
-		centerX = Math.max(0, Math.min(centerX + scrollX, world.getWidth() - 1));
-		centerY = Math.max(0, Math.min(centerY + scrollY, world.getHeight() - 1));
+		int border;
+
+		// Set X - border is on right
+		border = Math.min(centerX + scrollX, world.getWidth() - 1);
+		centerX = Math.max(0, border);
+
+		// Set Y - border is on bottom
+		border = Math.min(centerY + scrollY, world.getHeight() - 1);
+		centerY = Math.max(0, border);
 	}
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
-		for (int x = 0; x < screenWidth; x++){
-			for (int y = 0; y < screenHeight; y++){
+		// Iterate over the screen
+		for (int x = 0; x < screenWidth; x++) {
+			for (int y = 0; y < screenHeight; y++) {
 				int worldX = x + left;
 				int worldY = y + top;
 
