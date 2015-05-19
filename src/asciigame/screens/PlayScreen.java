@@ -68,11 +68,21 @@ public class PlayScreen implements Screen {
 				.build();
 	}
 
+	/**
+	 * Finds the X coordinate of the top left corner of the scroll window.
+	 * The left, in other words.
+	 * @return
+	 */
 	public int getScrollX() {
 		int border = Math.min(centerX - (screenWidth / 2), world.getWidth() - screenWidth);
 		return Math.max(0, border);
 	}
 
+	/**
+	 * Finds the Y coordinate of the top left corner of the scroll window.
+	 * The top, in other words.
+	 * @return
+	 */
 	public int getScrollY() {
 		int border = Math.min(centerY - (screenHeight / 2), world.getHeight() - screenHeight);
 		return Math.max(0, border);
