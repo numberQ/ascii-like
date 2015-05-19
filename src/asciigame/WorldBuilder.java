@@ -22,13 +22,16 @@ public class WorldBuilder {
 	}
 
 	private WorldBuilder randomize() {
-		double percent = Math.random();
+		double percent;
 		double threshold = 0.45;
+
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
+				percent = Math.random();
 				tiles[x][y] = (percent < threshold) ? Tile.FLOOR : Tile.WALL;
 			}
 		}
+
 		return this;
 	}
 
@@ -45,7 +48,7 @@ public class WorldBuilder {
 
 					for (int dx = -1; dx <= 1; dx++) {
 						for (int dy = -1; dy <= 1; dy++) {
-							if (dx < 0 || dx >= width || dy < 0 || dy >= height) {
+							if (x + dx < 0 || x + dx >= width || y + dy < 0 || y + dy >= height) {
 								continue;
 							}
 
