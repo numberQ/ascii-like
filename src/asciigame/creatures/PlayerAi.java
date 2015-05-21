@@ -11,7 +11,7 @@ public class PlayerAi extends CreatureAi {
 	@Override
 	public void onEnter(int x, int y, Tile tile) {
 		if (tile.isWalkable()) {
-			// If that tile can be walked on, walk on it
+			// If the tile can be walked on, walk on it
 			creature.setX(x);
 			creature.setY(y);
 		} else {

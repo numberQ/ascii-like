@@ -23,7 +23,7 @@ public class WorldBuilder {
 
 	private WorldBuilder randomize() {
 		double percent;
-		double threshold = 0.45;
+		double threshold = 0.5;
 
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {

@@ -32,9 +32,9 @@ public class Creature {
 		world.dig(worldX, worldY);
 	}
 
-	public void moveTo(int moveX, int moveY) {
+	public void moveBy(int moveX, int moveY) {
 		moveX = x + moveX;
 		moveY = y + moveY;
-		ai.onEnter(x + moveX, y + moveY, world.getTile(moveX, moveY));
+		ai.onEnter(moveX, moveY, world.getTile(moveX, moveY));
 	}
 }

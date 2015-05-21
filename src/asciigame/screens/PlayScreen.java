@@ -4,6 +4,8 @@ import asciiPanel.AsciiPanel;
 import asciigame.ApplicationMain;
 import asciigame.World;
 import asciigame.WorldBuilder;
+import asciigame.creatures.Creature;
+import asciigame.creatures.CreatureFactory;
 
 import java.awt.event.KeyEvent;
 
@@ -12,28 +14,24 @@ public class PlayScreen implements Screen {
 	private int screenWidth;
 	private int screenHeight;
 	private World world;
-	private int centerX;
-	private int centerY;
+	Creature player;
 
 	public PlayScreen() {
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
 		createWorld();
-		centerX = world.getWidth() / 2;
-		centerY = world.getHeight() / 2;
+		CreatureFactory creatureFactory = new CreatureFactory(world);
+		player = creatureFactory.makePlayer();
 	}
 
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
-		int bylineY = screenHeight - 2;
 		int left = getScrollX();
 		int top = getScrollY();
 
 		displayTiles(terminal, left, top);
 
-		terminal.write('X', centerX - left, centerY - top);
-
-		terminal.writeCenter("Press [enter] to win or [escape] to lose.", bylineY);
+		terminal.write(player.getGlyph(), player.getX() - left, player.getY() - top, player.getColor());
 	}
 
 	@Override
@@ -44,16 +42,16 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_ESCAPE:
 				return new LoseScreen();
 			case KeyEvent.VK_LEFT:
-				scrollBy(-1, 0);
+				player.moveBy(-1, 0);
 				break;
 			case KeyEvent.VK_RIGHT:
-				scrollBy(1, 0);
+				player.moveBy(1, 0);
 				break;
 			case KeyEvent.VK_UP:
-				scrollBy(0, -1);
+				player.moveBy(0, -1);
 				break;
 			case KeyEvent.VK_DOWN:
-				scrollBy(0, 1);
+				player.moveBy(0, 1);
 				break;
 		}
 
@@ -71,33 +69,21 @@ public class PlayScreen implements Screen {
 	/**
 	 * Finds the X coordinate of the top left corner of the scroll window.
 	 * The left, in other words.
-	 * @return
+	 * @return - The X coord.
 	 */
 	public int getScrollX() {
-		int border = Math.min(centerX - (screenWidth / 2), world.getWidth() - screenWidth);
+		int border = Math.min(player.getX() - (screenWidth / 2), world.getWidth() - screenWidth);
 		return Math.max(0, border);
 	}
 
 	/**
 	 * Finds the Y coordinate of the top left corner of the scroll window.
 	 * The top, in other words.
-	 * @return
+	 * @return - The Y coord.
 	 */
 	public int getScrollY() {
-		int border = Math.min(centerY - (screenHeight / 2), world.getHeight() - screenHeight);
+		int border = Math.min(player.getY() - (screenHeight / 2), world.getHeight() - screenHeight);
 		return Math.max(0, border);
-	}
-
-	private void scrollBy(int scrollX, int scrollY){
-		int border;
-
-		// Set X - border is on right
-		border = Math.min(centerX + scrollX, world.getWidth() - 1);
-		centerX = Math.max(0, border);
-
-		// Set Y - border is on bottom
-		border = Math.min(centerY + scrollY, world.getHeight() - 1);
-		centerY = Math.max(0, border);
 	}
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
