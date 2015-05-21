@@ -26,18 +26,20 @@ public enum Tile {
 	}
 
 	public boolean isWalkable() {
-		if (this == FLOOR) {
-			return true;
+		switch (this) {
+			case FLOOR:
+				return true;
+			default:
+				return false;
 		}
-
-		return false;
 	}
 
 	public boolean isDiggable() {
-		if (this == WALL) {
-			return true;
+		switch (this) {
+			case WALL:
+				return true;
+			default:
+				return false;
 		}
-
-		return false;
 	}
 }

@@ -1,8 +1,6 @@
 package asciigame.creatures;
 
-import asciigame.Tile;
 import asciigame.World;
-
 import java.awt.*;
 
 public class Creature {

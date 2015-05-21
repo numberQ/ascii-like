@@ -5,12 +5,13 @@ public class WorldBuilder {
 	private Tile[][] tiles;
 	private int width;
 	private int height;
-	private int smoothTimes = 8;
+	private int smoothTimes;
 
 	public WorldBuilder(int width, int height) {
 		this.width = width;
 		this.height = height;
 		this.tiles = new Tile[width][height];
+		this.smoothTimes = 8;
 	}
 
 	public World build() {
