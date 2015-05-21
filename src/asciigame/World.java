@@ -1,5 +1,7 @@
 package asciigame;
 
+import asciigame.creatures.Creature;
+
 public class World {
 
 	private Tile[][] tiles;
@@ -25,5 +27,23 @@ public class World {
 		} else {
 			return tiles[x][y];
 		}
+	}
+
+	public void dig(int x, int y) {
+		if (getTile(x, y).isDiggable()) {
+			tiles[x][y] = Tile.FLOOR;
+		}
+	}
+
+	public void addAtEmptyLocation(Creature creature) {
+		int x, y;
+
+		do {
+			x = (int)(Math.random() * width);
+			y = (int)(Math.random() * height);
+		} while (!getTile(x, y).isWalkable());
+
+		creature.setX(x);
+		creature.setY(y);
 	}
 }

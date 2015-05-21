@@ -24,4 +24,20 @@ public enum Tile {
 		this.glyph = glyph;
 		this.color = color;
 	}
+
+	public boolean isWalkable() {
+		if (this == FLOOR) {
+			return true;
+		}
+
+		return false;
+	}
+
+	public boolean isDiggable() {
+		if (this == WALL) {
+			return true;
+		}
+
+		return false;
+	}
 }
