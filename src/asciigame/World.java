@@ -45,6 +45,10 @@ public class World {
 		return null;
 	}
 
+	public void killCreature(Creature creature) {
+		creatures.remove(creature);
+	}
+
 	public void dig(int x, int y) {
 		if (getTile(x, y).isDiggable()) {
 			tiles[x][y] = Tile.FLOOR;
@@ -57,10 +61,23 @@ public class World {
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		} while (!getTile(x, y).isWalkable() && getCreature(x, y) != null);
+		} while (!getTile(x, y).isWalkable() || getCreature(x, y) != null);
 
 		creature.setX(x);
 		creature.setY(y);
 		creatures.add(creature);
+	}
+
+	public void addAtLocation(Creature creature, int x, int y) {
+		creature.setX(x);
+		creature.setY(y);
+		creatures.add(creature);
+	}
+
+	public void update() {
+		List<Creature> toUpdate = new ArrayList<>(creatures);
+		for (Creature c : toUpdate) {
+			c.update();
+		}
 	}
 }

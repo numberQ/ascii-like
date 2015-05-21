@@ -35,4 +35,8 @@ public class Creature {
 		moveY = y + moveY;
 		ai.onEnter(moveX, moveY, world.getTile(moveX, moveY));
 	}
+
+	public void update() {
+		ai.onUpdate();
+	}
 }

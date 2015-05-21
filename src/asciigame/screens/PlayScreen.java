@@ -20,17 +20,25 @@ public class PlayScreen implements Screen {
 		screenHeight = ApplicationMain.getScreenHeight();
 		createWorld();
 		CreatureFactory creatureFactory = new CreatureFactory(world);
+		makeCreatures(creatureFactory);
+	}
+
+	private void makeCreatures(CreatureFactory creatureFactory) {
+		// Make the player
 		player = creatureFactory.makePlayer();
+
+		// Make fungi
+		for (int i = 0; i < 8; i++) {
+			creatureFactory.makeFungus();
+		}
 	}
 
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
 		int left = getScrollX();
 		int top = getScrollY();
-
 		displayTiles(terminal, left, top);
-
-//		terminal.write(player.getGlyph(), player.getX() - left, player.getY() - top, player.getColor());
+		world.update();
 	}
 
 	@Override
@@ -100,8 +108,8 @@ public class PlayScreen implements Screen {
 		for (Creature c : world.getCreatures()) {
 			int screenX = c.getX() - left;
 			int screenY = c.getY() - top;
-			if (screenX >= 0 && screenX <= screenWidth
-					&& screenY >= 0 && screenY <= screenHeight) {
+			if (screenX >= 0 && screenX < screenWidth
+					&& screenY >= 0 && screenY < screenHeight) {
 				terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 			}
 		}

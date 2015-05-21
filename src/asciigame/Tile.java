@@ -6,8 +6,8 @@ import java.awt.*;
 
 public enum Tile {
 
-	FLOOR ('.', AsciiPanel.white),
-	WALL ('#', AsciiPanel.white),
+	FLOOR ('.', AsciiPanel.brightWhite),
+	WALL ('#', AsciiPanel.brightWhite),
 	BOUNDS ('X', AsciiPanel.brightBlack);
 
 	private char glyph;
