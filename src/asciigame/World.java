@@ -1,12 +1,14 @@
 package asciigame;
 
 import asciigame.creatures.Creature;
+import java.util.*;
 
 public class World {
 
 	private Tile[][] tiles;
 	private int width;
 	private int height;
+	private List<Creature> creatures;
 
 	public int getWidth() {
 		return width;
@@ -14,11 +16,15 @@ public class World {
 	public int getHeight() {
 		return height;
 	}
+	public List<Creature> getCreatures() {
+		return creatures;
+	}
 
 	public World(Tile[][] tiles) {
 		this.tiles = tiles;
 		this.width = tiles.length;
 		this.height = tiles[0].length;
+		this.creatures = new ArrayList<>();
 	}
 
 	public Tile getTile(int x, int y) {
@@ -27,6 +33,16 @@ public class World {
 		} else {
 			return tiles[x][y];
 		}
+	}
+
+	public Creature getCreature(int x, int y) {
+		for (Creature c : creatures) {
+			if (c.getX() == x && c.getY() == y) {
+				return c;
+			}
+		}
+
+		return null;
 	}
 
 	public void dig(int x, int y) {
@@ -41,9 +57,10 @@ public class World {
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		} while (!getTile(x, y).isWalkable());
+		} while (!getTile(x, y).isWalkable() && getCreature(x, y) != null);
 
 		creature.setX(x);
 		creature.setY(y);
+		creatures.add(creature);
 	}
 }

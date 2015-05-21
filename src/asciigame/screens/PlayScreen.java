@@ -6,7 +6,6 @@ import asciigame.World;
 import asciigame.WorldBuilder;
 import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
-
 import java.awt.event.KeyEvent;
 
 public class PlayScreen implements Screen {
@@ -31,7 +30,7 @@ public class PlayScreen implements Screen {
 
 		displayTiles(terminal, left, top);
 
-		terminal.write(player.getGlyph(), player.getX() - left, player.getY() - top, player.getColor());
+//		terminal.write(player.getGlyph(), player.getX() - left, player.getY() - top, player.getColor());
 	}
 
 	@Override
@@ -88,12 +87,22 @@ public class PlayScreen implements Screen {
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
 		// Iterate over the screen
-		for (int x = 0; x < screenWidth; x++) {
-			for (int y = 0; y < screenHeight; y++) {
-				int worldX = x + left;
-				int worldY = y + top;
+		for (int screenX = 0; screenX < screenWidth; screenX++) {
+			for (int screenY = 0; screenY < screenHeight; screenY++) {
+				int worldX = screenX + left;
+				int worldY = screenY + top;
 
-				terminal.write(world.getTile(worldX, worldY).glyph(), x, y, world.getTile(worldX, worldY).color());
+				terminal.write(world.getTile(worldX, worldY).glyph(), screenX, screenY, world.getTile(worldX, worldY).color());
+			}
+		}
+
+		// Iterate over creatures
+		for (Creature c : world.getCreatures()) {
+			int screenX = c.getX() - left;
+			int screenY = c.getY() - top;
+			if (screenX >= 0 && screenX <= screenWidth
+					&& screenY >= 0 && screenY <= screenHeight) {
+				terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 			}
 		}
 	}
