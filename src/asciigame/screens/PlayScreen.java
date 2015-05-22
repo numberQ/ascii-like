@@ -1,6 +1,5 @@
 package asciigame.screens;
 
-import asciiPanel.AsciiPanel;
 import asciigame.ApplicationMain;
 import asciigame.World;
 import asciigame.WorldBuilder;
@@ -19,25 +18,25 @@ public class PlayScreen implements Screen {
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
 		createWorld();
-		CreatureFactory creatureFactory = new CreatureFactory(world);
-		makeCreatures(creatureFactory);
+		CreatureFactory.setWorld(world);
+		makeCreatures();
 	}
 
-	private void makeCreatures(CreatureFactory creatureFactory) {
+	private void makeCreatures() {
 		// Make the player
-		player = creatureFactory.makePlayer();
+		player = CreatureFactory.makePlayer();
 
 		// Make fungi
 		for (int i = 0; i < 8; i++) {
-			creatureFactory.makeFungus();
+			CreatureFactory.makeFungus();
 		}
 	}
 
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput() {
 		int left = getScrollX();
 		int top = getScrollY();
-		displayTiles(terminal, left, top);
+		displayTiles(left, top);
 		world.update();
 	}
 
@@ -93,7 +92,7 @@ public class PlayScreen implements Screen {
 		return Math.max(0, border);
 	}
 
-	private void displayTiles(AsciiPanel terminal, int left, int top) {
+	private void displayTiles(int left, int top) {
 		// Iterate over the screen
 		for (int screenX = 0; screenX < screenWidth; screenX++) {
 			for (int screenY = 0; screenY < screenHeight; screenY++) {

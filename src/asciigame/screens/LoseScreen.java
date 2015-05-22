@@ -1,13 +1,11 @@
 package asciigame.screens;
 
-import asciiPanel.AsciiPanel;
-
 import java.awt.event.KeyEvent;
 
 public class LoseScreen implements Screen {
 
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput() {
 		int bylineY = terminal.getHeightInCharacters() - 2;
 		terminal.write("You lost...", 1, 1);
 		terminal.writeCenter("Press [enter] to play again.", bylineY);
@@ -22,3 +20,10 @@ public class LoseScreen implements Screen {
 		}
 	}
 }
+
+
+
+/**
+ *	Maybe stop trying to static-ize ApplicationMain?
+ *
+ */

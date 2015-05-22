@@ -5,30 +5,30 @@ import asciigame.World;
 
 public class CreatureFactory {
 
-	private World world;
+	private static World world;
 
-	public CreatureFactory(World world) {
-		this.world = world;
+	public static void setWorld(World world) {
+		CreatureFactory.world = world;
 	}
 
-	public Creature makePlayer() {
+	public static Creature makePlayer() {
 		Creature player = new Creature(world, '@', AsciiPanel.brightYellow);
 		world.addAtEmptyLocation(player);
 		new PlayerAi(world, player);
 		return player;
 	}
 
-	public Creature makeFungus() {
+	public static Creature makeFungus() {
 		Creature fungus = new Creature(world, 'f', AsciiPanel.green);
 		world.addAtEmptyLocation(fungus);
-		new FungusAi(world, fungus, this);
+		new FungusAi(world, fungus);
 		return fungus;
 	}
 
-	public Creature makeFungus(int x, int y) {
+	public static Creature makeFungus(int x, int y) {
 		Creature fungus = new Creature(world, 'f', AsciiPanel.green);
 		world.addAtLocation(fungus, x, y);
-		new FungusAi(world, fungus, this);
+		new FungusAi(world, fungus);
 		return fungus;
 	}
 }

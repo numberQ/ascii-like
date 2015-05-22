@@ -1,13 +1,11 @@
 package asciigame.screens;
 
-import asciiPanel.AsciiPanel;
-
 import java.awt.event.KeyEvent;
 
 public class WinScreen implements Screen {
 
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput() {
 		int bylineY = terminal.getHeightInCharacters() - 2;
 		terminal.write("You won!", 1, 1);
 		terminal.writeCenter("Press [enter] to play again.", bylineY);

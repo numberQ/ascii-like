@@ -4,15 +4,13 @@ import asciigame.World;
 
 public class FungusAi extends CreatureAi {
 
-	private CreatureFactory fungusFactory;
 	private int spreadMax;
 	private int spreadCount;
 	private double spreadRate;
 	private int spreadRange;
 
-	public FungusAi(World world, Creature creature, CreatureFactory fungusFactory) {
+	public FungusAi(World world, Creature creature) {
 		super(world, creature);
-		this.fungusFactory = fungusFactory;
 		this.spreadMax = 5;
 		this.spreadRate = 0.001;
 		this.spreadRange = 5;
@@ -35,7 +33,7 @@ public class FungusAi extends CreatureAi {
 			return;
 		}
 
-		fungusFactory.makeFungus(x, y);
+		CreatureFactory.makeFungus(x, y);
 		spreadCount++;
 	}
 }
