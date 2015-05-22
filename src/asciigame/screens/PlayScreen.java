@@ -7,12 +7,12 @@ import asciigame.WorldBuilder;
 import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class PlayScreen implements Screen {
 
-	private static List<String> messages;
+	private static Deque<String> messages;
 
 	public static void addMessage(String message) { messages.add(message); }
 
@@ -24,7 +24,7 @@ public class PlayScreen implements Screen {
 	private Creature player;
 
 	public PlayScreen() {
-		messages = new ArrayList<>();
+		messages = new ArrayDeque<>();
 		addMessage("Welcome!");
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
@@ -143,7 +143,9 @@ public class PlayScreen implements Screen {
 	private String trimString(String string, int maxLength) {
 		/**
 		 * Make messages a Deque. If a string is too long,
-		 * cut off the too long bit and add it to the head of the Deque.
+		 * cut off the too-long bit and add it to the head of the Deque.
 		 */
+
+		return string;
 	}
 }
