@@ -15,8 +15,12 @@ public class ApplicationMain extends JFrame implements KeyListener {
 
 	private static int screenWidth = 80;
 	private static int screenHeight = 24;
-	private AsciiPanel terminal;
 	private static Screen startScreen;
+
+	public static int getScreenWidth() { return screenWidth; }
+	public static int getScreenHeight() { return screenHeight; }
+
+	private AsciiPanel terminal;
 
 	public ApplicationMain(Screen screen){
 		super();
@@ -26,14 +30,6 @@ public class ApplicationMain extends JFrame implements KeyListener {
 		startScreen = screen;
 		addKeyListener(this);
 		repaint();
-	}
-
-	public static int getScreenWidth() {
-		return screenWidth;
-	}
-
-	public static int getScreenHeight() {
-		return screenHeight;
 	}
 
 	@Override

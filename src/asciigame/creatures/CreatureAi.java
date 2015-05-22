@@ -7,6 +7,7 @@ public class CreatureAi {
 
 	protected Creature creature;
 	protected World world;
+	protected int damageDealt;
 
 	public CreatureAi(World world, Creature creature) {
 		this.world = world;
@@ -37,11 +38,15 @@ public class CreatureAi {
 			int min = creature.getMinAttack();
 			int max = creature.getMaxAttack();
 
-			int damageDealt = (int) (Math.random() * (max - min)) + min;
+			damageDealt = (int) (Math.random() * (max - min)) + min;
 			damageDealt = damageDealt - other.getDefense();
 			damageDealt = Math.max(0, damageDealt);
 
 			other.modifyHealth(-damageDealt);
+
+			if (creature.getName() != "player") {
+				creature.say("The " + creature.getName() + " attacks the " + other.getName() + " for " + damageDealt + " damage!");
+			}
 		}
 	}
 

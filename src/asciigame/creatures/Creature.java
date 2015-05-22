@@ -1,6 +1,8 @@
 package asciigame.creatures;
 
 import asciigame.World;
+import asciigame.screens.PlayScreen;
+
 import java.awt.*;
 
 public class Creature {
@@ -65,5 +67,9 @@ public class Creature {
 		if (health > maxHealth) {
 			health = maxHealth;
 		}
+	}
+
+	public void say(String message) {
+		PlayScreen.addMessage(message);
 	}
 }

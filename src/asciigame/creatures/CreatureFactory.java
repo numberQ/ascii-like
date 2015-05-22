@@ -7,9 +7,7 @@ public class CreatureFactory {
 
 	private static World world;
 
-	public static void setWorld(World world) {
-		CreatureFactory.world = world;
-	}
+	public static void setWorld(World world) { CreatureFactory.world = world; }
 
 	public static Creature makePlayer() {
 		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow, 50, 10, 5, 1);

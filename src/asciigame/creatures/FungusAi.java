@@ -53,9 +53,7 @@ public class FungusAi extends CreatureAi {
 	private void attackAllAdjacent() {
 		for (int dx = -1; dx <= 1; dx++) {
 			for (int dy = -1; dy <= 1; dy++) {
-				int x = creature.getX() + dx;
-				int y = creature.getY() + dy;
-				attack(x, y);
+				attack(creature.getX() + dx, creature.getY() + dy);
 			}
 		}
 	}
