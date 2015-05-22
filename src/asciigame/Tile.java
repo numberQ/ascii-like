@@ -1,6 +1,7 @@
 package asciigame;
 
 import asciiPanel.AsciiPanel;
+
 import java.awt.*;
 
 public enum Tile {

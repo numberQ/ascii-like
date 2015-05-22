@@ -15,41 +15,49 @@ public class ApplicationMain extends JFrame implements KeyListener {
 
 	private static int screenWidth = 80;
 	private static int screenHeight = 24;
-	private static AsciiPanel terminal;
-	private static Screen screen;
-
-	public static int getScreenWidth() 		{ return screenWidth; }
-	public static int getScreenHeight() 	{ return screenHeight; }
-	public static AsciiPanel getTerminal()  { return terminal; }
+	private AsciiPanel terminal;
+	private static Screen startScreen;
 
 	public ApplicationMain(){
 		super();
 		terminal = new AsciiPanel(screenWidth, screenHeight);
 		add(terminal);
 		pack();
-		screen = new StartScreen();
+		startScreen = new StartScreen();
 		addKeyListener(this);
 		repaint();
+	}
+
+	public static int getScreenWidth() {
+		return screenWidth;
+	}
+
+	public static int getScreenHeight() {
+		return screenHeight;
 	}
 
 	@Override
 	public void repaint() {
 		terminal.clear();
-		screen.displayOutput();
+		startScreen.displayOutput(terminal);
 		super.repaint();
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		screen = screen.respondToUserInput(e);
+		startScreen = startScreen.respondToUserInput(e);
 		repaint();
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) { }
+	public void keyTyped(KeyEvent e) {
+
+	}
 
 	@Override
-	public void keyReleased(KeyEvent e) { }
+	public void keyReleased(KeyEvent e) {
+
+	}
 
 	public static void main(String[] args) {
 		ApplicationMain app = new ApplicationMain();
