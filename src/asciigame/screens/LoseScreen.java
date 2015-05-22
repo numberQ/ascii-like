@@ -1,7 +1,6 @@
 package asciigame.screens;
 
 import asciiPanel.AsciiPanel;
-
 import java.awt.event.KeyEvent;
 
 public class LoseScreen implements Screen {

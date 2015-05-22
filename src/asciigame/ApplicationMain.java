@@ -4,7 +4,6 @@ import javax.swing.*;
 import asciiPanel.AsciiPanel;
 import asciigame.screens.Screen;
 import asciigame.screens.StartScreen;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

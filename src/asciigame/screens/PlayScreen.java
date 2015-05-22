@@ -19,17 +19,17 @@ public class PlayScreen implements Screen {
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
 		createWorld();
-		CreatureFactory creatureFactory = new CreatureFactory(world);
-		makeCreatures(creatureFactory);
+		CreatureFactory.setWorld(world);
+		makeCreatures();
 	}
 
-	private void makeCreatures(CreatureFactory creatureFactory) {
+	private void makeCreatures() {
 		// Make the player
-		player = creatureFactory.makePlayer();
+		player = CreatureFactory.makePlayer();
 
 		// Make fungi
 		for (int i = 0; i < 8; i++) {
-			creatureFactory.makeFungus();
+			CreatureFactory.makeFungus();
 		}
 	}
 
