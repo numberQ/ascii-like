@@ -14,7 +14,7 @@ public class PlayScreen implements Screen {
 
 	private static Deque<String> messages;
 
-	public static void addMessage(String message) { messages.add(message); }
+	public static void addMessage(String message) { messages.addLast(message); }
 
 	private int screenWidth;
 	private int screenHeight;
@@ -133,18 +133,48 @@ public class PlayScreen implements Screen {
 	private void displayMessages(AsciiPanel terminal) {
 		int messageX = leftMapBorder + 1;
 		int messageY = 1;
-		for (String message : messages) {
-			message = trimString(message, screenWidth - messageX);
+        String message;
+
+		while (!messages.isEmpty()) {
+			message = messages.removeFirst();
+            message = trimString(message, screenWidth - messageX);
 			terminal.write(message, messageX, messageY);
 			messageY++;
 		}
 	}
 
 	private String trimString(String string, int maxLength) {
-		/**
-		 * Make messages a Deque. If a string is too long,
-		 * cut off the too-long bit and add it to the head of the Deque.
-		 */
+
+        // Don't do anything if the string is already short enough
+        if (string.length() > maxLength) {
+
+            // Determine word breaks
+            String[] splitBySpace = string.split(" ");
+            if (splitBySpace.length == 1) {
+
+                // If there are no spaces, just truncate the word at maxLength
+                string = splitBySpace[0].substring(0, maxLength);
+                messages.addFirst(splitBySpace[0].substring(maxLength));
+            } else {
+
+                // Gather every word that fits before the word that takes it over maxLength
+                int i = 0;
+                int sum = 0;
+                string = "";
+                do {
+                    string += splitBySpace[i];
+                    sum += splitBySpace[i].length();
+                    i++;
+                } while (i < splitBySpace.length && sum < maxLength);
+
+                // Stitch together remaining words, if any, and push them back on the Deque
+                String remaining = "";
+                for (int j = i; j < splitBySpace.length; j++) {
+                    remaining += splitBySpace[j];
+                }
+                messages.addFirst(remaining);
+            }
+        }
 
 		return string;
 	}
