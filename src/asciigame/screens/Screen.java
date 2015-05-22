@@ -1,11 +1,14 @@
 package asciigame.screens;
 
-import java.awt.event.KeyEvent;
 import asciiPanel.AsciiPanel;
+import asciigame.ApplicationMain;
+import java.awt.event.KeyEvent;
 
 public interface Screen {
 
-	void displayOutput(AsciiPanel terminal);
+	AsciiPanel terminal = ApplicationMain.getTerminal();
+
+	void displayOutput();
 
 	Screen respondToUserInput(KeyEvent key);
 }

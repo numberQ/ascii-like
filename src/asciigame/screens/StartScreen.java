@@ -1,12 +1,11 @@
 package asciigame.screens;
 
-import asciiPanel.AsciiPanel;
 import java.awt.event.KeyEvent;
 
 public class StartScreen implements Screen {
 
 	@Override
-	public void displayOutput(AsciiPanel terminal) {
+	public void displayOutput() {
 		int bylineY = terminal.getHeightInCharacters() - 2;
 		terminal.write("Ascii game", 1, 1);
 		terminal.writeCenter("Press [enter] to start.", bylineY);
