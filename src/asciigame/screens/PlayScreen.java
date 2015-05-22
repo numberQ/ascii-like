@@ -39,6 +39,8 @@ public class PlayScreen implements Screen {
 		int top = getScrollY();
 		displayTiles(terminal, left, top);
 		world.update();
+		String stats = String.format("%3d/%3d hp", player.getHealth(), player.getMaxHealth());
+		terminal.write(stats, 1, terminal.getHeightInCharacters() - 1);
 	}
 
 	@Override

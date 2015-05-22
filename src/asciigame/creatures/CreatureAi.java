@@ -14,7 +14,35 @@ public class CreatureAi {
 		this.creature.setCreatureAi(this);
 	}
 
-	public void onEnter(int x, int y, Tile tile) { }
-	public void attack(int x, int y) { }
 	public void onUpdate() { }
+
+	public void onEnter(int x, int y, Tile tile) {
+		if (world.getCreature(x, y) != null) {
+			// If the tile is a creature, attack it
+			attack(x, y);
+		} else if (tile.isWalkable()) {
+			// If the tile can be walked on, walk on it
+			creature.setX(x);
+			creature.setY(y);
+		} else {
+			// Otherwise, attempt to dig
+			dig(x, y);
+		}
+	}
+
+	public void attack(int x, int y) {
+		Creature other = world.getCreature(x, y);
+		int min = creature.getMinAttack();
+		int max = creature.getMaxAttack();
+
+		int damageDealt = (int)(Math.random() * (max - min)) + min;
+		damageDealt = damageDealt - other.getDefense();
+		damageDealt = Math.max(0, damageDealt);
+
+		other.modifyHealth(-damageDealt);
+	}
+
+	public void dig(int worldX, int worldY) {
+		world.dig(worldX, worldY);
+	}
 }

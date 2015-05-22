@@ -11,6 +11,11 @@ public class Creature {
 	private char glyph;
 	private Color color;
 	private CreatureAi ai;
+	private int maxHealth;
+	private int health;
+	private int minAttack;
+	private int maxAttack;
+	private int defense;
 
 	public int getX() 						 { return x; }
 	public void setX(int x)					 { this.x = x; }
@@ -19,15 +24,21 @@ public class Creature {
 	public char getGlyph() 					 { return glyph; }
 	public Color getColor() 				 { return color; }
 	public void setCreatureAi(CreatureAi ai) { this.ai = ai; }
+	public int getMaxHealth()				 { return maxHealth; }
+	public int getHealth()					 { return health; }
+	public int getMinAttack()				 { return minAttack; }
+	public int getMaxAttack()				 { return maxAttack; }
+	public int getDefense()					 { return defense; }
 
-	public Creature(World world, char glyph, Color color) {
+	public Creature(World world, char glyph, Color color, int maxHealth, int maxAttack, int minAttack, int defense) {
 		this.world = world;
 		this.glyph = glyph;
 		this.color = color;
-	}
-
-	public void dig(int worldX, int worldY) {
-		world.dig(worldX, worldY);
+		this.maxHealth = maxHealth;
+		this.health = maxHealth;
+		this.maxAttack = maxAttack;
+		this.minAttack = minAttack;
+		this.defense = defense;
 	}
 
 	public void moveBy(int moveX, int moveY) {
@@ -38,5 +49,18 @@ public class Creature {
 
 	public void update() {
 		ai.onUpdate();
+	}
+
+	public void modifyHealth(int amount) {
+		this.health += amount;
+
+		if (health <= 0) {
+			health = 0;
+			world.killCreature(this);
+		}
+
+		if (health > maxHealth) {
+			health = maxHealth;
+		}
 	}
 }

@@ -18,12 +18,12 @@ public class ApplicationMain extends JFrame implements KeyListener {
 	private AsciiPanel terminal;
 	private static Screen startScreen;
 
-	public ApplicationMain(){
+	public ApplicationMain(Screen screen){
 		super();
 		terminal = new AsciiPanel(screenWidth, screenHeight);
 		add(terminal);
 		pack();
-		startScreen = new StartScreen();
+		startScreen = screen;
 		addKeyListener(this);
 		repaint();
 	}
@@ -60,7 +60,8 @@ public class ApplicationMain extends JFrame implements KeyListener {
 	}
 
 	public static void main(String[] args) {
-		ApplicationMain app = new ApplicationMain();
+		Screen screen = new StartScreen();
+		ApplicationMain app = new ApplicationMain(screen);
 		app.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		app.setVisible(true);
 	}
