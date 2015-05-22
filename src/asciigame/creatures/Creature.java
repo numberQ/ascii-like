@@ -16,6 +16,7 @@ public class Creature {
 	private int minAttack;
 	private int maxAttack;
 	private int defense;
+	private String name;
 
 	public int getX() 						 { return x; }
 	public void setX(int x)					 { this.x = x; }
@@ -29,8 +30,9 @@ public class Creature {
 	public int getMinAttack()				 { return minAttack; }
 	public int getMaxAttack()				 { return maxAttack; }
 	public int getDefense()					 { return defense; }
+	public String getName()					 { return name; }
 
-	public Creature(World world, char glyph, Color color, int maxHealth, int maxAttack, int minAttack, int defense) {
+	public Creature(World world, String name, char glyph, Color color, int maxHealth, int maxAttack, int minAttack, int defense) {
 		this.world = world;
 		this.glyph = glyph;
 		this.color = color;
@@ -39,6 +41,7 @@ public class Creature {
 		this.maxAttack = maxAttack;
 		this.minAttack = minAttack;
 		this.defense = defense;
+		this.name = name;
 	}
 
 	public void moveBy(int moveX, int moveY) {

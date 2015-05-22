@@ -32,14 +32,17 @@ public class CreatureAi {
 
 	public void attack(int x, int y) {
 		Creature other = world.getCreature(x, y);
-		int min = creature.getMinAttack();
-		int max = creature.getMaxAttack();
 
-		int damageDealt = (int)(Math.random() * (max - min)) + min;
-		damageDealt = damageDealt - other.getDefense();
-		damageDealt = Math.max(0, damageDealt);
+		if (other != null) {
+			int min = creature.getMinAttack();
+			int max = creature.getMaxAttack();
 
-		other.modifyHealth(-damageDealt);
+			int damageDealt = (int) (Math.random() * (max - min)) + min;
+			damageDealt = damageDealt - other.getDefense();
+			damageDealt = Math.max(0, damageDealt);
+
+			other.modifyHealth(-damageDealt);
+		}
 	}
 
 	public void dig(int worldX, int worldY) {
