@@ -44,7 +44,7 @@ public class CreatureAi {
 
 			other.modifyHealth(-damageDealt);
 
-			if (creature.getName() != "player") {
+			if (!creature.getName().equals("player")) {
 				creature.say("The " + creature.getName() + " attacks the " + other.getName() + " for " + damageDealt + " damage!");
 			}
 		}

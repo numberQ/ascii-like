@@ -13,6 +13,7 @@ import java.util.Deque;
 public class PlayScreen implements Screen {
 
 	private static Deque<String> messages;
+    private static Deque<String> toDisplay;
 
 	public static void addMessage(String message) { messages.addLast(message); }
 
@@ -134,12 +135,18 @@ public class PlayScreen implements Screen {
 		int messageX = leftMapBorder + 1;
 		int messageY = 1;
         String message;
+        toDisplay = new ArrayDeque<>(messages);
 
-		while (!messages.isEmpty()) {
-			message = messages.removeFirst();
+		while (!toDisplay.isEmpty()) {
+			message = toDisplay.removeFirst();
             message = trimString(message, screenWidth - messageX);
 			terminal.write(message, messageX, messageY);
 			messageY++;
+
+            if (messageY > screenHeight - 2) {
+                toDisplay.clear();
+                messages.clear();
+            }
 		}
 	}
 
@@ -154,25 +161,30 @@ public class PlayScreen implements Screen {
 
                 // If there are no spaces, just truncate the word at maxLength
                 string = splitBySpace[0].substring(0, maxLength);
-                messages.addFirst(splitBySpace[0].substring(maxLength));
+                toDisplay.addFirst(splitBySpace[0].substring(maxLength));
             } else {
 
-                // Gather every word that fits before the word that takes it over maxLength
+                // Gather every word that fits until the word that takes it over maxLength
                 int i = 0;
                 int sum = 0;
                 string = "";
                 do {
-                    string += splitBySpace[i];
-                    sum += splitBySpace[i].length();
+                    string += splitBySpace[i] + " ";
+                    sum += splitBySpace[i].length() + 1;
                     i++;
                 } while (i < splitBySpace.length && sum < maxLength);
+
+                // Remove that last word
+                i--;
+                sum -= splitBySpace[i].length() + 1;
+                string = string.substring(0, sum);
 
                 // Stitch together remaining words, if any, and push them back on the Deque
                 String remaining = "";
                 for (int j = i; j < splitBySpace.length; j++) {
-                    remaining += splitBySpace[j];
+                    remaining += splitBySpace[j] + " ";
                 }
-                messages.addFirst(remaining);
+                toDisplay.addFirst(remaining);
             }
         }
 
