@@ -19,17 +19,18 @@ public class PlayScreen implements Screen {
 
 	private int screenWidth;
 	private int screenHeight;
-	private int leftMapBorder;
+	private int rightMapBorder;
 	private int bottomMapBorder;
 	private World world;
 	private Creature player;
 
 	public PlayScreen() {
 		messages = new ArrayDeque<>();
+		toDisplay = new ArrayDeque<>();
 		addMessage("Welcome!");
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
-		leftMapBorder = screenWidth * 2 / 3;
+		rightMapBorder = screenWidth * 2 / 3;
 		bottomMapBorder = screenHeight - 3;
 		createWorld();
 		CreatureFactory.setWorld(world);
@@ -82,7 +83,7 @@ public class PlayScreen implements Screen {
 	}
 
 	private void createWorld() {
-		int width = (int)(leftMapBorder * 1.5);
+		int width = (int)(rightMapBorder * 1.5);
 		int height = bottomMapBorder * 2;
 		world = new WorldBuilder(width, height)
 				.makeWorld()
@@ -95,7 +96,7 @@ public class PlayScreen implements Screen {
 	 * @return - The X coord.
 	 */
 	public int getScrollX() {
-		int border = Math.min(player.getX() - (leftMapBorder / 2), world.getWidth() - leftMapBorder);
+		int border = Math.min(player.getX() - (rightMapBorder / 2), world.getWidth() - rightMapBorder);
 		return Math.max(0, border);
 	}
 
@@ -111,7 +112,7 @@ public class PlayScreen implements Screen {
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
 		// Iterate over the screen
-		for (int screenX = 0; screenX < leftMapBorder; screenX++) {
+		for (int screenX = 0; screenX < rightMapBorder; screenX++) {
 			for (int screenY = 0; screenY < bottomMapBorder; screenY++) {
 				int worldX = screenX + left;
 				int worldY = screenY + top;
@@ -124,7 +125,7 @@ public class PlayScreen implements Screen {
 		for (Creature c : world.getCreatures()) {
 			int screenX = c.getX() - left;
 			int screenY = c.getY() - top;
-			if (screenX >= 0 && screenX < leftMapBorder
+			if (screenX >= 0 && screenX < rightMapBorder
 					&& screenY >= 0 && screenY < bottomMapBorder) {
 				terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 			}
@@ -132,7 +133,7 @@ public class PlayScreen implements Screen {
 	}
 
 	private void displayMessages(AsciiPanel terminal) {
-		int messageX = leftMapBorder + 1;
+		int messageX = rightMapBorder + 1;
 		int messageY = 1;
         String message;
         toDisplay = new ArrayDeque<>(messages);
@@ -160,8 +161,8 @@ public class PlayScreen implements Screen {
             if (splitBySpace.length == 1) {
 
                 // If there are no spaces, just truncate the word at maxLength
-                string = splitBySpace[0].substring(0, maxLength);
-                toDisplay.addFirst(splitBySpace[0].substring(maxLength));
+                string = string.substring(0, maxLength);
+                toDisplay.addFirst(string.substring(maxLength));
             } else {
 
                 // Gather every word that fits until the word that takes it over maxLength
