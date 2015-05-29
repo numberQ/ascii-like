@@ -10,9 +10,6 @@ public class PlayerAi extends CreatureAi {
 
 	@Override
 	public void attack(int x, int y) {
-        Creature other = world.getCreature(x, y);
-        String name = other.getName();
 		super.attack(x, y);
-		creature.say("You attack the " + name + " for " + damageDealt + " damage!");
 	}
 }

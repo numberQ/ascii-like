@@ -68,8 +68,4 @@ public class Creature {
 			health = maxHealth;
 		}
 	}
-
-	public void say(String message) {
-		PlayScreen.addMessage(message);
-	}
 }

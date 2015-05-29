@@ -43,10 +43,6 @@ public class CreatureAi {
 			damageDealt = Math.max(0, damageDealt);
 
 			other.modifyHealth(-damageDealt);
-
-			if (!creature.getName().equals("player")) {
-				creature.say("The " + creature.getName() + " attacks the " + other.getName() + " for " + damageDealt + " damage!");
-			}
 		}
 	}
 
