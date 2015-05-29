@@ -128,9 +128,16 @@ public class PlayScreen implements Screen {
 
 	private void displayMessages(AsciiPanel terminal) {
 		int top = screenHeight - messages.size();
+		int left = rightMapBorder + 1;
+		int maxLength = screenWidth - left;
+		String message;
 
 		for (int i = 0; i < messages.size(); i++) {
-			terminal.writeCenter(messages.get(i), top + i);
+			message = messages.get(i);
+			if (message.length() > maxLength) {
+
+			}
+			terminal.write(messages.get(i), left, top + i);
 		}
 
 		messages.clear();
