@@ -17,6 +17,8 @@ public class CreatureAi {
 
 	public void onUpdate() { }
 
+	public void onNotify(String message) { }
+
 	public void onEnter(int x, int y, Tile tile) {
 		if (world.getCreature(x, y) != null) {
 			// If the tile is a creature, attack it
@@ -43,6 +45,9 @@ public class CreatureAi {
 			damageDealt = Math.max(0, damageDealt);
 
 			other.modifyHealth(-damageDealt);
+
+			creature.notify("You attack the " + other.getName() + " for " + damageDealt + " damage.");
+			other.notify("The " + creature.getName() + " attacks you for " + damageDealt + " damage.");
 		}
 	}
 

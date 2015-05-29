@@ -7,6 +7,8 @@ import asciigame.WorldBuilder;
 import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayScreen implements Screen {
 
@@ -15,6 +17,7 @@ public class PlayScreen implements Screen {
 	private int rightMapBorder;
 	private int bottomMapBorder;
 	private World world;
+	private List<String> messages;
 	private Creature player;
 
 	public PlayScreen() {
@@ -24,12 +27,13 @@ public class PlayScreen implements Screen {
 		bottomMapBorder = screenHeight - 3;
 		createWorld();
 		CreatureFactory.setWorld(world);
+		messages = new ArrayList<>();
 		makeCreatures();
 	}
 
 	private void makeCreatures() {
 		// Make the player
-		player = CreatureFactory.makePlayer();
+		player = CreatureFactory.makePlayer(messages);
 
 		// Make fungi
 		for (int i = 0; i < 8; i++) {
@@ -41,8 +45,9 @@ public class PlayScreen implements Screen {
 	public void displayOutput(AsciiPanel terminal) {
 		int left = getScrollX();
 		int top = getScrollY();
-		displayTiles(terminal, left, top);
 		world.update();
+		displayTiles(terminal, left, top);
+		displayMessages(terminal);
 		String stats = player.getHealth() + "/" + player.getMaxHealth();
 		terminal.write(stats, 1, terminal.getHeightInCharacters() - 2);
 	}
@@ -119,5 +124,15 @@ public class PlayScreen implements Screen {
 				terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 			}
 		}
+	}
+
+	private void displayMessages(AsciiPanel terminal) {
+		int top = screenHeight - messages.size();
+
+		for (int i = 0; i < messages.size(); i++) {
+			terminal.writeCenter(messages.get(i), top + i);
+		}
+
+		messages.clear();
 	}
 }

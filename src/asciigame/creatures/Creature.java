@@ -68,4 +68,8 @@ public class Creature {
 			health = maxHealth;
 		}
 	}
+
+	public void notify(String message){
+		ai.onNotify(message);
+	}
 }

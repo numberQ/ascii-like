@@ -3,16 +3,18 @@ package asciigame.creatures;
 import asciiPanel.AsciiPanel;
 import asciigame.World;
 
+import java.util.List;
+
 public class CreatureFactory {
 
 	private static World world;
 
 	public static void setWorld(World world) { CreatureFactory.world = world; }
 
-	public static Creature makePlayer() {
+	public static Creature makePlayer(List<String> messages) {
 		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow, 50, 10, 5, 1);
 		world.addAtEmptyLocation(player);
-		new PlayerAi(world, player);
+		new PlayerAi(world, player, messages);
 		return player;
 	}
 
