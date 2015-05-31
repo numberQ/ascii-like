@@ -29,6 +29,7 @@ public class PlayScreen implements Screen {
 		CreatureFactory.setWorld(world);
 		messages = new ArrayList<>();
 		makeCreatures();
+		messages.add("Welcome! Use the arrow keys to move you character. Move into walls to dig, and move into enemies to attack.");
 	}
 
 	private void makeCreatures() {
@@ -127,19 +128,42 @@ public class PlayScreen implements Screen {
 	}
 
 	private void displayMessages(AsciiPanel terminal) {
-		int top = screenHeight - messages.size();
+		//int top = screenHeight - messages.size();
 		int left = rightMapBorder + 1;
 		int maxLength = screenWidth - left;
-		String message;
+		String origMessage, message;
 
 		for (int i = 0; i < messages.size(); i++) {
-			message = messages.get(i);
-			if (message.length() > maxLength) {
+			origMessage = messages.get(i);
+			message = trimString(origMessage, maxLength);
+			messages.set(i, message);
+			terminal.write(message, left, i);
 
+			message = origMessage.substring(message.length());
+			if (message.length() > 1) {
+				messages.add(i + 1, message.trim());
 			}
-			terminal.write(messages.get(i), left, top + i);
 		}
 
 		messages.clear();
+	}
+
+	private String trimString(String message, int maxLength) {
+		message = message.trim();
+
+		// Message is already short enough
+		if (message.length() < maxLength) {
+			return message.trim();
+		}
+
+		// Truncate message exactly at maxLength, and check if it ends at the end of a word
+		String trimmed = message.substring(0, maxLength - 1);
+		if (trimmed.endsWith(" ") || message.charAt(trimmed.length()) == ' ') {
+			return trimmed.trim();
+		}
+
+		// Otherwise, truncate to the last word (words separated by spaces, obviously)
+		trimmed = trimmed.substring(0, trimmed.lastIndexOf(' '));
+		return trimmed.trim();
 	}
 }
