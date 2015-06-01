@@ -29,7 +29,7 @@ public class PlayScreen implements Screen {
 		CreatureFactory.setWorld(world);
 		messages = new ArrayList<>();
 		makeCreatures();
-		messages.add("Welcome! Use the arrow keys to move you character. Move into walls to dig, and move into enemies to attack.");
+		messages.add("Welcome! Use the arrow keys to move your character. Move into walls to dig, and move into enemies to attack.");
 	}
 
 	private void makeCreatures() {
@@ -128,24 +128,32 @@ public class PlayScreen implements Screen {
 	}
 
 	private void displayMessages(AsciiPanel terminal) {
-		//int top = screenHeight - messages.size();
 		int left = rightMapBorder + 1;
 		int maxLength = screenWidth - left;
 		String origMessage, message;
 
+		// First, sort out all the messages so everything looks pretty
 		for (int i = 0; i < messages.size(); i++) {
 			origMessage = messages.get(i);
 			message = trimString(origMessage, maxLength);
 			messages.set(i, message);
-			terminal.write(message, left, i);
 
 			message = origMessage.substring(message.length());
 			if (message.length() > 1) {
 				messages.add(i + 1, message.trim());
 			}
+
+			if (messages.size() > screenHeight) {
+				messages.remove(0);
+				i--;
+			}
 		}
 
-		messages.clear();
+		// Then, print all the prettied-up messages
+		for (int j = 0; j < messages.size(); j++) {
+			message = messages.get(j);
+			terminal.write(message, left, j);
+		}
 	}
 
 	private String trimString(String message, int maxLength) {
