@@ -46,8 +46,7 @@ public class CreatureAi {
 
 			other.modifyHealth(-damageDealt);
 
-			creature.notify("You attack the " + other.getName() + " for " + damageDealt + " damage.");
-			other.notify("The " + creature.getName() + " attacks you for " + damageDealt + " damage.");
+			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
 		}
 	}
 

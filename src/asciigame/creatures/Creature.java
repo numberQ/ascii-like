@@ -34,14 +34,14 @@ public class Creature {
 	public int getDefense()					 { return defense; }
 	public String getName()					 { return name; }
 
-	public Creature(World world, String name, char glyph, Color color, int maxHealth, int maxAttack, int minAttack, int defense) {
+	public Creature(World world, String name, char glyph, Color color, int maxHealth, int minAttack, int maxAttack, int defense) {
 		this.world = world;
 		this.glyph = glyph;
 		this.color = color;
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
-		this.maxAttack = maxAttack;
 		this.minAttack = minAttack;
+		this.maxAttack = maxAttack;
 		this.defense = defense;
 		this.name = name;
 	}
@@ -61,6 +61,7 @@ public class Creature {
 
 		if (health <= 0) {
 			health = 0;
+			sayAction("die");
 			world.killCreature(this);
 		}
 
@@ -69,7 +70,48 @@ public class Creature {
 		}
 	}
 
-	public void notify(String message){
+	public void sayAction(String message) {
+		int range = 9;
+		Creature other;
+
+		for (int dx = -range; dx <= range; dx++) {
+			for (int dy = -range; dy <= range; dy++) {
+
+				// Ensures a diamond shape
+				if (dx * dx + dy * dy > range * range) {
+					continue;
+				}
+
+				other = world.getCreature(x + dx, y + dy);
+
+				// Ignore empty squares
+				if (other == null) {
+					continue;
+				}
+
+				if (other == this) {
+					other.notify("You " + message + ".");
+				} else {
+					other.notify("The " + getName() + " " + makeSecondPerson(message) + ".");
+				}
+			}
+		}
+	}
+
+	private void notify(String message) {
 		ai.onNotify(message);
+	}
+
+	private String makeSecondPerson(String message) {
+		String[] messageArr;
+		messageArr = message.split(" ");
+
+		message = messageArr[0] + "s";
+		for (int i = 1; i < messageArr.length; i++) {
+			message += " " + messageArr[i];
+		}
+		message = message.replaceAll("the player", "you");
+
+		return message;
 	}
 }

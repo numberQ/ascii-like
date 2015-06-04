@@ -13,7 +13,7 @@ public class FungusAi extends CreatureAi {
 	public FungusAi(World world, Creature creature) {
 		super(world, creature);
 		this.spreadMax = 5;
-		this.spreadRate = 0.001;
+		this.spreadRate = 0.01;
 		this.spreadRange = 5;
 		this.attackRate = 1;
 	}
@@ -47,6 +47,7 @@ public class FungusAi extends CreatureAi {
 		}
 
 		CreatureFactory.makeFungus(x, y);
+		creature.sayAction("spawn a child");
 		spreadCount++;
 	}
 

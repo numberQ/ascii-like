@@ -46,6 +46,9 @@ public class World {
 	}
 
 	public void killCreature(Creature creature) {
+		if (creature.getName() == "player") {
+
+		}
 		creatures.remove(creature);
 	}
 
