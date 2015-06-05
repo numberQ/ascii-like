@@ -5,11 +5,15 @@ import java.util.*;
 
 public class World {
 
-	private Tile[][] tiles;
+	private Tile[][][] tiles;
+	private int depth;
 	private int width;
 	private int height;
 	private List<Creature> creatures;
 
+	public int getDepth() {
+		return depth;
+	}
 	public int getWidth() {
 		return width;
 	}
@@ -20,24 +24,25 @@ public class World {
 		return creatures;
 	}
 
-	public World(Tile[][] tiles) {
+	public World(Tile[][][] tiles) {
 		this.tiles = tiles;
-		this.width = tiles.length;
-		this.height = tiles[0].length;
+		this.depth = tiles.length;
+		this.width = tiles[0].length;
+		this.height = tiles[0][0].length;
 		this.creatures = new ArrayList<>();
 	}
 
-	public Tile getTile(int x, int y) {
-		if (x < 0 || x >= width || y < 0 || y >= height) {
+	public Tile getTile(int z, int x, int y) {
+		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height) {
 			return Tile.BOUNDS;
 		} else {
-			return tiles[x][y];
+			return tiles[z][x][y];
 		}
 	}
 
-	public Creature getCreature(int x, int y) {
+	public Creature getCreature(int z, int x, int y) {
 		for (Creature c : creatures) {
-			if (c.getX() == x && c.getY() == y) {
+			if (c.getZ() == z && c.getX() == x && c.getY() == y) {
 				return c;
 			}
 		}
@@ -46,32 +51,29 @@ public class World {
 	}
 
 	public void killCreature(Creature creature) {
-		if (creature.getName() == "player") {
-
-		}
 		creatures.remove(creature);
 	}
 
-	public void dig(int x, int y) {
-		if (getTile(x, y).isDiggable()) {
-			tiles[x][y] = Tile.FLOOR;
+	public void dig(int z, int x, int y) {
+		if (getTile(z, x, y).isDiggable()) {
+			tiles[z][x][y] = Tile.FLOOR;
 		}
 	}
 
-	public void addAtEmptyLocation(Creature creature) {
+	public void addAtEmptyLocation(Creature creature, int z) {
 		int x, y;
 
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		} while (!getTile(x, y).isWalkable() || getCreature(x, y) != null);
+		} while (!getTile(z, x, y).isWalkable() || getCreature(z, x, y) != null);
 
 		creature.setX(x);
 		creature.setY(y);
 		creatures.add(creature);
 	}
 
-	public void addAtLocation(Creature creature, int x, int y) {
+	public void addAtLocation(Creature creature, int z, int x, int y) {
 		creature.setX(x);
 		creature.setY(y);
 		creatures.add(creature);

@@ -78,11 +78,34 @@ public class PlayScreen implements Screen {
 	}
 
 	private void createWorld() {
+		int depth = 5;
 		int width = (int)(rightMapBorder * 1.5);
 		int height = bottomMapBorder * 2;
-		world = new WorldBuilder(width, height)
+
+		world = new WorldBuilder(depth, width, height)
 				.makeWorld()
 				.build();
+
+		// Benchmarking world gen
+		/*long start, end, average, times = 100;
+		for (depth = 1; depth <= 500; depth++) {
+			average = 0;
+
+			for (int i = 0; i < times; i++) {
+				start = System.currentTimeMillis();
+
+				world = new WorldBuilder(depth, width, height)
+						.makeWorld()
+						.build();
+
+				end = System.currentTimeMillis();
+				average += (end - start);
+			}
+
+			average /= times;
+
+			System.out.println("Depth: " + depth + " | Average time (ms) : " + average);
+		}*/
 	}
 
 	/**
@@ -109,10 +132,11 @@ public class PlayScreen implements Screen {
 		// Iterate over the screen
 		for (int screenX = 0; screenX < rightMapBorder; screenX++) {
 			for (int screenY = 0; screenY < bottomMapBorder; screenY++) {
+				int worldZ = player.getZ();
 				int worldX = screenX + left;
 				int worldY = screenY + top;
 
-				terminal.write(world.getTile(worldX, worldY).glyph(), screenX, screenY, world.getTile(worldX, worldY).color());
+				terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
 			}
 		}
 

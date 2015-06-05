@@ -19,22 +19,24 @@ public class CreatureAi {
 
 	public void onNotify(String message) { }
 
-	public void onEnter(int x, int y, Tile tile) {
-		if (world.getCreature(x, y) != null) {
+	public void onEnter(int z, int x, int y, Tile tile) {
+		if (world.getCreature(z, x, y) != null) {
 			// If the tile is a creature, attack it
 			attack(x, y);
 		} else if (tile.isWalkable()) {
 			// If the tile can be walked on, walk on it
+			creature.setZ(z);
 			creature.setX(x);
 			creature.setY(y);
 		} else {
 			// Otherwise, attempt to dig
-			dig(x, y);
+			dig(z, x, y);
 		}
 	}
 
 	public void attack(int x, int y) {
-		Creature other = world.getCreature(x, y);
+		int z = creature.getZ();
+		Creature other = world.getCreature(z, x, y);
 
 		if (other != null) {
 			int min = creature.getMinAttack();
@@ -50,7 +52,7 @@ public class CreatureAi {
 		}
 	}
 
-	public void dig(int worldX, int worldY) {
-		world.dig(worldX, worldY);
+	public void dig(int z, int x, int y) {
+		world.dig(z, x, y);
 	}
 }

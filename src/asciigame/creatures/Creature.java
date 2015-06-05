@@ -8,6 +8,7 @@ import java.awt.*;
 public class Creature {
 
 	private World world;
+	private int z;
 	private int x;
 	private int y;
 	private char glyph;
@@ -20,6 +21,8 @@ public class Creature {
 	private int defense;
 	private String name;
 
+	public int getZ()						 { return z; }
+	public void setZ(int z)					 { this.z = z; }
 	public int getX() 						 { return x; }
 	public void setX(int x)					 { this.x = x; }
 	public int getY() 						 { return y; }
@@ -49,7 +52,7 @@ public class Creature {
 	public void moveBy(int moveX, int moveY) {
 		moveX = x + moveX;
 		moveY = y + moveY;
-		ai.onEnter(moveX, moveY, world.getTile(moveX, moveY));
+		ai.onEnter(z, moveX, moveY, world.getTile(z, moveX, moveY));
 	}
 
 	public void update() {
@@ -82,7 +85,7 @@ public class Creature {
 					continue;
 				}
 
-				other = world.getCreature(x + dx, y + dy);
+				other = world.getCreature(z, x + dx, y + dy);
 
 				// Ignore empty squares
 				if (other == null) {

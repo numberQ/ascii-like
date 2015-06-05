@@ -13,7 +13,7 @@ public class FungusAi extends CreatureAi {
 	public FungusAi(World world, Creature creature) {
 		super(world, creature);
 		this.spreadMax = 5;
-		this.spreadRate = 0.01;
+		this.spreadRate = 0.002;
 		this.spreadRange = 5;
 		this.attackRate = 1;
 	}
@@ -30,19 +30,21 @@ public class FungusAi extends CreatureAi {
 
 	@Override
 	public void attack(int x, int y) {
-		Creature c = world.getCreature(x, y);
+		int z = creature.getZ();
+		Creature c = world.getCreature(z, x, y);
 		if (c != null && !c.getName().equals("fungus")) {
 			super.attack(x, y);
 		}
 	}
 
 	private void spread() {
-		int x, y;
+		int z, x, y;
 
+		z = creature.getZ();
 		x = creature.getX() + (int)(Math.random() * (spreadRange * 2 + 1)) - spreadRange;
 		y = creature.getY() + (int)(Math.random() * (spreadRange * 2 + 1)) - spreadRange;
 
-		if (!world.getTile(x, y).isWalkable() || world.getCreature(x, y) != null) {
+		if (!world.getTile(z, x, y).isWalkable() || world.getCreature(z, x, y) != null) {
 			return;
 		}
 
