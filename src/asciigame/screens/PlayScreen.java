@@ -72,6 +72,14 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_DOWN:
 				player.moveBy(0, 1);
 				break;
+
+			// Debug - instant layer change
+			case KeyEvent.VK_Q:
+				player.setZ(player.getZ() - 1);
+				break;
+			case KeyEvent.VK_W:
+				player.setZ(player.getZ() + 1);
+				break;
 		}
 
 		return this;

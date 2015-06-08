@@ -1,15 +1,14 @@
 package asciigame;
 
 import asciiPanel.AsciiPanel;
-
 import java.awt.*;
 
 public enum Tile {
 
 	FLOOR ('.', AsciiPanel.brightWhite),
 	WALL ('#', AsciiPanel.brightWhite),
-	STAIRS_DOWN ('<', AsciiPanel.brightWhite),
-	STAIRS_UP ('>', AsciiPanel.brightWhite),
+	STAIRS_DOWN ('<', AsciiPanel.brightYellow),
+	STAIRS_UP ('>', AsciiPanel.brightYellow),
 	BOUNDS ('X', AsciiPanel.brightBlack);
 
 	private char glyph;
@@ -30,6 +29,8 @@ public enum Tile {
 	public boolean isWalkable() {
 		switch (this) {
 			case FLOOR:
+			case STAIRS_UP:
+			case STAIRS_DOWN:
 				return true;
 			default:
 				return false;

@@ -1,6 +1,7 @@
 package asciigame;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class WorldBuilder {
@@ -29,7 +30,8 @@ public class WorldBuilder {
 	public WorldBuilder makeWorld() {
 		return randomize()
 				.smooth(smoothTimes)
-				.createRegions();
+				.createRegions()
+				.connectRegions();
 	}
 
 	private WorldBuilder randomize() {
@@ -183,12 +185,46 @@ public class WorldBuilder {
 				 connection = new Tuple<>(regions[z][x][y], regions[z + 1][x][y]);
 
 				if (!connections.contains(connection)
-						&& tiles[z][x][y].isWalkable()
-						&& tiles[z + 1][x][y].isWalkable()) {
+						&& tiles[z][x][y] == Tile.FLOOR
+						&& tiles[z + 1][x][y] == Tile.FLOOR) {
 					connections.add(connection);
-					// TODO: Connect down more
+					connectRegionsDown(z, regions[z][x][y], regions[z + 1][x][y]);
 				}
 			}
 		}
+	}
+
+	private void connectRegionsDown(int z, int regionUp, int regionDown) {
+		List<Point> candidates = findRegionOverlaps(z, regionUp, regionDown); // Put overlaps method here
+		Point point;
+
+		int numStairs = 0;
+		int stairsRatio = 250;
+		do {
+			point = candidates.remove(0);
+			int x = point.getX();
+			int y = point.getY();
+			tiles[z][x][y] = Tile.STAIRS_DOWN;
+			tiles[z + 1][x][y] = Tile.STAIRS_UP;
+			numStairs++;
+		} while (candidates.size() / numStairs > stairsRatio);
+	}
+
+	private List<Point> findRegionOverlaps(int z, int regionUp, int regionDown) {
+		List<Point> candidates = new ArrayList<>();
+
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (tiles[z][x][y] == Tile.FLOOR
+						&& tiles[z + 1][x][y] == Tile.FLOOR
+						&& regions[z][x][y] == regionUp
+						&& regions[z + 1][x][y] == regionDown) {
+					candidates.add(new Point(z, x, y));
+				}
+			}
+		}
+
+		Collections.shuffle(candidates);
+		return candidates;
 	}
 }
