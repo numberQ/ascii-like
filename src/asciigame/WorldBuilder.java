@@ -175,17 +175,17 @@ public class WorldBuilder {
 	}
 
 	private void connectRegionsDown(int z) {
-		List<String> connections = new ArrayList<>();
-		String regionString;
+		List<Tuple> connections = new ArrayList<>();
+		Tuple<Integer, Integer> connection;
 
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				regionString = regions[z][x][y] + "," + regions[z + 1][x][y];
+				 connection = new Tuple<>(regions[z][x][y], regions[z + 1][x][y]);
 
-				if (!connections.contains(regionString)
+				if (!connections.contains(connection)
 						&& tiles[z][x][y].isWalkable()
 						&& tiles[z + 1][x][y].isWalkable()) {
-					connections.add(regionString);
+					connections.add(connection);
 					// TODO: Connect down more
 				}
 			}
