@@ -1,8 +1,7 @@
 package asciigame.creatures;
 
+import asciigame.Tile;
 import asciigame.World;
-import asciigame.screens.PlayScreen;
-
 import java.awt.*;
 
 public class Creature {
@@ -49,10 +48,31 @@ public class Creature {
 		this.name = name;
 	}
 
-	public void moveBy(int moveX, int moveY) {
+	public void moveBy(int moveZ, int moveX, int moveY) {
 		moveX = x + moveX;
 		moveY = y + moveY;
-		ai.onEnter(z, moveX, moveY, world.getTile(z, moveX, moveY));
+		Tile tile = world.getTile(z, moveX, moveY);
+
+		if (moveZ < 0) {
+			if (tile == Tile.STAIRS_UP) {
+				sayAction("walk up the stairs to level " + (z + moveZ + 1));
+			} else {
+				sayAction("attempt to go up, but the ceiling is in the way");
+				return;
+			}
+		} else if (moveZ > 0) {
+			if (tile == Tile.STAIRS_DOWN) {
+				sayAction("walk down the stairs to level " + (z + moveZ + 1));
+			} else {
+				sayAction("attempt to go down, but the floor is in the way");
+				return;
+			}
+		}
+
+		moveZ = z + moveZ;
+		tile = world.getTile(moveZ, moveX, moveY);
+
+		ai.onEnter(moveZ, moveX, moveY, tile);
 	}
 
 	public void update() {

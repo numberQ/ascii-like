@@ -61,16 +61,16 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_ESCAPE:
 				return new LoseScreen();
 			case KeyEvent.VK_LEFT:
-				player.moveBy(-1, 0);
+				player.moveBy(0, -1, 0);
 				break;
 			case KeyEvent.VK_RIGHT:
-				player.moveBy(1, 0);
+				player.moveBy(0, 1, 0);
 				break;
 			case KeyEvent.VK_UP:
-				player.moveBy(0, -1);
+				player.moveBy(0, 0, -1);
 				break;
 			case KeyEvent.VK_DOWN:
-				player.moveBy(0, 1);
+				player.moveBy(0, 0, 1);
 				break;
 
 			// Debug - instant layer change
@@ -79,6 +79,15 @@ public class PlayScreen implements Screen {
 				break;
 			case KeyEvent.VK_W:
 				player.setZ(player.getZ() + 1);
+				break;
+		}
+
+		switch (key.getKeyChar()) {
+			case '<':
+				player.moveBy(-1, 0, 0);
+				break;
+			case '>':
+				player.moveBy(1, 0, 0);
 				break;
 		}
 

@@ -203,7 +203,7 @@ public class WorldBuilder {
 		Point point;
 
 		int numStairs = 0;
-		int stairsRatio = 250;
+		int stairsRatio = candidates.size();
 		do {
 			point = candidates.remove(0);
 			int x = point.getX();
