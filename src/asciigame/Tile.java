@@ -5,10 +5,13 @@ import java.awt.*;
 
 public enum Tile {
 
+	// For abnormal characters, see:
+	// http://en.wikipedia.org/wiki/Code_page_437
+	// Ascii numbers correspond to codes on that page.
 	FLOOR ('.', AsciiPanel.brightWhite),
 	WALL ('#', AsciiPanel.brightWhite),
-	STAIRS_DOWN ('<', AsciiPanel.brightYellow),
-	STAIRS_UP ('>', AsciiPanel.brightYellow),
+	STAIRS_UP ((char)24, AsciiPanel.brightYellow),
+	STAIRS_DOWN ((char)25, AsciiPanel.brightYellow),
 	BOUNDS ('X', AsciiPanel.brightBlack);
 
 	private char glyph;

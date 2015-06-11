@@ -129,6 +129,7 @@ public class WorldBuilder {
 
 	private int fillRegion(int z, int x, int y) {
 		int size = 1;
+		int nz, nx, ny;
 		List<Point> openPoints = new ArrayList<>();
 		Point point = new Point(z, x, y);
 		openPoints.add(point);
@@ -138,18 +139,21 @@ public class WorldBuilder {
 			point = openPoints.remove(0);
 
 			for (Point neighbor : point.getAdjacent()) {
-				if (neighbor.getZ() < 0 || neighbor.getZ() >= depth
-						|| neighbor.getX() < 0 || neighbor.getX() >= width
-						|| neighbor.getY() < 0 || neighbor.getY() >= height) {
+				nz = neighbor.getZ();
+				nx = neighbor.getX();
+				ny = neighbor.getY();
+				if (nz < 0 || nz >= depth
+						|| nx < 0 || nx >= width
+						|| ny < 0 || ny >= height) {
 					continue;
 				}
-				if (regions[neighbor.getZ()][neighbor.getX()][neighbor.getY()] > -1
-						|| tiles[neighbor.getZ()][neighbor.getX()][neighbor.getY()] == Tile.WALL) {
+				if (regions[nz][nx][ny] > -1
+						|| tiles[nz][nx][ny] == Tile.WALL) {
 					continue;
 				}
 
 				size++;
-				regions[neighbor.getZ()][neighbor.getX()][neighbor.getY()] = regionId;
+				regions[nz][nx][ny] = regionId;
 				openPoints.add(neighbor);
 			}
 		}
@@ -177,12 +181,12 @@ public class WorldBuilder {
 	}
 
 	private void connectRegionsDown(int z) {
-		List<Tuple> connections = new ArrayList<>();
-		Tuple<Integer, Integer> connection;
+		List<String> connections = new ArrayList<>();
+		String connection;
 
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
-				 connection = new Tuple<>(regions[z][x][y], regions[z + 1][x][y]);
+				connection = regions[z][x][y] + "," + regions[z + 1][x][y];
 
 				if (!connections.contains(connection)
 						&& tiles[z][x][y] == Tile.FLOOR
@@ -195,7 +199,7 @@ public class WorldBuilder {
 	}
 
 	private void connectRegionsDown(int z, int regionUp, int regionDown) {
-		List<Point> candidates = findRegionOverlaps(z, regionUp, regionDown); // Put overlaps method here
+		List<Point> candidates = findRegionOverlaps(z, regionUp, regionDown);
 		Point point;
 
 		int numStairs = 0;
