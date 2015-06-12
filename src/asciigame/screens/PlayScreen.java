@@ -147,23 +147,27 @@ public class PlayScreen implements Screen {
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
 		// Iterate over the screen
+		int worldZ, worldX, worldY;
+		worldZ = player.getZ();
 		for (int screenX = 0; screenX < rightMapBorder; screenX++) {
 			for (int screenY = 0; screenY < bottomMapBorder; screenY++) {
-				int worldZ = player.getZ();
-				int worldX = screenX + left;
-				int worldY = screenY + top;
+				worldX = screenX + left;
+				worldY = screenY + top;
 
 				terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
 			}
 		}
 
 		// Iterate over creatures
+		int screenX, screenY;
 		for (Creature c : world.getCreatures()) {
-			int screenX = c.getX() - left;
-			int screenY = c.getY() - top;
-			if (screenX >= 0 && screenX < rightMapBorder
-					&& screenY >= 0 && screenY < bottomMapBorder) {
-				terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
+			if (c.getZ() == worldZ) {
+				screenX = c.getX() - left;
+				screenY = c.getY() - top;
+				if (screenX >= 0 && screenX < rightMapBorder
+						&& screenY >= 0 && screenY < bottomMapBorder) {
+					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
+				}
 			}
 		}
 	}
