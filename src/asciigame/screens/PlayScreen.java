@@ -1,9 +1,7 @@
 package asciigame.screens;
 
 import asciiPanel.AsciiPanel;
-import asciigame.ApplicationMain;
-import asciigame.World;
-import asciigame.WorldBuilder;
+import asciigame.*;
 import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
 import java.awt.event.KeyEvent;
@@ -168,6 +166,21 @@ public class PlayScreen implements Screen {
 						&& screenY >= 0 && screenY < bottomMapBorder) {
 					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 				}
+			}
+		}
+
+		// Draw a test line
+		int testX = 10; //(int)(Math.random() * (world.getWidth() / 4));
+		int testY = 10; //(int)(Math.random() * (world.getHeight() / 4));
+		int testDx = (int)(Math.random() * 10 - 5);
+		int testDy = (int)(Math.random() * 10 - 5);
+		Line line = new Line(0, testX, testY, testX + testDx, testY + testDy).construct();
+		for (Point p : line.getPoints()) {
+			screenX = p.getX() - left;
+			screenY = p.getY() - top;
+			if (screenX >= 0 && screenX < rightMapBorder
+					&& screenY >= 0 && screenY < bottomMapBorder) {
+				terminal.write('*', screenX, screenY, AsciiPanel.brightCyan);
 			}
 		}
 	}
