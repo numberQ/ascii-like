@@ -26,34 +26,32 @@ public class Line {
 	}
 
 	public Line construct() {
-		double dx = x1 - x0;
-		double dy = y1 - y0;
-		double slope = dy / dx;
+		/*
+			What does any of this mean???
+		 */
 
-		double error = 0;
-		if (slope <= 1) {
-			int y = y0;
-			for (int x = x0; x <= x1; x++) {
-				points.add(new Point(z, x, y));
+		int dx = Math.abs(x1 - x0);
+		int dy = Math.abs(y1 - y0);
+		int sx = x0 < x1 ? 1 : -1;
+		int sy = y0 < y1 ? 1 : -1;
+		int error = dx - dy;
+		int err;
 
-				if (error + slope < threshold) {
-					error += slope;
-				} else {
-					y++;
-					error += slope - 1;
-				}
+		while (true) {
+			points.add(new Point(z, x0, y0));
+
+			if (x0 == x1 && y0 == y1) {
+				break;
 			}
-		} else {
-			int x = x0;
-			for (int y = y0; y <= y1; y++) {
-				points.add(new Point(z, x, y));
 
-				if (error + slope < threshold) {
-					error += slope;
-				} else {
-					x++;
-					error += slope - 1;
-				}
+			err = error * 2;
+			if (err > -dx) {
+				error -= dy;
+				x0 += sx;
+			}
+			if (err < dx) {
+				error += dx;
+				y0 += sy;
 			}
 		}
 
