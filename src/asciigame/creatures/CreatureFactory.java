@@ -2,7 +2,6 @@ package asciigame.creatures;
 
 import asciiPanel.AsciiPanel;
 import asciigame.World;
-
 import java.util.List;
 
 public class CreatureFactory {
@@ -14,21 +13,27 @@ public class CreatureFactory {
 	public static void setLayer(int layer) { CreatureFactory.layer = layer; }
 
 	public static Creature makePlayer(List<String> messages) {
-		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow, 50, 5, 10, 1);
+		int maxHealth = 50, minAttack = 5, maxAttack = 10, defense = 1;
+		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow,
+				maxHealth, minAttack, maxAttack, defense);
 		world.addAtEmptyLocation(player, layer);
 		new PlayerAi(world, player, messages);
 		return player;
 	}
 
 	public static Creature makeFungus() {
-		Creature fungus = new Creature(world, "fungus", 'f', AsciiPanel.green, 20, 1, 5, 0);
+		int maxHealth = 10, minAttack = 1, maxAttack = 4, defense = 0;
+		Creature fungus = new Creature(world, "fungus", 'f', AsciiPanel.green,
+				maxHealth, minAttack, maxAttack, defense);
 		world.addAtEmptyLocation(fungus, layer);
 		new FungusAi(world, fungus);
 		return fungus;
 	}
 
 	public static Creature makeFungus(int x, int y) {
-		Creature fungus = new Creature(world, "fungus", 'f', AsciiPanel.green, 20, 1, 5, 0);
+		int maxHealth = 10, minAttack = 1, maxAttack = 4, defense = 0;
+		Creature fungus = new Creature(world, "fungus", 'f', AsciiPanel.green,
+				maxHealth, minAttack, maxAttack, defense);
 		world.addAtLocation(fungus, layer, x, y);
 		new FungusAi(world, fungus);
 		return fungus;

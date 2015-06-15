@@ -19,6 +19,7 @@ public class Creature {
 	private int maxAttack;
 	private int defense;
 	private String name;
+	private int visionRadius;
 
 	public int getZ()						 { return z; }
 	public void setZ(int z)					 { this.z = z; }
@@ -35,6 +36,7 @@ public class Creature {
 	public int getMaxAttack()				 { return maxAttack; }
 	public int getDefense()					 { return defense; }
 	public String getName()					 { return name; }
+	public int getVisionRadius()			 { return visionRadius; }
 
 	public Creature(World world, String name, char glyph, Color color, int maxHealth, int minAttack, int maxAttack, int defense) {
 		this.world = world;
