@@ -68,6 +68,7 @@ public class World {
 			y = (int)(Math.random() * height);
 		} while (!getTile(z, x, y).isWalkable() || getCreature(z, x, y) != null);
 
+		creature.setZ(z);
 		creature.setX(x);
 		creature.setY(y);
 		creatures.add(creature);

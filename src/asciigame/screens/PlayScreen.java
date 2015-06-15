@@ -19,24 +19,34 @@ public class PlayScreen implements Screen {
 	private Creature player;
 
 	public PlayScreen() {
+		// Define screen vars
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
 		rightMapBorder = screenWidth * 2 / 3;
 		bottomMapBorder = screenHeight - 3;
+
+		// Define messages
+		messages = new ArrayList<>();
+		messages.add("Welcome! Use the arrow keys to move your character. Move into walls to dig, and move into enemies to attack.");
+
+		// Map shenanigans
 		createWorld();
 		CreatureFactory.setWorld(world);
-		messages = new ArrayList<>();
 		makeCreatures();
-		messages.add("Welcome! Use the arrow keys to move your character. Move into walls to dig, and move into enemies to attack.");
 	}
 
 	private void makeCreatures() {
 		// Make the player
+		CreatureFactory.setLayer(0);
 		player = CreatureFactory.makePlayer(messages);
 
 		// Make fungi
-		for (int i = 0; i < 8; i++) {
-			CreatureFactory.makeFungus();
+		int depth = world.getDepth();
+		for (int i = 0; i < depth; i++) {
+			CreatureFactory.setLayer(i);
+			for (int j = 0; j < 4; j++) {
+				CreatureFactory.makeFungus();
+			}
 		}
 	}
 
