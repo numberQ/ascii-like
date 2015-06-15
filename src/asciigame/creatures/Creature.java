@@ -38,8 +38,9 @@ public class Creature {
 	public String getName()					 { return name; }
 	public int getVisionRadius()			 { return visionRadius; }
 
-	public Creature(World world, String name, char glyph, Color color, int maxHealth, int minAttack, int maxAttack, int defense) {
+	public Creature(World world, String name, char glyph, Color color, int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius) {
 		this.world = world;
+		this.name = name;
 		this.glyph = glyph;
 		this.color = color;
 		this.maxHealth = maxHealth;
@@ -47,7 +48,7 @@ public class Creature {
 		this.minAttack = minAttack;
 		this.maxAttack = maxAttack;
 		this.defense = defense;
-		this.name = name;
+		this.visionRadius = visionRadius;
 	}
 
 	public void moveBy(int moveZ, int moveX, int moveY) {
