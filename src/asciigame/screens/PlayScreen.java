@@ -165,7 +165,7 @@ public class PlayScreen implements Screen {
 				if (player.canSee(player.getZ(), worldX, worldY)) {
 					terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
 				} else {
-					terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, AsciiPanel.brightBlack);
+					terminal.write(Tile.BOUNDS.glyph(), screenX, screenY, Tile.BOUNDS.color());
 				}
 			}
 		}

@@ -49,10 +49,11 @@ public enum Tile {
 		}
 	}
 
-	public boolean isOpaque() {
+	public boolean isTransparent() {
 		switch (this) {
-			case WALL:
-			case BOUNDS:
+			case FLOOR:
+			case STAIRS_UP:
+			case STAIRS_DOWN:
 				return true;
 			default:
 				return false;

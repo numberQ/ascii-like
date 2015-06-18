@@ -59,21 +59,32 @@ public class CreatureAi {
 	}
 
 	public boolean canSee(int z, int x, int y) {
+		// Different floors trivially cannot see each other
 		if (creature.getZ() != z) {
 			return false;
 		}
+
+		// Set up circular vision radius
 		if ((creature.getX() - x) * (creature.getX() - x) + (creature.getY() - y) * (creature.getY() - y)
 				> creature.getVisionRadius() * creature.getVisionRadius()) {
 			return false;
 		}
 
+		// Check points on line of sight
 		Point creaturePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
 		Point lookPoint = new Point (z, x, y);
-		Line lineOfSight = new Line(creaturePoint, lookPoint);
+		Line lineOfSight = new Line(creaturePoint, lookPoint).construct();
+		boolean hitWall = false;
 		for (Point point : lineOfSight.getPoints()) {
-			if (world.getTile(z, point.getX(), point.getY()).isOpaque()) {
-				return false;
+			if (!hitWall) {
+				if (world.getTile(z, point.getX(), point.getY()).isTransparent()) {
+					continue;
+				} else {
+					hitWall = true;
+					continue;
+				}
 			}
+			return false;
 		}
 
 		return true;
