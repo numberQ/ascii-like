@@ -1,5 +1,7 @@
 package asciigame.creatures;
 
+import asciigame.Line;
+import asciigame.Point;
 import asciigame.Tile;
 import asciigame.World;
 
@@ -54,5 +56,26 @@ public class CreatureAi {
 
 	public void dig(int z, int x, int y) {
 		world.dig(z, x, y);
+	}
+
+	public boolean canSee(int z, int x, int y) {
+		if (creature.getZ() != z) {
+			return false;
+		}
+		if ((creature.getX() - x) * (creature.getX() - x) + (creature.getY() - y) * (creature.getY() - y)
+				> creature.getVisionRadius() * creature.getVisionRadius()) {
+			return false;
+		}
+
+		Point creaturePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
+		Point lookPoint = new Point (z, x, y);
+		Line lineOfSight = new Line(creaturePoint, lookPoint);
+		for (Point point : lineOfSight.getPoints()) {
+			if (world.getTile(z, point.getX(), point.getY()).isOpaque()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

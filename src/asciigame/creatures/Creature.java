@@ -78,6 +78,10 @@ public class Creature {
 		ai.onEnter(moveZ, moveX, moveY, tile);
 	}
 
+	public boolean canSee(int worldZ, int worldX, int worldY) {
+		return ai.canSee(worldZ, worldX, worldY);
+	}
+
 	public void update() {
 		ai.onUpdate();
 	}

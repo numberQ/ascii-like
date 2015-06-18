@@ -31,27 +31,27 @@ public class Line {
 		int dy = Math.abs(y1 - y0);
 		int signX = Integer.signum(x1 - x0);
 		int signY = Integer.signum(y1 - y0);
-		int x, xEst, y, yEst;
+		int x, y, exactValue;
 
-		if (dx >= dy) {		// Line is more horizontal than vertical (or perfectly diagonal
+		if (dx >= dy) {		// Line is more horizontal than vertical (or perfectly diagonal)
 			y = y0;
-			yEst = dx / 2;
+			exactValue = dx / 2;
 			for (x = x0; x != (x1 + signX); x += signX) {
 				points.add(new Point(z, x, y));
-				yEst += dy;
-				if (yEst >= dx) {
-					yEst -= dx;
+				exactValue += dy;
+				if (exactValue >= dx) {
+					exactValue -= dx;
 					y += signY;
 				}
 			}
 		} else {			// Line is more vertical than horizontal
 			x = x0;
-			xEst = dy / 2;
+			exactValue = dy / 2;
 			for (y = y0; y != (y1 + signY); y += signY) {
 				points.add(new Point(z, x, y));
-				xEst += dx;
-				if (xEst >= dy) {
-					xEst -= dy;
+				exactValue += dx;
+				if (exactValue >= dy) {
+					exactValue -= dy;
 					x += signX;
 				}
 			}

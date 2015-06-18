@@ -162,7 +162,11 @@ public class PlayScreen implements Screen {
 				worldX = screenX + left;
 				worldY = screenY + top;
 
-				terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
+				if (player.canSee(player.getZ(), worldX, worldY)) {
+					terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
+				} else {
+					terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, AsciiPanel.brightBlack);
+				}
 			}
 		}
 
@@ -173,7 +177,8 @@ public class PlayScreen implements Screen {
 				screenX = c.getX() - left;
 				screenY = c.getY() - top;
 				if (screenX >= 0 && screenX < rightMapBorder
-						&& screenY >= 0 && screenY < bottomMapBorder) {
+						&& screenY >= 0 && screenY < bottomMapBorder
+						&& player.canSee(c.getZ(), c.getX(), c.getY())) {
 					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 				}
 			}

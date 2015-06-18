@@ -48,4 +48,14 @@ public enum Tile {
 				return false;
 		}
 	}
+
+	public boolean isOpaque() {
+		switch (this) {
+			case WALL:
+			case BOUNDS:
+				return true;
+			default:
+				return false;
+		}
+	}
 }
