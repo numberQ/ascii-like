@@ -37,26 +37,10 @@ public class PlayScreen implements Screen {
 		makeCreatures();
 	}
 
-	private void makeCreatures() {
-		// Make the player
-		CreatureFactory.setLayer(0);
-		player = CreatureFactory.makePlayer(messages, playerFov);
-
-		// Make fungi
-		int depth = world.getDepth();
-		for (int i = 0; i < depth; i++) {
-			CreatureFactory.setLayer(i);
-			for (int j = 0; j < 4; j++) {
-				CreatureFactory.makeFungus();
-			}
-		}
-	}
-
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
 		int left = getScrollX();
 		int top = getScrollY();
-		world.update();
 		displayTiles(terminal, left, top);
 		displayMessages(terminal);
 		String stats = player.getHealth() + "/" + player.getMaxHealth();
@@ -64,7 +48,7 @@ public class PlayScreen implements Screen {
 	}
 
 	@Override
-	public Screen respondToUserInput(KeyEvent key) {
+	public Screen respondToUserInputAndUpdate(KeyEvent key) {
 		switch (key.getKeyCode()) {
 			case KeyEvent.VK_ENTER:
 				return new WinScreen();
@@ -117,8 +101,19 @@ public class PlayScreen implements Screen {
 				break;
 		}
 
-		return this;
+        return update();
 	}
+
+    private Screen update() {
+        world.update();
+
+        // Check if player is dead
+        if (player.getHealth() <= 0) {
+            return new LoseScreen();
+        }
+
+        return this;
+    }
 
 	private void createWorld() {
 		int depth = 5;
@@ -129,6 +124,31 @@ public class PlayScreen implements Screen {
 				.makeWorld()
 				.build();
 	}
+
+    private void makeCreatures() {
+        int depth = world.getDepth();
+        int fungusAmount = 4;
+        int batAmount = 10;
+
+        // Make the player
+        CreatureFactory.setLayer(0);
+        player = CreatureFactory.makePlayer(messages, playerFov);
+
+        for (int i = 0; i < depth; i++) {
+            CreatureFactory.setLayer(i);
+            int j;
+
+            // Make fungi
+            for (j = 0; j < fungusAmount; j++) {
+                CreatureFactory.makeFungus();
+            }
+
+            // Make bats
+            for (j = 0; j < batAmount; j++) {
+                CreatureFactory.makeBat();
+            }
+        }
+    }
 
 	/**
 	 * Finds the X coordinate of the top left corner of the scroll window.

@@ -41,7 +41,7 @@ public class ApplicationMain extends JFrame implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		screen = screen.respondToUserInput(e);
+		screen = screen.respondToUserInputAndUpdate(e);
 		repaint();
 	}
 

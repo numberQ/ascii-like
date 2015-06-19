@@ -13,7 +13,7 @@ public class StartScreen implements Screen {
 	}
 
 	@Override
-	public Screen respondToUserInput(KeyEvent key) {
+	public Screen respondToUserInputAndUpdate(KeyEvent key) {
 		if (key.getKeyCode() == KeyEvent.VK_ENTER) {
 			return new PlayScreen();
 		} else {

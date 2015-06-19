@@ -38,12 +38,8 @@ public class CreatureAi {
 	}
 
 	public void wander() {
-		int dx, dy;
-
-		do {
-			dx = (int)(Math.random() * 3 - 1);
-			dy = (int)(Math.random() * 3 - 1);
-		} while (dx == 0 && dy == 0);
+		int dx = (int)(Math.random() * 3) - 1;
+        int dy = (int)(Math.random() * 3) - 1;
 
 		creature.moveBy(0, dx, dy);
 	}

@@ -52,6 +52,11 @@ public class Creature {
 	}
 
 	public void moveBy(int moveZ, int moveX, int moveY) {
+        // Ignore creatures standing still
+        if (moveZ == 0 && moveX == 0 && moveY == 0) {
+            return;
+        }
+
 		moveX = x + moveX;
 		moveY = y + moveY;
 		Tile tile = world.getTile(z, moveX, moveY);
