@@ -31,9 +31,21 @@ public class CreatureAi {
 			creature.setX(x);
 			creature.setY(y);
 		} else {
+			creature.sayAction("bump into a wall");
 			// Otherwise, attempt to dig
-			dig(z, x, y);
+			//dig(z, x, y);
 		}
+	}
+
+	public void wander() {
+		int dx, dy;
+
+		do {
+			dx = (int)(Math.random() * 3 - 1);
+			dy = (int)(Math.random() * 3 - 1);
+		} while (dx == 0 && dy == 0);
+
+		creature.moveBy(0, dx, dy);
 	}
 
 	public void attack(int x, int y) {

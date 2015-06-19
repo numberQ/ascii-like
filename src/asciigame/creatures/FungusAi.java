@@ -13,7 +13,7 @@ public class FungusAi extends CreatureAi {
 	public FungusAi(World world, Creature creature) {
 		super(world, creature);
 		this.spreadMax = 3;
-		this.spreadRate = 0.002;
+		this.spreadRate = 0.003;
 		this.spreadRange = 5;
 		this.attackRate = 0.6;
 	}
