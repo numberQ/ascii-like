@@ -7,6 +7,10 @@ public class FieldOfView {
 	private boolean[][] visible;
 	private Tile[][][] tiles;
 
+	public Tile getTile(int z, int x, int y) {
+		return tiles[z][x][y];
+	}
+
 	public FieldOfView(World world) {
 		this.world = world;
 		this.visible = new boolean[world.getWidth()][world.getHeight()];
@@ -17,7 +21,6 @@ public class FieldOfView {
 				for (int z = 0; z < world.getDepth(); z++) {
 					tiles[z][x][y] = Tile.UNKNOWN;
 				}
-				visible[x][y] = false;
 			}
 		}
 	}
@@ -38,9 +41,10 @@ public class FieldOfView {
 
 	public void update(int worldZ, int worldX, int worldY, int radius) {
 		depth = worldZ;
+		visible = new boolean[world.getWidth()][world.getHeight()];
 
-		for (int x = -radius; x < radius; x++) {
-			for (int y = -radius; y < radius; y++) {
+		for (int x = -radius; x <= radius; x++) {
+			for (int y = -radius; y <= radius; y++) {
 				if (x * x + y * y > radius * radius
 						|| worldX + x < 0 || worldX + x >= world.getWidth()
 						|| worldY + y < 0 || worldY + y >= world.getHeight()) {
@@ -50,17 +54,13 @@ public class FieldOfView {
 				Point creaturePoint = new Point(worldZ, worldX, worldY);
 				Point lookPoint = new Point (worldZ, worldX + x, worldY + y);
 				Line lineOfSight = new Line(creaturePoint, lookPoint).construct();
-				boolean hitWall = false;
+
 				for (Point point : lineOfSight.getPoints()) {
 					Tile tile = world.getTile(point.getZ(), point.getX(), point.getY());
 					visible[point.getX()][point.getY()] = true;
 					tiles[point.getZ()][point.getX()][point.getY()] = tile;
-
-					if (hitWall) {
-						break;
-					}
 					if (!tile.isTransparent()) {
-						hitWall = true;
+						break;
 					}
 				}
 			}

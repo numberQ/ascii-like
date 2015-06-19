@@ -1,6 +1,7 @@
 package asciigame.creatures;
 
 import asciiPanel.AsciiPanel;
+import asciigame.FieldOfView;
 import asciigame.World;
 import java.util.List;
 
@@ -12,12 +13,12 @@ public class CreatureFactory {
 	public static void setWorld(World world) { CreatureFactory.world = world; }
 	public static void setLayer(int layer) { CreatureFactory.layer = layer; }
 
-	public static Creature makePlayer(List<String> messages) {
+	public static Creature makePlayer(List<String> messages, FieldOfView fov) {
 		int maxHealth = 50, minAttack = 5, maxAttack = 10, defense = 1, visionRadius = 9;
 		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow,
 				maxHealth, minAttack, maxAttack, defense, visionRadius);
 		world.addAtEmptyLocation(player, layer);
-		new PlayerAi(world, player, messages);
+		new PlayerAi(world, player, messages, fov);
 		return player;
 	}
 

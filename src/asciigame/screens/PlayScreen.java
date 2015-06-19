@@ -17,6 +17,7 @@ public class PlayScreen implements Screen {
 	private World world;
 	private List<String> messages;
 	private Creature player;
+	private FieldOfView playerFov;
 
 	public PlayScreen() {
 		// Define screen vars
@@ -32,13 +33,14 @@ public class PlayScreen implements Screen {
 		// Map shenanigans
 		createWorld();
 		CreatureFactory.setWorld(world);
+		playerFov = new FieldOfView(world);
 		makeCreatures();
 	}
 
 	private void makeCreatures() {
 		// Make the player
 		CreatureFactory.setLayer(0);
-		player = CreatureFactory.makePlayer(messages);
+		player = CreatureFactory.makePlayer(messages, playerFov);
 
 		// Make fungi
 		int depth = world.getDepth();
@@ -110,27 +112,6 @@ public class PlayScreen implements Screen {
 		world = new WorldBuilder(depth, width, height)
 				.makeWorld()
 				.build();
-
-		// Benchmarking world gen
-		/*long start, end, average, times = 100;
-		for (depth = 1; depth <= 500; depth++) {
-			average = 0;
-
-			for (int i = 0; i < times; i++) {
-				start = System.currentTimeMillis();
-
-				world = new WorldBuilder(depth, width, height)
-						.makeWorld()
-						.build();
-
-				end = System.currentTimeMillis();
-				average += (end - start);
-			}
-
-			average /= times;
-
-			System.out.println("Depth: " + depth + " | Average time (ms) : " + average);
-		}*/
 	}
 
 	/**
@@ -154,9 +135,11 @@ public class PlayScreen implements Screen {
 	}
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
-		// Iterate over the screen
 		int worldZ, worldX, worldY;
 		worldZ = player.getZ();
+		playerFov.update(worldZ, player.getX(), player.getY(), player.getVisionRadius());
+
+		// Iterate over the screen
 		for (int screenX = 0; screenX < rightMapBorder; screenX++) {
 			for (int screenY = 0; screenY < bottomMapBorder; screenY++) {
 				worldX = screenX + left;
@@ -165,7 +148,7 @@ public class PlayScreen implements Screen {
 				if (player.canSee(player.getZ(), worldX, worldY)) {
 					terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
 				} else {
-					terminal.write(Tile.BOUNDS.glyph(), screenX, screenY, Tile.BOUNDS.color());
+					terminal.write(playerFov.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, AsciiPanel.brightBlack);
 				}
 			}
 		}

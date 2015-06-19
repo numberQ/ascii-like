@@ -9,9 +9,10 @@ public class PlayerAi extends CreatureAi {
 	private List<String> messages;
 	private FieldOfView fov;
 
-	public PlayerAi(World world, Creature creature, List<String> messages) {
+	public PlayerAi(World world, Creature creature, List<String> messages, FieldOfView fov) {
 		super(world, creature);
 		this.messages = messages;
+		this.fov = fov;
 	}
 
 	@Override

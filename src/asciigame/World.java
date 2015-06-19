@@ -75,6 +75,7 @@ public class World {
 	}
 
 	public void addAtLocation(Creature creature, int z, int x, int y) {
+		creature.setZ(z);
 		creature.setX(x);
 		creature.setY(y);
 		creatures.add(creature);

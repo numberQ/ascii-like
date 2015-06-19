@@ -101,18 +101,12 @@ public class Creature {
 	}
 
 	public void sayAction(String message) {
-		int range = 9;
 		Creature other;
 
-		for (int dx = -range; dx <= range; dx++) {
-			for (int dy = -range; dy <= range; dy++) {
-
-				// Ensures a diamond shape
-				if (dx * dx + dy * dy > range * range) {
-					continue;
-				}
-
-				other = world.getCreature(z, x + dx, y + dy);
+		// Broadcast to every creature on this layer, if they can see it
+		for (int worldX = 0; worldX <= world.getWidth(); worldX++) {
+			for (int worldY = 0; worldY <= world.getHeight(); worldY++) {
+				other = world.getCreature(z, worldX, worldY);
 
 				// Ignore empty squares
 				if (other == null) {
@@ -121,7 +115,7 @@ public class Creature {
 
 				if (other == this) {
 					other.notify("You " + message + ".");
-				} else {
+				} else if (other.canSee(z, x, y)) {
 					other.notify("The " + getName() + " " + makeSecondPerson(message) + ".");
 				}
 			}
