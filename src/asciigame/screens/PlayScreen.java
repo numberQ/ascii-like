@@ -92,6 +92,7 @@ public class PlayScreen implements Screen {
 				break;
 		}
 
+		// For characters without KeyEvents (as far as I can tell)
 		switch (key.getKeyChar()) {
 			case '<':
 				player.moveBy(-1, 0, 0);

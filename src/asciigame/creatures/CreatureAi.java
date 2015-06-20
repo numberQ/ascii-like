@@ -48,7 +48,7 @@ public class CreatureAi {
 		int z = creature.getZ();
 		Creature other = world.getCreature(z, x, y);
 
-		if (other != null) {
+		if (other != null && !other.getName().equals(creature.getName())) {
 			int min = creature.getMinAttack();
 			int max = creature.getMaxAttack();
 

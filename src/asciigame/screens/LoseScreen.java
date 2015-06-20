@@ -8,7 +8,7 @@ public class LoseScreen implements Screen {
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
 		int bylineY = terminal.getHeightInCharacters() - 2;
-		terminal.write("You lost...", 1, 1);
+		terminal.write("You died...", 1, 1);
 		terminal.writeCenter("Press [enter] to play again.", bylineY);
 	}
 

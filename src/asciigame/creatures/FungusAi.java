@@ -28,15 +28,6 @@ public class FungusAi extends CreatureAi {
 		}
 	}
 
-	@Override
-	public void attack(int x, int y) {
-		int z = creature.getZ();
-		Creature c = world.getCreature(z, x, y);
-		if (c != null && !c.getName().equals("fungus")) {
-			super.attack(x, y);
-		}
-	}
-
 	private void spread() {
 		int z, x, y;
 
