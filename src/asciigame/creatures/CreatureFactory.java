@@ -14,7 +14,7 @@ public class CreatureFactory {
 	public static void setLayer(int layer) { CreatureFactory.layer = layer; }
 
 	public static Creature makePlayer(List<String> messages, FieldOfView fov) {
-		int maxHealth = 50, minAttack = 3, maxAttack = 10, defense = 1, visionRadius = 9;
+		int maxHealth = 1, minAttack = 3, maxAttack = 10, defense = 1, visionRadius = 9;
 		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow,
 				maxHealth, minAttack, maxAttack, defense, visionRadius);
 		world.addAtEmptyLocation(player, layer);

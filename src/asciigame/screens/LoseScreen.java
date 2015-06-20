@@ -5,10 +5,16 @@ import java.awt.event.KeyEvent;
 
 public class LoseScreen implements Screen {
 
+	private String deathMessage;
+
+	public LoseScreen(String deathMessage) {
+		this.deathMessage = deathMessage;
+	}
+
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
 		int bylineY = terminal.getHeightInCharacters() - 2;
-		terminal.write("You died...", 1, 1);
+		terminal.write(deathMessage, 1, 1);
 		terminal.writeCenter("Press [enter] to play again.", bylineY);
 	}
 

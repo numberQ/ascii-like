@@ -53,7 +53,7 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_ENTER:
 				return new WinScreen();
 			case KeyEvent.VK_ESCAPE:
-				return new LoseScreen();
+				return new LoseScreen("Game over");
 			case KeyEvent.VK_LEFT:
 			case KeyEvent.VK_H:
 				player.moveBy(0, -1, 0);
@@ -110,7 +110,7 @@ public class PlayScreen implements Screen {
 
         // Check if player is dead
         if (player.getHealth() <= 0) {
-            return new LoseScreen();
+            return new LoseScreen(messages.get(messages.size() - 2) + " You die.");
         }
 
         return this;
