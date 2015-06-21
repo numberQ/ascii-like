@@ -4,6 +4,8 @@ import asciiPanel.AsciiPanel;
 import asciigame.*;
 import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
+import asciigame.items.ItemFactory;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -33,8 +35,10 @@ public class PlayScreen implements Screen {
 		// Map shenanigans
 		createWorld();
 		CreatureFactory.setWorld(world);
+		ItemFactory.setWorld(world);
 		playerFov = new FieldOfView(world);
 		makeCreatures();
+		makeItems();
 	}
 
 	@Override
@@ -151,6 +155,21 @@ public class PlayScreen implements Screen {
         }
     }
 
+	private void makeItems() {
+		int depth = world.getDepth();
+		int rockAmount = world.getWidth() * world.getHeight() / 20;
+
+		for (int i = 0; i < depth; i++) {
+			ItemFactory.setLayer(i);
+			int j;
+
+			// Make rocks
+			for (j = 0; j < rockAmount; j++) {
+				ItemFactory.makeRock();
+			}
+		}
+	}
+
 	/**
 	 * Finds the X coordinate of the top left corner of the scroll window.
 	 * The left, in other words.
@@ -172,26 +191,31 @@ public class PlayScreen implements Screen {
 	}
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
-		int worldZ, worldX, worldY;
+		int worldZ, worldX, worldY, screenX, screenY;
 		worldZ = player.getZ();
 		playerFov.update(worldZ, player.getX(), player.getY(), player.getVisionRadius());
 
 		// Iterate over the screen
-		for (int screenX = 0; screenX < rightMapBorder; screenX++) {
-			for (int screenY = 0; screenY < bottomMapBorder; screenY++) {
+		for (screenX = 0; screenX < rightMapBorder; screenX++) {
+			for (screenY = 0; screenY < bottomMapBorder; screenY++) {
 				worldX = screenX + left;
 				worldY = screenY + top;
 
-				if (player.canSee(player.getZ(), worldX, worldY)) {
-					terminal.write(world.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, world.getTile(worldZ, worldX, worldY).color());
+				if (player.canSee(worldZ, worldX, worldY)) {
+					if (world.getItem(worldZ, worldX, worldY) == null) {
+						terminal.write(world.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
+								world.getTile(worldZ, worldX, worldY).getColor());
+					} else {
+						terminal.write(world.getItem(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
+								world.getItem(worldZ, worldX, worldY).getColor());
+					}
 				} else {
-					terminal.write(playerFov.getTile(worldZ, worldX, worldY).glyph(), screenX, screenY, AsciiPanel.brightBlack);
+					terminal.write(playerFov.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY, AsciiPanel.brightBlack);
 				}
 			}
 		}
 
 		// Iterate over creatures
-		int screenX, screenY;
 		for (Creature c : world.getCreatures()) {
 			if (c.getZ() == worldZ) {
 				screenX = c.getX() - left;
@@ -201,6 +225,13 @@ public class PlayScreen implements Screen {
 						&& player.canSee(c.getZ(), c.getX(), c.getY())) {
 					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 				}
+			}
+		}
+
+		// Iterate over items
+		for (screenX = 0; screenX < rightMapBorder; screenX++) {
+			for (screenY = 0; screenY < bottomMapBorder; screenY++) {
+
 			}
 		}
 	}

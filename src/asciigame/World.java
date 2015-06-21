@@ -1,6 +1,8 @@
 package asciigame;
 
 import asciigame.creatures.Creature;
+import asciigame.items.Item;
+
 import java.util.*;
 
 public class World {
@@ -10,6 +12,7 @@ public class World {
 	private int width;
 	private int height;
 	private List<Creature> creatures;
+	private Item[][][] items;
 
 	public int getDepth() {
 		return depth;
@@ -30,6 +33,7 @@ public class World {
 		this.width = tiles[0].length;
 		this.height = tiles[0][0].length;
 		this.creatures = new ArrayList<>();
+		this.items = new Item[depth][width][height];
 	}
 
 	public Tile getTile(int z, int x, int y) {
@@ -48,6 +52,10 @@ public class World {
 		}
 
 		return null;
+	}
+
+	public Item getItem(int z, int x, int y) {
+		return items[z][x][y];
 	}
 
 	public void killCreature(Creature creature) {
@@ -79,6 +87,17 @@ public class World {
 		creature.setX(x);
 		creature.setY(y);
 		creatures.add(creature);
+	}
+
+	public void addAtEmptyLocation(Item item, int z) {
+		int x, y;
+
+		do {
+			x = (int)(Math.random() * width);
+			y = (int)(Math.random() * height);
+		} while (!getTile(z, x, y).isWalkable() || getItem(z, x, y) != null);
+
+		items[z][x][y] = item;
 	}
 
 	public void update() {

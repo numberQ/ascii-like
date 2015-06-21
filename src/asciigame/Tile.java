@@ -16,12 +16,12 @@ public enum Tile {
 	UNKNOWN(' ', AsciiPanel.white);
 
 	private char glyph;
-	public char glyph() {
+	public char getGlyph() {
 		return glyph;
 	}
 
 	private Color color;
-	public Color color() {
+	public Color getColor() {
 		return color;
 	}
 
