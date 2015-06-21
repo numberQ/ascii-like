@@ -11,7 +11,7 @@ public class World {
 	private int depth;
 	private int width;
 	private int height;
-	private List<Creature> creatures;
+	private Creature[][][] creatures;
 	private Item[][][] items;
 
 	public int getDepth() {
@@ -23,43 +23,43 @@ public class World {
 	public int getHeight() {
 		return height;
 	}
-	public List<Creature> getCreatures() {
-		return creatures;
-	}
 
 	public World(Tile[][][] tiles) {
 		this.tiles = tiles;
 		this.depth = tiles.length;
 		this.width = tiles[0].length;
 		this.height = tiles[0][0].length;
-		this.creatures = new ArrayList<>();
+		this.creatures = new Creature[depth][width][height];
 		this.items = new Item[depth][width][height];
 	}
 
 	public Tile getTile(int z, int x, int y) {
 		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height) {
 			return Tile.BOUNDS;
-		} else {
-			return tiles[z][x][y];
 		}
+
+		return tiles[z][x][y];
 	}
 
 	public Creature getCreature(int z, int x, int y) {
-		for (Creature c : creatures) {
-			if (c.getZ() == z && c.getX() == x && c.getY() == y) {
-				return c;
-			}
+		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height) {
+			return null;
 		}
 
-		return null;
+		return creatures[z][x][y];
 	}
 
 	public Item getItem(int z, int x, int y) {
 		return items[z][x][y];
 	}
 
+	public void moveCreature(Creature creature, int z, int x, int y) {
+		creatures[creature.getZ()][creature.getX()][creature.getY()] = null;
+		creatures[z][x][y] = creature;
+	}
+
 	public void killCreature(Creature creature) {
-		creatures.remove(creature);
+		creatures[creature.getZ()][creature.getX()][creature.getY()] = null;
 	}
 
 	public void dig(int z, int x, int y) {
@@ -79,14 +79,14 @@ public class World {
 		creature.setZ(z);
 		creature.setX(x);
 		creature.setY(y);
-		creatures.add(creature);
+		creatures[z][x][y] = creature;
 	}
 
 	public void addAtLocation(Creature creature, int z, int x, int y) {
 		creature.setZ(z);
 		creature.setX(x);
 		creature.setY(y);
-		creatures.add(creature);
+		creatures[z][x][y] = creature;
 	}
 
 	public void addAtEmptyLocation(Item item, int z) {
@@ -101,9 +101,16 @@ public class World {
 	}
 
 	public void update() {
-		List<Creature> toUpdate = new ArrayList<>(creatures);
-		for (Creature c : toUpdate) {
-			c.update();
+		Creature creature;
+		for (int z = 0; z < depth; z++) {
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					creature = creatures[z][x][y];
+					if (creature != null) {
+						creature.update();
+					}
+				}
+			}
 		}
 	}
 }

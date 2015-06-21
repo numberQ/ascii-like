@@ -109,8 +109,8 @@ public class Creature {
 		Creature other;
 
 		// Broadcast to every creature on this layer, if they can see it
-		for (int worldX = 0; worldX <= world.getWidth(); worldX++) {
-			for (int worldY = 0; worldY <= world.getHeight(); worldY++) {
+		for (int worldX = 0; worldX < world.getWidth(); worldX++) {
+			for (int worldY = 0; worldY < world.getHeight(); worldY++) {
 				other = world.getCreature(z, worldX, worldY);
 
 				// Ignore empty squares

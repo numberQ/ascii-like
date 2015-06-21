@@ -27,6 +27,7 @@ public class CreatureAi {
 			attack(x, y);
 		} else if (tile.isWalkable()) {
 			// If the tile can be walked on, walk on it
+			world.moveCreature(creature, z, x, y);
 			creature.setZ(z);
 			creature.setX(x);
 			creature.setY(y);
