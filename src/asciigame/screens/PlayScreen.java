@@ -203,13 +203,19 @@ public class PlayScreen implements Screen {
 
 				if (player.canSee(worldZ, worldX, worldY)) {
 					if (world.getItem(worldZ, worldX, worldY) == null) {
+
+						// Draw base tiles
 						terminal.write(world.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
 								world.getTile(worldZ, worldX, worldY).getColor());
 					} else {
+
+						// Draw items
 						terminal.write(world.getItem(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
 								world.getItem(worldZ, worldX, worldY).getColor());
 					}
 				} else {
+
+					// Draw unseen tiles
 					terminal.write(playerFov.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY, AsciiPanel.brightBlack);
 				}
 			}
@@ -225,13 +231,6 @@ public class PlayScreen implements Screen {
 						&& player.canSee(c.getZ(), c.getX(), c.getY())) {
 					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 				}
-			}
-		}
-
-		// Iterate over items
-		for (screenX = 0; screenX < rightMapBorder; screenX++) {
-			for (screenY = 0; screenY < bottomMapBorder; screenY++) {
-
 			}
 		}
 	}
