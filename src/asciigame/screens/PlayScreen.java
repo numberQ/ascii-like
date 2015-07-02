@@ -206,6 +206,7 @@ public class PlayScreen implements Screen {
 				worldY = screenY + top;
 
 				if (player.canSee(worldZ, worldX, worldY)) {
+<<<<<<< HEAD
 					if (world.getCreature(worldZ, worldX, worldY) != null) {
 						creature = world.getCreature(worldZ, worldX, worldY);
 						terminal.write(creature.getGlyph(), screenX, screenY, creature.getColor());
@@ -215,12 +216,42 @@ public class PlayScreen implements Screen {
 					} else {
 						tile = world.getTile(worldZ, worldX, worldY);
 						terminal.write(tile.getGlyph(), screenX, screenY, tile.getColor());
+=======
+					if (world.getItem(worldZ, worldX, worldY) == null) {
+
+						// Draw base tiles
+						terminal.write(world.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
+								world.getTile(worldZ, worldX, worldY).getColor());
+					} else {
+
+						// Draw items
+						terminal.write(world.getItem(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
+								world.getItem(worldZ, worldX, worldY).getColor());
+>>>>>>> creatureArray
 					}
 				} else {
+
+					// Draw unseen tiles
 					terminal.write(playerFov.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY, AsciiPanel.brightBlack);
 				}
 			}
 		}
+<<<<<<< HEAD
+=======
+
+		// Iterate over creatures
+		for (Creature c : world.getCreatures()) {
+			if (c.getZ() == worldZ) {
+				screenX = c.getX() - left;
+				screenY = c.getY() - top;
+				if (screenX >= 0 && screenX < rightMapBorder
+						&& screenY >= 0 && screenY < bottomMapBorder
+						&& player.canSee(c.getZ(), c.getX(), c.getY())) {
+					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
+				}
+			}
+		}
+>>>>>>> creatureArray
 	}
 
 	private void displayMessages(AsciiPanel terminal) {
