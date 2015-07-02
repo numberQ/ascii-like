@@ -50,6 +50,10 @@ public class World {
 	}
 
 	public Item getItem(int z, int x, int y) {
+		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height) {
+			return null;
+		}
+
 		return items[z][x][y];
 	}
 

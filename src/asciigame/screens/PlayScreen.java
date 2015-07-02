@@ -4,6 +4,7 @@ import asciiPanel.AsciiPanel;
 import asciigame.*;
 import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
+import asciigame.items.Item;
 import asciigame.items.ItemFactory;
 
 import java.awt.event.KeyEvent;
@@ -192,6 +193,9 @@ public class PlayScreen implements Screen {
 
 	private void displayTiles(AsciiPanel terminal, int left, int top) {
 		int worldZ, worldX, worldY, screenX, screenY;
+		Creature creature;
+		Item item;
+		Tile tile;
 		worldZ = player.getZ();
 		playerFov.update(worldZ, player.getX(), player.getY(), player.getVisionRadius());
 
@@ -202,34 +206,20 @@ public class PlayScreen implements Screen {
 				worldY = screenY + top;
 
 				if (player.canSee(worldZ, worldX, worldY)) {
-					if (world.getItem(worldZ, worldX, worldY) == null) {
-
-						// Draw base tiles
-						terminal.write(world.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
-								world.getTile(worldZ, worldX, worldY).getColor());
+					if (world.getCreature(worldZ, worldX, worldY) != null) {
+						creature = world.getCreature(worldZ, worldX, worldY);
+						terminal.write(creature.getGlyph(), screenX, screenY, creature.getColor());
+					} else if (world.getItem(worldZ, worldX, worldY) != null) {
+						item = world.getItem(worldZ, worldX, worldY);
+						terminal.write(item.getGlyph(), screenX, screenY, item.getColor());
 					} else {
-
-						// Draw items
-						terminal.write(world.getItem(worldZ, worldX, worldY).getGlyph(), screenX, screenY,
-								world.getItem(worldZ, worldX, worldY).getColor());
+						tile = world.getTile(worldZ, worldX, worldY);
+						terminal.write(tile.getGlyph(), screenX, screenY, tile.getColor());
 					}
 				} else {
 
 					// Draw unseen tiles
 					terminal.write(playerFov.getTile(worldZ, worldX, worldY).getGlyph(), screenX, screenY, AsciiPanel.brightBlack);
-				}
-			}
-		}
-
-		// Iterate over creatures
-		for (Creature c : world.getCreatures()) {
-			if (c.getZ() == worldZ) {
-				screenX = c.getX() - left;
-				screenY = c.getY() - top;
-				if (screenX >= 0 && screenX < rightMapBorder
-						&& screenY >= 0 && screenY < bottomMapBorder
-						&& player.canSee(c.getZ(), c.getX(), c.getY())) {
-					terminal.write(c.getGlyph(), screenX, screenY, c.getColor());
 				}
 			}
 		}
