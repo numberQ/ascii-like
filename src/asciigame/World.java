@@ -3,8 +3,6 @@ package asciigame;
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
 
-import java.util.*;
-
 public class World {
 
 	private Tile[][][] tiles;
