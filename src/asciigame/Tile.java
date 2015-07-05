@@ -41,6 +41,16 @@ public enum Tile {
 		}
 	}
 
+	public boolean isStairs() {
+		switch (this) {
+			case STAIRS_UP:
+			case STAIRS_DOWN:
+				return true;
+			default:
+				return false;
+		}
+	}
+
 	public boolean isDiggable() {
 		switch (this) {
 			case WALL:

@@ -97,7 +97,7 @@ public class World {
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		} while (!getTile(z, x, y).isWalkable() || getItem(z, x, y) != null);
+		} while (!getTile(z, x, y).isWalkable() || getTile(z, x, y).isStairs() || getItem(z, x, y) != null);
 
 		items[z][x][y] = item;
 	}
