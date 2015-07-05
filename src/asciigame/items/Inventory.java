@@ -14,8 +14,18 @@ public class Inventory {
 		this.load = 0;
 	}
 
-	public Item get(int i) {
-		return items[i];
+	public Item get(int idx) {
+		return items[idx];
+	}
+
+	public int find(Item item) {
+		for (int i = 0; i < max; i++) {
+			if (items[i] == item) {
+				return i;
+			}
+		}
+
+		return -1;
 	}
 
 	public void add(Item item) {
@@ -28,14 +38,9 @@ public class Inventory {
 		}
 	}
 
-	public void remove(Item item) {
-		for (int i = 0; i < max; i++) {
-			if (items[i] == item) {
-				items[i] = null;
-				load--;
-				return;
-			}
-		}
+	public void remove(int idx) {
+		items[idx] = null;
+		load--;
 	}
 
 	public boolean isFull() {

@@ -60,8 +60,12 @@ public class World {
 		creatures[z][x][y] = creature;
 	}
 
-	public void killCreature(Creature creature) {
+	public void removeCreature(Creature creature) {
 		creatures[creature.getZ()][creature.getX()][creature.getY()] = null;
+	}
+
+	public void removeItem(int z, int x, int y) {
+		items[z][x][y] = null;
 	}
 
 	public void dig(int z, int x, int y) {
@@ -99,6 +103,10 @@ public class World {
 			y = (int)(Math.random() * height);
 		} while (!getTile(z, x, y).isWalkable() || getTile(z, x, y).isStairs() || getItem(z, x, y) != null);
 
+		items[z][x][y] = item;
+	}
+
+	public void addAtLocation(Item item, int z, int x, int y) {
 		items[z][x][y] = item;
 	}
 

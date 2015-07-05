@@ -55,10 +55,8 @@ public class PlayScreen implements Screen {
 	@Override
 	public Screen respondToUserInputAndUpdate(KeyEvent key) {
 		switch (key.getKeyCode()) {
-			case KeyEvent.VK_ENTER:
-				return new WinScreen();
-			case KeyEvent.VK_ESCAPE:
-				return new LoseScreen("Game over");
+
+			// Movement
 			case KeyEvent.VK_LEFT:
 			case KeyEvent.VK_H:
 				player.moveBy(0, -1, 0);
@@ -88,6 +86,11 @@ public class PlayScreen implements Screen {
 				player.moveBy(0, 1, 1);
 				break;
 
+			// Pick up items
+			case KeyEvent.VK_G:
+				player.pickup();
+				break;
+
 			// Debug - instant layer change
 			case KeyEvent.VK_Q:
 				player.setZ(player.getZ() - 1);
@@ -95,6 +98,12 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_W:
 				player.setZ(player.getZ() + 1);
 				break;
+
+			// Debug - instant win/lose
+			case KeyEvent.VK_ENTER:
+				return new WinScreen();
+			case KeyEvent.VK_ESCAPE:
+				return new LoseScreen("Game over");
 		}
 
 		// For characters without KeyEvents (as far as I can tell)
@@ -133,8 +142,8 @@ public class PlayScreen implements Screen {
 
     private void makeCreatures() {
         int depth = world.getDepth();
-        int fungusAmount = 4;
-        int batAmount = 10;
+        int fungusAmount = 8;
+        int batAmount = 4;
 
         // Make the player
         CreatureFactory.setLayer(0);
@@ -158,7 +167,7 @@ public class PlayScreen implements Screen {
 
 	private void makeItems() {
 		int depth = world.getDepth();
-		int rockAmount = world.getWidth() * world.getHeight() / 20;
+		int rockAmount = world.getWidth() * world.getHeight() / 25;
 
 		for (int i = 0; i < depth; i++) {
 			ItemFactory.setLayer(i);
