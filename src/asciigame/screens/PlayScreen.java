@@ -6,6 +6,7 @@ import asciigame.creatures.Creature;
 import asciigame.creatures.CreatureFactory;
 import asciigame.items.Item;
 import asciigame.items.ItemFactory;
+import asciigame.items.ItemPile;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -102,7 +103,12 @@ public class PlayScreen implements Screen {
 
 			// Pick up items
 			case KeyEvent.VK_G:
-				player.pickup();
+				if (world.hasNoItems(player.getZ(), player.getX(), player.getY())) {
+					player.sayAction("grab at the ground, but nothing is there");
+					break;
+				}
+				ItemPile items = world.getItems(player.getZ(), player.getX(), player.getY());
+				subscreen = new PickUpScreen(player, items);
 				break;
 
 			// Drop items
@@ -239,8 +245,8 @@ public class PlayScreen implements Screen {
 					if (world.getCreature(worldZ, worldX, worldY) != null) {
 						creature = world.getCreature(worldZ, worldX, worldY);
 						terminal.write(creature.getGlyph(), screenX, screenY, creature.getColor());
-					} else if (world.getItem(worldZ, worldX, worldY) != null) {
-						item = world.getItem(worldZ, worldX, worldY);
+					} else if (!world.hasNoItems(worldZ, worldX, worldY)) {
+						item = world.getTopItem(worldZ, worldX, worldY);
 						terminal.write(item.getGlyph(), screenX, screenY, item.getColor());
 					} else {
 						tile = world.getTile(worldZ, worldX, worldY);

@@ -2,6 +2,7 @@ package asciigame;
 
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
+import asciigame.items.ItemPile;
 
 public class World {
 
@@ -10,7 +11,7 @@ public class World {
 	private int width;
 	private int height;
 	private Creature[][][] creatures;
-	private Item[][][] items;
+	private ItemPile[][][] items;
 
 	public int getDepth() {
 		return depth;
@@ -28,7 +29,7 @@ public class World {
 		this.width = tiles[0].length;
 		this.height = tiles[0][0].length;
 		this.creatures = new Creature[depth][width][height];
-		this.items = new Item[depth][width][height];
+		this.items = new ItemPile[depth][width][height];
 	}
 
 	public Tile getTile(int z, int x, int y) {
@@ -47,12 +48,20 @@ public class World {
 		return creatures[z][x][y];
 	}
 
-	public Item getItem(int z, int x, int y) {
-		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height) {
+	public ItemPile getItems(int z, int x, int y) {
+		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height || items[z][x][y] == null) {
 			return null;
 		}
 
 		return items[z][x][y];
+	}
+
+	public Item getTopItem(int z, int x, int y) {
+		if (z < 0 || z >= depth || x < 0 || x >= width || y < 0 || y >= height || items[z][x][y] == null) {
+			return null;
+		}
+
+		return items[z][x][y].getTopItem();
 	}
 
 	public void moveCreature(Creature creature, int z, int x, int y) {
@@ -64,8 +73,8 @@ public class World {
 		creatures[creature.getZ()][creature.getX()][creature.getY()] = null;
 	}
 
-	public void removeItem(int z, int x, int y) {
-		items[z][x][y] = null;
+	public void removeItem(int z, int x, int y, Item item) {
+		items[z][x][y].removeItem(item);
 	}
 
 	public void dig(int z, int x, int y) {
@@ -101,13 +110,27 @@ public class World {
 		do {
 			x = (int)(Math.random() * width);
 			y = (int)(Math.random() * height);
-		} while (!getTile(z, x, y).isWalkable() || getTile(z, x, y).isStairs() || getItem(z, x, y) != null);
+		} while (!getTile(z, x, y).isWalkable() || getTile(z, x, y).isStairs() || !hasNoItems(z, x, y));
 
-		items[z][x][y] = item;
+		if (items[z][x][y] == null) {
+			items[z][x][y] = new ItemPile();
+		}
+		items[z][x][y].addItem(item);
 	}
 
 	public void addAtLocation(Item item, int z, int x, int y) {
-		items[z][x][y] = item;
+		if (items[z][x][y] == null) {
+			items[z][x][y] = new ItemPile();
+		}
+		items[z][x][y].addItem(item);
+	}
+
+	public boolean hasNoItems(int z, int x, int y) {
+		if (items[z][x][y] == null) {
+			return true;
+		}
+
+		return items[z][x][y].hasNoItems();
 	}
 
 	public void update() {

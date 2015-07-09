@@ -3,6 +3,7 @@ package asciigame.screens;
 import asciiPanel.AsciiPanel;
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
+import asciigame.items.ItemPile;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 public abstract class InventoryBasedScreen implements Screen {
 
 	private String letters;
+	private Item[] items;
 	protected Creature player;
 
 	protected abstract String getVerb();
@@ -18,7 +20,18 @@ public abstract class InventoryBasedScreen implements Screen {
 
 	public InventoryBasedScreen(Creature player) {
 		this.letters = "abcdefghijklmnopqrstuvwxyz";
+		this.items = player.getInventory().getItems();
 		this.player = player;
+	}
+
+	public InventoryBasedScreen(Creature player, ItemPile pile) {
+		this.letters = "abcdefghijklmnopqrstuvwxyz";
+		this.items = new Item[pile.getItems().size()];
+		this.player = player;
+
+		for (int i = 0; i < items.length; i++) {
+			items[i] = pile.getItem(i);
+		}
 	}
 
 	@Override
@@ -48,36 +61,34 @@ public abstract class InventoryBasedScreen implements Screen {
 	@Override
 	public Screen respondToUserInputAndUpdate(KeyEvent key) {
 		int choice = letters.indexOf(key.getKeyChar());
-		Item[] inventory = player.getInventory().getItems();
 
 		// User quit manually
 		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			return null;
 		}
 		// User did not enter a valid option
-		if (choice < 0 || choice >= inventory.length) {
+		if (choice < 0 || choice >= items.length) {
 			return this;
 		}
 		// User selected empty inventory slot
-		if (inventory[choice] == null) {
+		if (items[choice] == null) {
 			return this;
 		}
 		// Selected item cannot be verbed
-		if (!isAcceptable(inventory[choice])) {
+		if (!isAcceptable(items[choice])) {
 			return this;
 		}
 
-		return use(inventory[choice]);
+		return use(items[choice]);
 	}
 
 	private List<String> getAcceptable() {
 		List<String> acceptable = new ArrayList<>();
-		Item[] potential = player.getInventory().getItems();
 		Item itemToCheck;
 		String line;
 
-		for (int i = 0; i < potential.length; i++) {
-			itemToCheck = potential[i];
+		for (int i = 0; i < items.length; i++) {
+			itemToCheck = items[i];
 			if (itemToCheck != null && isAcceptable(itemToCheck)) {
 				line = letters.charAt(i) + " - (" + itemToCheck.getGlyph() + ") " + itemToCheck.getName();
 				acceptable.add(line);

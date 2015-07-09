@@ -4,6 +4,7 @@ import asciigame.Line;
 import asciigame.Point;
 import asciigame.Tile;
 import asciigame.World;
+import asciigame.items.Item;
 
 public class CreatureAi {
 

@@ -89,15 +89,13 @@ public class Creature {
 		ai.onEnter(moveZ, moveX, moveY, tile);
 	}
 
-	public void pickup() {
-		Item item = world.getItem(z, x, y);
-
+	public void pickup(Item item) {
 		if (item == null) {
 			sayAction("grab at the ground, but there's nothing there");
 		} else if (inventory.isFull()) {
 			sayAction("grab at the " + item.getName() + ", but already have a full inventory");
 		} else {
-			world.removeItem(z, x, y);
+			world.removeItem(z, x, y, item);
 			inventory.add(item);
 			sayAction("pick up the " + item.getName());
 		}
@@ -109,11 +107,6 @@ public class Creature {
 		// Item not in inventory
 		if (idx < 0) {
 			notify("You do not have the " + item.getName() + " in your inventory.");
-			return;
-		}
-		// No space to drop
-		if (world.getItem(z, x, y) != null) {
-			notify("You want to drop the " + item.getName() + ", but there's nowhere to put it.");
 			return;
 		}
 

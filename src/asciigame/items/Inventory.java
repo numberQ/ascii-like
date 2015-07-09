@@ -14,10 +14,6 @@ public class Inventory {
 		this.load = 0;
 	}
 
-	public Item get(int idx) {
-		return items[idx];
-	}
-
 	public int find(Item item) {
 		for (int i = 0; i < max; i++) {
 			if (items[i] == item) {

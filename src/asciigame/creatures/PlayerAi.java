@@ -2,6 +2,8 @@ package asciigame.creatures;
 
 import asciigame.FieldOfView;
 import asciigame.World;
+import asciigame.items.Item;
+
 import java.util.List;
 
 public class PlayerAi extends CreatureAi {
