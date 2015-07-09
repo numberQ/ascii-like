@@ -23,6 +23,8 @@ public class Creature {
 	private String name;
 	private int visionRadius;
 	private Inventory inventory;
+	private int maxFood;
+	private int food;
 
 	public int getZ()						 { return z; }
 	public void setZ(int z)					 { this.z = z; }
@@ -43,7 +45,8 @@ public class Creature {
 	public Inventory getInventory()			 { return inventory; }
 
 	public Creature(World world, String name, char glyph, Color color,
-					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize) {
+					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize,
+					int maxFood) {
 		this.world = world;
 		this.name = name;
 		this.glyph = glyph;
@@ -55,6 +58,8 @@ public class Creature {
 		this.defense = defense;
 		this.visionRadius = visionRadius;
 		this.inventory = new Inventory(invSize);
+		this.maxFood = maxFood;
+		this.food = maxFood * 2 / 3;
 	}
 
 	public void moveBy(int moveZ, int moveX, int moveY) {
@@ -115,6 +120,16 @@ public class Creature {
 		sayAction("drop a " + item.getName());
 	}
 
+	public void eat(Item item) {
+		modifyFood(item.getNutrition());
+		inventory.remove(inventory.find(item));
+	}
+
+	public String hungerLevel() {
+		double hungerRatio = (double)(food / maxFood);
+		return "" + hungerRatio + " " + food + "/" + maxFood;
+	}
+
 	public boolean hasItem(String itemName) {
 		return inventory.find(itemName) > -1;
 	}
@@ -124,6 +139,7 @@ public class Creature {
 	}
 
 	public void update() {
+		modifyFood(-1);
 		ai.onUpdate();
 	}
 
@@ -133,12 +149,34 @@ public class Creature {
 		if (health <= 0) {
 			health = 0;
 			sayAction("die");
+			dropLoot();
 			world.removeCreature(this);
 		}
 
 		if (health > maxHealth) {
 			health = maxHealth;
 		}
+	}
+
+	public void modifyFood(int amount) {
+		this.food += amount;
+
+		if (food <= 0 && maxFood > 0) {
+			food = 0;
+			sayAction("starve to death");
+			dropLoot();
+			world.removeCreature(this);
+		}
+
+		if (food > maxFood) {
+			food = maxFood;
+		}
+	}
+
+	private void dropLoot() {
+		double corpseNutrition = maxHealth * 10;
+		Item corpse = new Item('%', color, name + " corpse", (int)corpseNutrition);
+		world.addAtLocation(corpse, z, x, y);
 	}
 
 	public void sayAction(String message) {

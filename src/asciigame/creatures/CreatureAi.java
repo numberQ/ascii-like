@@ -30,6 +30,7 @@ public class CreatureAi {
 			creature.setZ(z);
 			creature.setX(x);
 			creature.setY(y);
+			creature.modifyFood(-1);
 		} else if (tile.isDiggable()) {
 			// If the tile can be dug, dig if we have the pick
 			if (creature.hasItem("pick")) {
@@ -60,12 +61,15 @@ public class CreatureAi {
 			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
 
 			other.modifyHealth(-damageDealt);
+
+			creature.modifyFood(-20);
 		}
 	}
 
 	public void dig(int z, int x, int y) {
 		world.dig(z, x, y);
 		creature.sayAction("dig through a wall");
+		creature.modifyFood(-10);
 	}
 
 	public boolean canSee(int z, int x, int y) {

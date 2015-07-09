@@ -51,7 +51,7 @@ public class PlayScreen implements Screen {
 		int top = getScrollY();
 		displayTiles(terminal, left, top);
 		displayMessages(terminal);
-		String stats = player.getHealth() + "/" + player.getMaxHealth();
+		String stats = player.getHealth() + "/" + player.getMaxHealth() + " " + player.hungerLevel();
 		terminal.write(stats, 1, terminal.getHeightInCharacters() - 2);
 
 		// Display subscreen on top of current screen
@@ -115,6 +115,11 @@ public class PlayScreen implements Screen {
 			// Drop items
 			case KeyEvent.VK_D:
 				subscreen = new DropScreen(player);
+				break;
+
+			// Eat items
+			case KeyEvent.VK_E:
+				subscreen = new EatScreen(player);
 				break;
 
 
