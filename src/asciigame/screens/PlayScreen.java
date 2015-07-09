@@ -21,6 +21,7 @@ public class PlayScreen implements Screen {
 	private List<String> messages;
 	private Creature player;
 	private FieldOfView playerFov;
+	private Screen subscreen;
 
 	public PlayScreen() {
 		// Define screen vars
@@ -50,10 +51,23 @@ public class PlayScreen implements Screen {
 		displayMessages(terminal);
 		String stats = player.getHealth() + "/" + player.getMaxHealth();
 		terminal.write(stats, 1, terminal.getHeightInCharacters() - 2);
+
+		// Display subscreen on top of current screen
+		if (subscreen != null) {
+			subscreen.displayOutput(terminal);
+		}
 	}
 
 	@Override
 	public Screen respondToUserInputAndUpdate(KeyEvent key) {
+
+		// Divert keyboard control to a subscreen if it exists
+		if (subscreen != null) {
+			subscreen = subscreen.respondToUserInputAndUpdate(key);
+			return this;
+		}
+
+		// Respond to the input
 		switch (key.getKeyCode()) {
 
 			// Movement
@@ -91,6 +105,13 @@ public class PlayScreen implements Screen {
 				player.pickup();
 				break;
 
+			// Drop items
+			case KeyEvent.VK_D:
+				subscreen = new DropScreen(player);
+				break;
+
+
+
 			// Debug - instant layer change
 			case KeyEvent.VK_Q:
 				player.setZ(player.getZ() - 1);
@@ -120,7 +141,7 @@ public class PlayScreen implements Screen {
 	}
 
     private Screen update() {
-        world.update();
+		world.update();
 
         // Check if player is dead
         if (player.getHealth() <= 0) {

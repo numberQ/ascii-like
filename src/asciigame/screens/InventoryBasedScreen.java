@@ -78,7 +78,7 @@ public abstract class InventoryBasedScreen implements Screen {
 
 		for (int i = 0; i < potential.length; i++) {
 			itemToCheck = potential[i];
-			if (isAcceptable(itemToCheck)) {
+			if (itemToCheck != null && isAcceptable(itemToCheck)) {
 				line = letters.charAt(i) + " - (" + itemToCheck.getGlyph() + ") " + itemToCheck.getName();
 				acceptable.add(line);
 			}
@@ -89,8 +89,8 @@ public abstract class InventoryBasedScreen implements Screen {
 
 	private int lengthOfLongestString(List<String> strings) {
 		int maxLength = 0, curLength;
-		for (int i = 0; i < strings.size(); i++) {
-			curLength = strings.get(i).length();
+		for (String string : strings) {
+			curLength = string.length();
 			if (curLength > maxLength) {
 				maxLength = curLength;
 			}
