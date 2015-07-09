@@ -13,6 +13,7 @@ public class WorldBuilder {
 	private int regionId;
 	private int smoothTimes;
 	private int[][][] regions;
+	private Point playerSpawn;
 
 	public WorldBuilder(int depth, int width, int height) {
 		this.depth = depth;
@@ -24,14 +25,15 @@ public class WorldBuilder {
 	}
 
 	public World build() {
-		return new World(tiles);
+		return new World(tiles, playerSpawn);
 	}
 
 	public WorldBuilder makeWorld() {
 		return randomize()
 				.smooth(smoothTimes)
 				.createRegions()
-				.connectRegions();
+				.connectRegions()
+				.makePlayerSpawn();
 	}
 
 	private WorldBuilder randomize() {
@@ -230,5 +232,19 @@ public class WorldBuilder {
 
 		Collections.shuffle(candidates);
 		return candidates;
+	}
+
+	private WorldBuilder makePlayerSpawn() {
+		int x, y;
+
+		do {
+			x = (int)(Math.random() * width);
+			y = (int)(Math.random() * height);
+		} while (!tiles[0][x][y].isWalkable() || tiles[0][x][y].isStairs());
+
+		tiles[0][x][y] = Tile.STAIRS_UP;
+		playerSpawn = new Point(0, x, y);
+
+		return this;
 	}
 }

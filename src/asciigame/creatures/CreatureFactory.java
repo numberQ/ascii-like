@@ -17,7 +17,7 @@ public class CreatureFactory {
 		int maxHealth = 50, minAttack = 3, maxAttack = 10, defense = 1, visionRadius = 9, invSize = 10;
 		Creature player = new Creature(world, "player", '@', AsciiPanel.brightYellow,
 				maxHealth, minAttack, maxAttack, defense, visionRadius, invSize);
-		world.addAtEmptyLocation(player, layer);
+		world.addPlayer(player);
 		new PlayerAi(world, player, messages, fov);
 		return player;
 	}

@@ -30,8 +30,8 @@ public class CreatureAi {
 			creature.setZ(z);
 			creature.setX(x);
 			creature.setY(y);
-		} else if (tile != Tile.BOUNDS) {
-			// If we're holding the pick, dig through not out-of-bounds blocks
+		} else if (tile.isDiggable()) {
+			// If the tile can be dug, dig if we have the pick
 			if (creature.hasItem("pick")) {
 				dig(z, x, y);
 			}

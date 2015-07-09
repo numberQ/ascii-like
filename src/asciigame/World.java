@@ -12,18 +12,20 @@ public class World {
 	private int height;
 	private Creature[][][] creatures;
 	private ItemPile[][][] items;
+	private Point playerSpawn;
 
 	public int getDepth()  { return depth; }
 	public int getWidth()  { return width; }
 	public int getHeight() { return height; }
 
-	public World(Tile[][][] tiles) {
+	public World(Tile[][][] tiles, Point playerSpawn) {
 		this.tiles = tiles;
 		this.depth = tiles.length;
 		this.width = tiles[0].length;
 		this.height = tiles[0][0].length;
 		this.creatures = new Creature[depth][width][height];
 		this.items = new ItemPile[depth][width][height];
+		this.playerSpawn = playerSpawn;
 	}
 
 	public Tile getTile(int z, int x, int y) {
@@ -75,6 +77,14 @@ public class World {
 		if (getTile(z, x, y).isDiggable()) {
 			tiles[z][x][y] = Tile.FLOOR;
 		}
+	}
+
+	public void addPlayer(Creature player) {
+		int x = playerSpawn.getX(), y = playerSpawn.getY();
+		player.setZ(0);
+		player.setX(x);
+		player.setY(y);
+		creatures[0][x][y] = player;
 	}
 
 	public void addAtEmptyLocation(Creature creature, int z) {

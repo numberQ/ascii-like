@@ -33,7 +33,8 @@ public class PlayScreen implements Screen {
 
 		// Define messages
 		messages = new ArrayList<>();
-		messages.add("Welcome! Use the arrow keys to move your character. Move into walls to dig, and move into enemies to attack.");
+		messages.add("HJKL to move your character, YUBN for diagonals. Move into enemies to attack. G to pick up items, D to drop them. " +
+				"Collect the MacGuffin and return with it to win!");
 
 		// Map shenanigans
 		createWorld();
@@ -136,25 +137,43 @@ public class PlayScreen implements Screen {
 		// For characters without KeyEvents (as far as I can tell)
 		switch (key.getKeyChar()) {
 			case '<':
-				player.moveBy(-1, 0, 0);
-				break;
+				if (playerIsExiting()) {
+					return playerExits();
+				} else {
+					player.moveBy(-1, 0, 0);
+					break;
+				}
 			case '>':
 				player.moveBy(1, 0, 0);
 				break;
 		}
 
-        return update();
+		return update();
 	}
 
-    private Screen update() {
+	private boolean playerIsExiting() {
+		if (world.getTile(player.getZ(), player.getX(), player.getY()) != Tile.STAIRS_UP) {
+			return false;
+		}
+		return player.getZ() == 0;
+	}
+
+	private Screen playerExits() {
+		if (player.hasItem("MacGuffin")) {
+			return new WinScreen();
+		}
+		return new LoseScreen("You return from the cave empty-handed. Despair engulfs you. You die.");
+	}
+
+	private Screen update() {
 		world.update();
 
         // Check if player is dead
         if (player.getHealth() <= 0) {
-            return new LoseScreen(messages.get(messages.size() - 2) + " You die.");
-        }
+			return new LoseScreen(messages.get(messages.size() - 2) + " You die.");
+		}
 
-        return this;
+		return this;
     }
 
 	private void createWorld() {
