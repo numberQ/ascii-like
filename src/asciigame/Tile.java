@@ -13,7 +13,7 @@ public enum Tile {
 	STAIRS_UP ((char)24, AsciiPanel.brightYellow),
 	STAIRS_DOWN ((char)25, AsciiPanel.brightYellow),
 	BOUNDS ('X', AsciiPanel.brightBlack),
-	UNKNOWN(' ', AsciiPanel.white);
+	UNKNOWN(' ', AsciiPanel.brightBlack);
 
 	private char glyph;
 	public char getGlyph() {

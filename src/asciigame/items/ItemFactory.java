@@ -24,7 +24,7 @@ public class ItemFactory {
 	}
 
 	public static Item makeVictoryItem() {
-		Item victoryItem = new Item('*', AsciiPanel.brightWhite, "shiny rock");
+		Item victoryItem = new Item('*', AsciiPanel.brightYellow, "shiny rock");
 		world.addAtEmptyLocation(victoryItem, world.getDepth() - 1);
 		return victoryItem;
 	}
