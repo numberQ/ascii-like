@@ -24,6 +24,16 @@ public class Inventory {
 		return -1;
 	}
 
+	public int find(String itemName) {
+		for (int i = 0; i < max; i++) {
+			if (items[i] != null && items[i].getName().equals(itemName)) {
+				return i;
+			}
+		}
+
+		return -1;
+	}
+
 	public void add(Item item) {
 		for (int i = 0; i < max; i++) {
 			if (items[i] == null) {

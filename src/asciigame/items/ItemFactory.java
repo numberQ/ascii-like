@@ -16,4 +16,16 @@ public class ItemFactory {
 		world.addAtEmptyLocation(rock, layer);
 		return rock;
 	}
+
+	public static Item makePick() {
+		Item pick = new Item ('/', AsciiPanel.brightCyan, "pick");
+		world.addAtEmptyLocation(pick, layer);
+		return pick;
+	}
+
+	public static Item makeVictoryItem() {
+		Item victoryItem = new Item('*', AsciiPanel.brightWhite, "shiny rock");
+		world.addAtEmptyLocation(victoryItem, world.getDepth() - 1);
+		return victoryItem;
+	}
 }

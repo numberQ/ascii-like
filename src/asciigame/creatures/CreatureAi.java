@@ -4,8 +4,6 @@ import asciigame.Line;
 import asciigame.Point;
 import asciigame.Tile;
 import asciigame.World;
-import asciigame.items.Item;
-
 public class CreatureAi {
 
 	protected Creature creature;
@@ -32,10 +30,11 @@ public class CreatureAi {
 			creature.setZ(z);
 			creature.setX(x);
 			creature.setY(y);
-		} else {
-			creature.sayAction("bump into a wall");
-			// Otherwise, attempt to dig
-			//dig(z, x, y);
+		} else if (tile != Tile.BOUNDS) {
+			// If we're holding the pick, dig through not out-of-bounds blocks
+			if (creature.hasItem("pick")) {
+				dig(z, x, y);
+			}
 		}
 	}
 
@@ -66,6 +65,7 @@ public class CreatureAi {
 
 	public void dig(int z, int x, int y) {
 		world.dig(z, x, y);
+		creature.sayAction("dig through a wall");
 	}
 
 	public boolean canSee(int z, int x, int y) {

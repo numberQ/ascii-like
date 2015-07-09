@@ -13,15 +13,9 @@ public class World {
 	private Creature[][][] creatures;
 	private ItemPile[][][] items;
 
-	public int getDepth() {
-		return depth;
-	}
-	public int getWidth() {
-		return width;
-	}
-	public int getHeight() {
-		return height;
-	}
+	public int getDepth()  { return depth; }
+	public int getWidth()  { return width; }
+	public int getHeight() { return height; }
 
 	public World(Tile[][][] tiles) {
 		this.tiles = tiles;

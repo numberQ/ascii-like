@@ -115,6 +115,10 @@ public class Creature {
 		sayAction("drop a " + item.getName());
 	}
 
+	public boolean hasItem(String itemName) {
+		return inventory.find(itemName) > -1;
+	}
+
 	public boolean canSee(int worldZ, int worldX, int worldY) {
 		return ai.canSee(worldZ, worldX, worldY);
 	}

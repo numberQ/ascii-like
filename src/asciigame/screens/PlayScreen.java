@@ -196,6 +196,10 @@ public class PlayScreen implements Screen {
 		int depth = world.getDepth();
 		int rockAmount = world.getWidth() * world.getHeight() / 25;
 
+		// Make victory item
+		ItemFactory.setLayer(depth);
+		ItemFactory.makeVictoryItem();
+
 		for (int i = 0; i < depth; i++) {
 			ItemFactory.setLayer(i);
 			int j;
@@ -205,6 +209,11 @@ public class PlayScreen implements Screen {
 				ItemFactory.makeRock();
 			}
 		}
+
+		// Make pick
+		depth = (int)(Math.random() * depth);
+		ItemFactory.setLayer(depth);
+		ItemFactory.makePick();
 	}
 
 	/**
