@@ -41,7 +41,7 @@ public class CreatureFactory {
 	}
 
     public static Creature makeBat() {
-        int maxHealth = 15, minAttack = 2, maxAttack = 6, defense = 1, visionRadius = 4, invSize = 0, maxFood = 500;
+        int maxHealth = 15, minAttack = 2, maxAttack = 6, defense = 1, visionRadius = 4, invSize = 0, maxFood = 750;
         Creature bat = new Creature(world, "bat", 'b', AsciiPanel.yellow,
                 maxHealth, minAttack, maxAttack, defense, visionRadius, invSize, maxFood);
         world.addAtEmptyLocation(bat, layer);

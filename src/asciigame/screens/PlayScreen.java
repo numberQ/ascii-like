@@ -219,6 +219,10 @@ public class PlayScreen implements Screen {
 	private void makeItems() {
 		int depth = world.getDepth();
 		int rockAmount = world.getWidth() * world.getHeight() / 25;
+		int cheeseSteakAmount = world.getWidth() * world.getHeight() / 50;
+		int spaghettiAmount = world.getWidth() * world.getHeight() / 45;
+		int granolaBarAmount = world.getWidth() * world.getHeight() / 10;
+		int ambrosiaAmount = world.getWidth() * world.getHeight() / 100;
 
 		// Make victory item
 		ItemFactory.setLayer(depth);
@@ -231,6 +235,26 @@ public class PlayScreen implements Screen {
 			// Make rocks
 			for (j = 0; j < rockAmount; j++) {
 				ItemFactory.makeRock();
+			}
+
+			// Make cheese steaks
+			for (j = 0; j < cheeseSteakAmount; j++) {
+				ItemFactory.makeCheeseSteak();
+			}
+
+			// Make spaghetti
+			for (j = 0; j < spaghettiAmount; j++) {
+				ItemFactory.makeSpaghetti();
+			}
+
+			// Make granola bars
+			for (j = 0; j < granolaBarAmount; j++) {
+				ItemFactory.makeGranolaBar();
+			}
+
+			// Make ambrosia
+			for (j = 0; j < ambrosiaAmount; j++) {
+				ItemFactory.makeAmbrosia();
 			}
 		}
 

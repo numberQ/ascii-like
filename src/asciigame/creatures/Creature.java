@@ -59,10 +59,11 @@ public class Creature {
 		this.visionRadius = visionRadius;
 		this.inventory = new Inventory(invSize);
 		this.maxFood = maxFood;
-		this.food = maxFood * 2 / 3;
+		this.food = maxFood * 85 / 100;
 	}
 
 	public void moveBy(int moveZ, int moveX, int moveY) {
+
         // Ignore creatures standing still
         if (moveZ == 0 && moveX == 0 && moveY == 0) {
             return;
@@ -126,8 +127,28 @@ public class Creature {
 	}
 
 	public String hungerLevel() {
-		double hungerRatio = (double)(food / maxFood);
-		return "" + hungerRatio + " " + food + "/" + maxFood;
+		double hungerRatio = (double)(food) / (double)(maxFood);
+
+		if (hungerRatio < 0.1) {
+			return "Starving!";
+		}
+		if (hungerRatio < 0.2) {
+			return "Hungry";
+		}
+		if (hungerRatio < 0.5) {
+			return "Stomach rumbling";
+		}
+		if (hungerRatio < 0.8) {
+			return "Peckish";
+		}
+		if (hungerRatio < 0.9) {
+			return "Full";
+		}
+		if (hungerRatio <= 1.0) {
+			return "Stuffed";
+		}
+
+		return "Overstuffed";
 	}
 
 	public boolean hasItem(String itemName) {
@@ -139,7 +160,6 @@ public class Creature {
 	}
 
 	public void update() {
-		modifyFood(-1);
 		ai.onUpdate();
 	}
 
@@ -168,7 +188,7 @@ public class Creature {
 			world.removeCreature(this);
 		}
 
-		if (food > maxFood) {
+		if (food > maxFood && isPlayer()) {
 			food = maxFood;
 		}
 	}
@@ -217,5 +237,9 @@ public class Creature {
 		message = message.replaceAll("have", "has");
 
 		return message;
+	}
+
+	public boolean isPlayer() {
+		return name.equals("player");
 	}
 }

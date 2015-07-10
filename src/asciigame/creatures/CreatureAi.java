@@ -16,7 +16,11 @@ public class CreatureAi {
 		this.creature.setCreatureAi(this);
 	}
 
-	public void onUpdate() { }
+	public void onUpdate() {
+		if (creature.isPlayer()) {
+			creature.modifyFood(-1);
+		}
+	}
 
 	public void onNotify(String message) { }
 
@@ -30,7 +34,10 @@ public class CreatureAi {
 			creature.setZ(z);
 			creature.setX(x);
 			creature.setY(y);
-			creature.modifyFood(-1);
+
+			if (creature.isPlayer()) {
+				creature.modifyFood(-1);
+			}
 		} else if (tile.isDiggable()) {
 			// If the tile can be dug, dig if we have the pick
 			if (creature.hasItem("pick")) {
