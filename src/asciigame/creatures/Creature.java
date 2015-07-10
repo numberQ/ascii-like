@@ -183,6 +183,7 @@ public class Creature {
 
 		if (food <= 0 && maxFood > 0) {
 			food = 0;
+			health = 0;
 			sayAction("starve to death");
 			dropLoot();
 			world.removeCreature(this);

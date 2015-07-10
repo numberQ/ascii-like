@@ -24,25 +24,25 @@ public class ItemFactory {
 	}
 
 	public static Item makePick() {
-		Item pick = new Item ('/', AsciiPanel.brightCyan, "pick", 0);
+		Item pick = new Item ('/', AsciiPanel.brightGreen, "pick", 0);
 		world.addAtEmptyLocation(pick, layer);
 		return pick;
 	}
 
 	public static Item makeCheeseSteak() {
-		Item cheeseSteak = new Item('c', AsciiPanel.yellow, "cheese steak", 150);
+		Item cheeseSteak = new Item('c', AsciiPanel.brightCyan, "cheese steak", 150);
 		world.addAtEmptyLocation(cheeseSteak, layer);
 		return cheeseSteak;
 	}
 
 	public static Item makeSpaghetti() {
-		Item spaghetti = new Item('s', AsciiPanel.yellow, "spaghetti", 140);
+		Item spaghetti = new Item('s', AsciiPanel.brightCyan, "spaghetti", 140);
 		world.addAtEmptyLocation(spaghetti, layer);
 		return spaghetti;
 	}
 
 	public static Item makeGranolaBar() {
-		Item granolaBar = new Item('g', AsciiPanel.yellow, "granola bar", 50);
+		Item granolaBar = new Item('g', AsciiPanel.brightCyan, "granola bar", 50);
 		world.addAtEmptyLocation(granolaBar, layer);
 		return granolaBar;
 	}
@@ -51,5 +51,11 @@ public class ItemFactory {
 		Item ambrosia = new Item('A', AsciiPanel.brightYellow, "ambrosia", 1000);
 		world.addAtEmptyLocation(ambrosia, layer);
 		return ambrosia;
+	}
+
+	public static Item makeTastyRock() {
+		Item tastyRock = new Item(',', AsciiPanel.brightCyan, "tasty rock", 3);
+		world.addAtEmptyLocation(tastyRock, layer);
+		return tastyRock;
 	}
 }
