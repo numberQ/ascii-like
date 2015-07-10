@@ -195,8 +195,8 @@ public class Creature {
 	}
 
 	private void dropLoot() {
-		double corpseNutrition = maxHealth * 10;
-		Item corpse = new Item('%', color, name + " corpse", (int)corpseNutrition);
+		int corpseNutrition = maxHealth * 10;
+		Item corpse = new Item('%', color, name + " corpse", corpseNutrition);
 		world.addAtLocation(corpse, z, x, y);
 	}
 

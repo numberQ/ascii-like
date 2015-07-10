@@ -70,13 +70,14 @@ public class CreatureAi {
 			other.modifyHealth(-damageDealt);
 
 			creature.modifyFood(-20);
+			other.modifyFood(-2);
 		}
 	}
 
 	public void dig(int z, int x, int y) {
 		world.dig(z, x, y);
 		creature.sayAction("dig through a wall");
-		creature.modifyFood(-10);
+		creature.modifyFood(-5);
 	}
 
 	public boolean canSee(int z, int x, int y) {
