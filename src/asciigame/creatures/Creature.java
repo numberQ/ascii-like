@@ -23,8 +23,8 @@ public class Creature {
 	private String name;
 	private int visionRadius;
 	private Inventory inventory;
-	private int maxFood;
-	private int food;
+	private int maxFullness;
+	private int fullness;
 
 	public int getZ()						 { return z; }
 	public void setZ(int z)					 { this.z = z; }
@@ -46,7 +46,7 @@ public class Creature {
 
 	public Creature(World world, String name, char glyph, Color color,
 					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize,
-					int maxFood) {
+					int maxFullness) {
 		this.world = world;
 		this.name = name;
 		this.glyph = glyph;
@@ -58,8 +58,8 @@ public class Creature {
 		this.defense = defense;
 		this.visionRadius = visionRadius;
 		this.inventory = new Inventory(invSize);
-		this.maxFood = maxFood;
-		this.food = maxFood * 85 / 100;
+		this.maxFullness = maxFullness;
+		this.fullness = maxFullness * 85 / 100;
 	}
 
 	public void moveBy(int moveZ, int moveX, int moveY) {
@@ -127,7 +127,7 @@ public class Creature {
 	}
 
 	public String hungerLevel() {
-		double hungerRatio = (double)(food) / (double)(maxFood);
+		double hungerRatio = (double)(fullness) / (double)(maxFullness);
 
 		if (hungerRatio < 0.1) {
 			return "Starving!";
@@ -179,18 +179,18 @@ public class Creature {
 	}
 
 	public void modifyFood(int amount) {
-		this.food += amount;
+		this.fullness += amount;
 
-		if (food <= 0 && maxFood > 0) {
-			food = 0;
+		if (fullness <= 0 && maxFullness > 0) {
+			fullness = 0;
 			health = 0;
 			sayAction("starve to death");
 			dropLoot();
 			world.removeCreature(this);
 		}
 
-		if (food > maxFood && isPlayer()) {
-			food = maxFood;
+		if (fullness > maxFullness && isPlayer()) {
+			fullness = maxFullness;
 		}
 	}
 
