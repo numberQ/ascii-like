@@ -218,12 +218,15 @@ public class PlayScreen implements Screen {
 
 	private void makeItems() {
 		int depth = world.getDepth();
-		int rockAmount = world.getWidth() * world.getHeight() / 25;
-		int cheeseSteakAmount = world.getWidth() * world.getHeight() / 700;
-		int spaghettiAmount = world.getWidth() * world.getHeight() / 600;
-		int granolaBarAmount = world.getWidth() * world.getHeight() / 300;
+		int worldSize = world.getWidth() * world.getHeight();
+		int rockAmount = worldSize / 25;
+		int cheeseSteakAmount = worldSize / 700;
+		int spaghettiAmount = worldSize / 600;
+		int granolaBarAmount = worldSize / 300;
 		int ambrosiaAmount = 1;
 		int tastyRockAmount = rockAmount / 100;
+		int weaponAmount = worldSize / 550;
+		int armorAmount = worldSize / 550;
 
 		// Make victory item
 		ItemFactory.setLayer(depth);
@@ -259,15 +262,28 @@ public class PlayScreen implements Screen {
 			}
 
 			// Make tasty rock
-			for (j = 0 ; j < tastyRockAmount; j++) {
+			for (j = 0; j < tastyRockAmount; j++) {
 				ItemFactory.makeTastyRock();
+			}
+
+			// Make weapons
+			for (j = 0; j < weaponAmount; j++) {
+				ItemFactory.makeRandomWeapon();
+			}
+
+			// Make armor
+			for (j = 0; j < armorAmount; j++) {
+				ItemFactory.makeRandomArmor();
 			}
 		}
 
 		// Make pick
-		depth = (int)(Math.random() * depth);
-		ItemFactory.setLayer(depth);
-		ItemFactory.makePick();
+		int pickAmount = (int)(Math.random() * (depth - 1)) + 1;
+		for (int j = 0; j < pickAmount; j++) {
+			depth = (int) (Math.random() * depth);
+			ItemFactory.setLayer(depth);
+			ItemFactory.makePick();
+		}
 	}
 
 	/**
