@@ -118,12 +118,23 @@ public class Creature {
 
 		inventory.remove(idx);
 		world.addAtLocation(item, z, x, y);
+
 		sayAction("drop a " + item.getName());
 	}
 
 	public void eat(Item item) {
+
+		// Stop player from overeating
+		// TODO - let the player overeat, but then force them to sit and hold their stomach until it's digested
+		if (fullness + item.getNutrition() > maxFullness) {
+			notify("You want to eat the " + item.getName() + ", but it just wouldn't fit in your stomach.");
+			return;
+		}
+
 		modifyFood(item.getNutrition());
 		inventory.remove(inventory.find(item));
+
+		sayAction("eat the " + item.getName());
 	}
 
 	public String hungerLevel() {
@@ -236,6 +247,7 @@ public class Creature {
 		}
 		message = message.replaceAll("the player", "you");
 		message = message.replaceAll("have", "has");
+		message = message.replaceAll("is", "are");
 
 		return message;
 	}

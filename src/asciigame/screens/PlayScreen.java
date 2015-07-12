@@ -219,8 +219,8 @@ public class PlayScreen implements Screen {
 	private void makeItems() {
 		int depth = world.getDepth();
 		int rockAmount = world.getWidth() * world.getHeight() / 25;
-		int cheeseSteakAmount = world.getWidth() * world.getHeight() / 500;
-		int spaghettiAmount = world.getWidth() * world.getHeight() / 500;
+		int cheeseSteakAmount = world.getWidth() * world.getHeight() / 700;
+		int spaghettiAmount = world.getWidth() * world.getHeight() / 600;
 		int granolaBarAmount = world.getWidth() * world.getHeight() / 300;
 		int ambrosiaAmount = 1;
 		int tastyRockAmount = rockAmount / 100;

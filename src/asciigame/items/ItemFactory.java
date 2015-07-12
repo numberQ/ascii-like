@@ -12,19 +12,19 @@ public class ItemFactory {
 	public static void setLayer(int layer) { ItemFactory.layer = layer; }
 
 	public static Item makeVictoryItem() {
-		Item victoryItem = new Item('*', AsciiPanel.brightYellow, "MacGuffin", 0);
+		Item victoryItem = new Item('*', AsciiPanel.brightYellow, "MacGuffin", -1);
 		world.addAtEmptyLocation(victoryItem, world.getDepth() - 1);
 		return victoryItem;
 	}
 
 	public static Item makeRock() {
-		Item rock = new Item(',', AsciiPanel.yellow, "rock", 0);
+		Item rock = new Item(',', AsciiPanel.yellow, "rock", -1);
 		world.addAtEmptyLocation(rock, layer);
 		return rock;
 	}
 
 	public static Item makePick() {
-		Item pick = new Item ('/', AsciiPanel.brightGreen, "pick", 0);
+		Item pick = new Item ('/', AsciiPanel.brightGreen, "pick", -1);
 		world.addAtEmptyLocation(pick, layer);
 		return pick;
 	}
