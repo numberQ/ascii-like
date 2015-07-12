@@ -25,6 +25,8 @@ public class Creature {
 	private Inventory inventory;
 	private int maxFullness;
 	private int fullness;
+	private Item weapon;
+	private Item armor;
 
 	public int getZ()						 { return z; }
 	public void setZ(int z)					 { this.z = z; }
@@ -162,6 +164,16 @@ public class Creature {
 		return "Overstuffed";
 	}
 
+	public void equip(Item item) {
+
+		// Equippable items will have attack or defense
+		if (item.getAttack() == 0 && item.getDefense() == 0) {
+			return;
+		}
+
+
+	}
+
 	public boolean hasItem(String itemName) {
 		return inventory.find(itemName) > -1;
 	}
@@ -207,7 +219,8 @@ public class Creature {
 
 	private void dropLoot() {
 		int corpseNutrition = maxHealth * 10;
-		Item corpse = new Item('%', color, name + " corpse", corpseNutrition);
+		Item corpse = new Item('%', color, name + " corpse");
+		corpse.setNutrition(corpseNutrition);
 		world.addAtLocation(corpse, z, x, y);
 	}
 
