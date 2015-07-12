@@ -10,6 +10,7 @@ public enum Tile {
 	// Ascii numbers correspond to codes on that page.
 	FLOOR ('.', AsciiPanel.brightWhite),
 	WALL ('#', AsciiPanel.brightWhite),
+	GLASS ('+', AsciiPanel.white),
 	STAIRS_UP ((char)24, AsciiPanel.brightYellow),
 	STAIRS_DOWN ((char)25, AsciiPanel.brightYellow),
 	BOUNDS ('X', AsciiPanel.brightBlack),
@@ -54,6 +55,7 @@ public enum Tile {
 	public boolean isDiggable() {
 		switch (this) {
 			case WALL:
+			case GLASS:
 				return true;
 			default:
 				return false;
@@ -65,6 +67,7 @@ public enum Tile {
 			case FLOOR:
 			case STAIRS_UP:
 			case STAIRS_DOWN:
+			case GLASS:
 				return true;
 			default:
 				return false;

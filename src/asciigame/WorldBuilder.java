@@ -38,13 +38,20 @@ public class WorldBuilder {
 
 	private WorldBuilder randomize() {
 		double percent;
-		double threshold = 0.5;
+		double wallThreshold = 0.5;
+		double glassThreshold = 0.8;
 
 		for (int z = 0; z < depth; z++) {
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
 					percent = Math.random();
-					tiles[z][x][y] = (percent < threshold) ? Tile.FLOOR : Tile.WALL;
+					if (percent > glassThreshold) {
+						tiles[z][x][y] = Tile.GLASS;
+					} else if (percent > wallThreshold) {
+						tiles[z][x][y] = Tile.WALL;
+					} else {
+						tiles[z][x][y] = Tile.FLOOR;
+					}
 				}
 			}
 		}
@@ -54,7 +61,8 @@ public class WorldBuilder {
 
 	private WorldBuilder smooth(int times) {
 		Tile[][][] tempTiles = new Tile[depth][width][height];
-		int floors, walls;
+		int floors, walls, glass;
+		Tile tile;
 
 		for (int time = 0; time < times; time++) {
 
@@ -63,25 +71,31 @@ public class WorldBuilder {
 					for (int y = 0; y < height; y++) {
 						floors = 0;
 						walls = 0;
+						glass = 0;
 
 						for (int dx = -1; dx <= 1; dx++) {
 							for (int dy = -1; dy <= 1; dy++) {
 								if (x + dx < 0 || x + dx >= width || y + dy < 0 || y + dy >= height) {
 									continue;
 								}
+								tile = tiles[z][x + dx][y + dy];
 
-								if (tiles[z][x + dx][y + dy] == Tile.FLOOR) {
+								if (tile == Tile.FLOOR) {
 									floors++;
-								} else {
+								} else if (tile == Tile.WALL) {
 									walls++;
+								} else if (tile == Tile.GLASS) {
+									glass++;
 								}
 							}
 						}
 
-						if (floors >= walls) {
+						if (floors >= walls + glass) {
 							tempTiles[z][x][y] = Tile.FLOOR;
-						} else {
+						} else if (walls >= glass) {
 							tempTiles[z][x][y] = Tile.WALL;
+						} else {
+							tempTiles[z][x][y] = Tile.GLASS;
 						}
 					}
 				}
@@ -150,7 +164,7 @@ public class WorldBuilder {
 					continue;
 				}
 				if (regions[nz][nx][ny] > -1
-						|| tiles[nz][nx][ny] == Tile.WALL) {
+						|| !tiles[nz][nx][ny].isWalkable()) {
 					continue;
 				}
 
@@ -168,7 +182,7 @@ public class WorldBuilder {
 			for (int y = 0; y < height; y++) {
 				if (regions[z][x][y] == regionId) {
 					regions[z][x][y] = -1;
-					tiles[z][x][y] = Tile.WALL;
+					tiles[z][x][y] = Math.random() > 0.2 ? Tile.WALL : Tile.GLASS;
 				}
 			}
 		}
