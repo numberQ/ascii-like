@@ -91,6 +91,9 @@ public abstract class InventoryBasedScreen implements Screen {
 			itemToCheck = items[i];
 			if (itemToCheck != null && isAcceptable(itemToCheck)) {
 				line = letters.charAt(i) + " - (" + itemToCheck.getGlyph() + ") " + itemToCheck.getName();
+				if (player.getWeapon() == itemToCheck || player.getArmor() == itemToCheck) {
+					line += " (equipped)";
+				}
 				acceptable.add(line);
 			}
 		}

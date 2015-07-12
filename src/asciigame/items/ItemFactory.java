@@ -119,11 +119,22 @@ public class ItemFactory {
 		return platemail;
 	}
 
+	public static Item makeBaguette() {
+		int attack = 4;
+		int nutrition = 200;
+		Item baguette = new Item('/', AsciiPanel.yellow, "baguette");
+		baguette.setAttack(attack);
+		baguette.setNutrition(nutrition);
+		world.addAtEmptyLocation(baguette, layer);
+		return baguette;
+	}
+
 	public static Item makeRandomWeapon() {
-		switch ((int)(Math.random() * 3)) {
+		switch ((int)(Math.random() * 4)) {
 			case 0: return makeShortSword();
 			case 1: return makeLongSword();
-			default: return makeStaff();
+			case 2: return makeStaff();
+			default: return makeBaguette();
 		}
 	}
 

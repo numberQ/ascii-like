@@ -45,6 +45,8 @@ public class Creature {
 	public String getName()					 { return name; }
 	public int getVisionRadius()			 { return visionRadius; }
 	public Inventory getInventory()			 { return inventory; }
+	public Item getWeapon()					 { return weapon; }
+	public Item getArmor()					 { return armor; }
 
 	public Creature(World world, String name, char glyph, Color color,
 					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize,
@@ -120,6 +122,7 @@ public class Creature {
 
 		inventory.remove(idx);
 		world.addAtLocation(item, z, x, y);
+		unequip(item);
 
 		sayAction("drop a " + item.getName());
 	}
@@ -135,6 +138,7 @@ public class Creature {
 
 		modifyFood(item.getNutrition());
 		inventory.remove(inventory.find(item));
+		unequip(item);
 
 		sayAction("eat the " + item.getName());
 	}
@@ -171,7 +175,30 @@ public class Creature {
 			return;
 		}
 
+		// Weapons have higher attack, armor has higher defense
+		if (item.getAttack() >= item.getDefense()) {
+			unequip(weapon);
+			weapon = item;
+			sayAction("wield the " + item.getName());
+		} else {
+			unequip(armor);
+			armor = item;
+			sayAction("don the " + item.getName());
+		}
+	}
 
+	public void unequip(Item item) {
+		if (item == null) {
+			return;
+		}
+
+		if (item == weapon) {
+			weapon = null;
+			sayAction("put away the " + item.getName());
+		} else if (item == armor) {
+			armor = null;
+			sayAction("remove the " + item.getName());
+		}
 	}
 
 	public boolean hasItem(String itemName) {

@@ -122,21 +122,22 @@ public class PlayScreen implements Screen {
 				subscreen = new EatScreen(player);
 				break;
 
+			// Equip/unequip items
+			case KeyEvent.VK_W:
+				subscreen = new EquipScreen(player);
+				break;
+
 
 
 			// Debug - instant layer change
-			case KeyEvent.VK_Q:
+			case KeyEvent.VK_MINUS:
 				player.setZ(player.getZ() - 1);
 				break;
-			case KeyEvent.VK_W:
+			case KeyEvent.VK_PLUS:
 				player.setZ(player.getZ() + 1);
 				break;
-
-			// Debug - instant win/lose
-			case KeyEvent.VK_ENTER:
-				return new WinScreen();
-			case KeyEvent.VK_ESCAPE:
-				return new LoseScreen("Game over");
+			case KeyEvent.VK_BACK_SPACE:
+				player.getInventory().add(new Item ('/', AsciiPanel.brightGreen, "pick"));
 		}
 
 		// For characters without KeyEvents (as far as I can tell)

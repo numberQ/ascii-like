@@ -60,9 +60,14 @@ public class CreatureAi {
 		if (other != null && !other.getName().equals(creature.getName())) {
 			int min = creature.getMinAttack();
 			int max = creature.getMaxAttack();
+			int addedAttack = creature.getWeapon() == null ? 0 : creature.getWeapon().getAttack();
+			addedAttack += creature.getArmor() == null ? 0 : creature.getArmor().getAttack();
+			int subtractedDefense = other.getArmor() == null ? 0 : other.getArmor().getDefense();
+			subtractedDefense += other.getWeapon() == null ? 0 : other.getWeapon().getDefense();
 
 			damageDealt = (int) (Math.random() * (max - min)) + min;
 			damageDealt = damageDealt - other.getDefense();
+			damageDealt += addedAttack - subtractedDefense;
 			damageDealt = Math.max(0, damageDealt);
 
 			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
