@@ -25,7 +25,9 @@ public class ItemFactory {
 	}
 
 	public static Item makePick() {
+		int attack = 3;
 		Item pick = new Item ('/', AsciiPanel.brightGreen, "pick");
+		pick.setAttack(attack);
 		world.addAtEmptyLocation(pick, layer);
 		return pick;
 	}
@@ -130,13 +132,37 @@ public class ItemFactory {
 		return baguette;
 	}
 
+	public static Item makeRandomFood() {
+		double percent = Math.random();
+
+		if (percent > Rarity.ULTRA_RARE.getRarity()) {
+			return makeAmbrosia();
+		}
+		if (percent > Rarity.VERY_RARE.getRarity()) {
+			return makeTastyRock();
+		}
+		if (percent > Rarity.COMMON.getRarity()) {
+			double p = Math.random();
+			if (p > Rarity.COMMON.getRarity()) {
+				return makeSpaghetti();
+			} else {
+				return makeCheeseSteak();
+			}
+		}
+		if (percent > Rarity.VERY_COMMON.getRarity()) {
+			return makeGranolaBar();
+		}
+
+		return null;
+	}
+
 	public static Item makeRandomWeapon() {
 		double percent = Math.random();
 
 		if (percent > Rarity.VERY_RARE.getRarity()) {
 			return makeBaguette();
 		}
-		if (percent > Rarity.UNCOMMON.getRarity()) {
+		if (percent > Rarity.COMMON.getRarity()) {
 			double p = Math.random();
 			if (p > Rarity.RARE.getRarity()) {
 				return makeLongSword();
@@ -144,7 +170,7 @@ public class ItemFactory {
 				return makeStaff();
 			}
 		}
-		if (percent > Rarity.COMMON.getRarity()) {
+		if (percent > Rarity.VERY_COMMON.getRarity()) {
 			return makeShortSword();
 		}
 
@@ -160,7 +186,7 @@ public class ItemFactory {
 		if (percent > Rarity.UNCOMMON.getRarity()) {
 			return makeChainmail();
 		}
-		if (percent > Rarity.COMMON.getRarity()) {
+		if (percent > Rarity.VERY_COMMON.getRarity()) {
 			return makeTunic();
 		}
 
