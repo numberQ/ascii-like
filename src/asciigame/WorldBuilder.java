@@ -39,7 +39,7 @@ public class WorldBuilder {
 	private WorldBuilder randomize() {
 		double percent;
 		double wallThreshold = 0.5;
-		double glassThreshold = 0.8;
+		double glassThreshold = 0.77;
 
 		for (int z = 0; z < depth; z++) {
 			for (int x = 0; x < width; x++) {

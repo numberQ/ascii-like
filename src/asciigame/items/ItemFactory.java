@@ -1,6 +1,7 @@
 package asciigame.items;
 
 import asciiPanel.AsciiPanel;
+import asciigame.Rarity;
 import asciigame.World;
 
 public class ItemFactory {
@@ -130,19 +131,39 @@ public class ItemFactory {
 	}
 
 	public static Item makeRandomWeapon() {
-		switch ((int)(Math.random() * 4)) {
-			case 0: return makeShortSword();
-			case 1: return makeLongSword();
-			case 2: return makeStaff();
-			default: return makeBaguette();
+		double percent = Math.random();
+
+		if (percent > Rarity.VERY_RARE.getRarity()) {
+			return makeBaguette();
 		}
+		if (percent > Rarity.UNCOMMON.getRarity()) {
+			double p = Math.random();
+			if (p > Rarity.RARE.getRarity()) {
+				return makeLongSword();
+			} else {
+				return makeStaff();
+			}
+		}
+		if (percent > Rarity.COMMON.getRarity()) {
+			return makeShortSword();
+		}
+
+		return null;
 	}
 
 	public static Item makeRandomArmor() {
-		switch ((int)(Math.random() * 3)) {
-			case 0: return makeTunic();
-			case 1: return makeChainmail();
-			default: return makePlatemail();
+		double percent = Math.random();
+
+		if (percent > Rarity.RARE.getRarity()) {
+			return makePlatemail();
 		}
+		if (percent > Rarity.UNCOMMON.getRarity()) {
+			return makeChainmail();
+		}
+		if (percent > Rarity.COMMON.getRarity()) {
+			return makeTunic();
+		}
+
+		return null;
 	}
 }
