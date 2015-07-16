@@ -40,7 +40,7 @@ public class CreatureAi {
 			}
 		} else if (tile.isDiggable()) {
 			// If the tile can be dug, dig if we have the pick
-			if (creature.getWeapon().getName().equals("pick")) {
+			if (creature.getWeapon() != null && creature.getWeapon().getName().equals("pick")) {
 				dig(z, x, y);
 			}
 		}

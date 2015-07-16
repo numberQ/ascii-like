@@ -221,7 +221,7 @@ public class PlayScreen implements Screen {
 		int depth = world.getDepth();
 		int worldSize = world.getWidth() * world.getHeight();
 		int rockAmount = worldSize / 25;
-		int foodAmount = worldSize / 100;
+		int foodAmount = worldSize / 80;
 		int weaponAmount = worldSize / 550;
 		int armorAmount = worldSize / 550;
 
