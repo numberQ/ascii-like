@@ -7,6 +7,7 @@ import asciigame.creatures.CreatureFactory;
 import asciigame.items.Item;
 import asciigame.items.ItemFactory;
 import asciigame.items.ItemPile;
+import asciigame.FieldOfView;
 
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -196,7 +197,7 @@ public class PlayScreen implements Screen {
         int depth = world.getDepth();
         int fungusAmount = 8;
         int batAmount = 4;
-		int zombieAmount = 5;
+		int zombieAmount = 2;
 
         // Make the player
         CreatureFactory.setLayer(0);

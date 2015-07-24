@@ -1,5 +1,8 @@
 package asciigame;
 
+import asciigame.utility.Line;
+import asciigame.utility.Point;
+
 public class FieldOfView {
 
 	private World world;

@@ -1,6 +1,6 @@
 package asciigame.creatures;
 
-import asciigame.Point;
+import asciigame.utility.Point;
 import asciigame.Rarity;
 import asciigame.World;
 

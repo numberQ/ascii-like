@@ -1,4 +1,4 @@
-package asciigame;
+package asciigame.utility;
 
 import java.util.ArrayList;
 import java.util.List;

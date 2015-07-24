@@ -1,7 +1,7 @@
 package asciigame.creatures;
 
-import asciigame.Line;
-import asciigame.Point;
+import asciigame.utility.Line;
+import asciigame.utility.Point;
 import asciigame.Tile;
 import asciigame.World;
 public class CreatureAi {

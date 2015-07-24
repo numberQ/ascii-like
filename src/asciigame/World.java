@@ -3,6 +3,7 @@ package asciigame;
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
 import asciigame.items.ItemPile;
+import asciigame.utility.Point;
 
 public class World {
 
