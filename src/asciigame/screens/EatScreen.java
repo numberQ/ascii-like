@@ -15,7 +15,7 @@ public class EatScreen extends InventoryBasedScreen {
 	}
 
 	@Override
-	protected boolean isAcceptable(Item item) {
+	protected boolean isRelevant(Item item) {
 		return item.getNutrition() > 0;
 	}
 

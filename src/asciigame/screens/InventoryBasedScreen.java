@@ -15,7 +15,7 @@ public abstract class InventoryBasedScreen implements Screen {
 	protected Creature player;
 
 	protected abstract String getVerb();
-	protected abstract boolean isAcceptable(Item item);
+	protected abstract boolean isRelevant(Item item);
 	protected abstract Screen use(Item item);
 
 	public InventoryBasedScreen(Creature player) {
@@ -26,7 +26,7 @@ public abstract class InventoryBasedScreen implements Screen {
 
 	public InventoryBasedScreen(Creature player, ItemPile pile) {
 		this.letters = "abcdefghijklmnopqrstuvwxyz";
-		this.items = new Item[pile.getItems().size()];
+		this.items = new Item[pile.getPileSize()];
 		this.player = player;
 
 		for (int i = 0; i < items.length; i++) {
@@ -36,8 +36,8 @@ public abstract class InventoryBasedScreen implements Screen {
 
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
-		List<String> acceptable = getAcceptable();
-		int maxWidth = lengthOfLongestString(acceptable) + 2;
+		List<String> relevantItems = getRelevantItems();
+		int maxWidth = lengthOfLongestString(relevantItems) + 2;
 
 		int x = 1;
 		int y = 1;
@@ -47,10 +47,10 @@ public abstract class InventoryBasedScreen implements Screen {
 		terminal.write(question, x, y);
 
 		x = 1;
-		y = terminal.getHeightInCharacters() - acceptable.size() - 2;
+		y = terminal.getHeightInCharacters() - relevantItems.size() - 2;
 
-		terminal.clear(' ', x, y, maxWidth, acceptable.size() + 2);
-		for (String line : acceptable) {
+		terminal.clear(' ', x, y, maxWidth, relevantItems.size() + 2);
+		for (String line : relevantItems) {
 			y++;
 			terminal.write(line, x, y);
 		}
@@ -75,30 +75,30 @@ public abstract class InventoryBasedScreen implements Screen {
 			return this;
 		}
 		// Selected item cannot be verbed
-		if (!isAcceptable(items[choice])) {
+		if (!isRelevant(items[choice])) {
 			return this;
 		}
 
 		return use(items[choice]);
 	}
 
-	private List<String> getAcceptable() {
-		List<String> acceptable = new ArrayList<>();
+	private List<String> getRelevantItems() {
+		List<String> relevantItems = new ArrayList<>();
 		Item itemToCheck;
 		String line;
 
 		for (int i = 0; i < items.length; i++) {
 			itemToCheck = items[i];
-			if (itemToCheck != null && isAcceptable(itemToCheck)) {
+			if (itemToCheck != null && isRelevant(itemToCheck)) {
 				line = letters.charAt(i) + " - (" + itemToCheck.getGlyph() + ") " + itemToCheck.getName();
 				if (player.getWeapon() == itemToCheck || player.getArmor() == itemToCheck) {
 					line += " (equipped)";
 				}
-				acceptable.add(line);
+				relevantItems.add(line);
 			}
 		}
 
-		return acceptable;
+		return relevantItems;
 	}
 
 	private int lengthOfLongestString(List<String> strings) {

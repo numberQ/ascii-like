@@ -15,7 +15,7 @@ public class EquipScreen extends InventoryBasedScreen {
 	}
 
 	@Override
-	protected boolean isAcceptable(Item item) {
+	protected boolean isRelevant(Item item) {
 		return item.getAttack() > 0 || item.getDefense() > 0;
 	}
 

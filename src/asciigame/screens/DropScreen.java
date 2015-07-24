@@ -15,7 +15,7 @@ public class DropScreen extends InventoryBasedScreen {
 	}
 
 	@Override
-	protected boolean isAcceptable(Item item) {
+	protected boolean isRelevant(Item item) {
 		return true;
 	}
 

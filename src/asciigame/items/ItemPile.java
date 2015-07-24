@@ -7,8 +7,6 @@ public class ItemPile {
 
 	private List<Item> items;
 
-	public List<Item> getItems() { return items; }
-
 	public ItemPile() {
 		this.items = new ArrayList<>();
 	}
@@ -27,6 +25,10 @@ public class ItemPile {
 
 	public void removeItem(Item item) {
 		items.remove(item);
+	}
+
+	public int getPileSize() {
+		return items.size();
 	}
 
 	public boolean hasNoItems() {
