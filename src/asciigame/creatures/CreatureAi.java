@@ -26,9 +26,11 @@ public class CreatureAi {
 
 	public void onEnter(int z, int x, int y, Tile tile) {
 		if (world.getCreature(z, x, y) != null) {
+
 			// If the tile is a creature, attack it
 			attack(x, y);
 		} else if (tile.isWalkable()) {
+
 			// If the tile can be walked on, walk on it
 			world.moveCreature(creature, z, x, y);
 			creature.setZ(z);
@@ -39,6 +41,7 @@ public class CreatureAi {
 				creature.modifyFood(-1);
 			}
 		} else if (tile.isDiggable()) {
+
 			// If the tile can be dug, dig if we have the pick
 			if (creature.getWeapon() != null && creature.getWeapon().getName().equals("pick")) {
 				dig(z, x, y);

@@ -196,6 +196,7 @@ public class PlayScreen implements Screen {
         int depth = world.getDepth();
         int fungusAmount = 8;
         int batAmount = 4;
+		int zombieAmount = 5;
 
         // Make the player
         CreatureFactory.setLayer(0);
@@ -214,6 +215,11 @@ public class PlayScreen implements Screen {
             for (j = 0; j < batAmount; j++) {
                 CreatureFactory.makeBat();
             }
+
+			// Make zombies
+			for (j = 0; j < zombieAmount + i; j++) {
+				CreatureFactory.makeZombie(player);
+			}
         }
     }
 

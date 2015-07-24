@@ -41,11 +41,20 @@ public class CreatureFactory {
 	}
 
     public static Creature makeBat() {
-        int maxHealth = 15, minAttack = 2, maxAttack = 6, defense = 1, visionRadius = 4, invSize = 0, maxFullness = 750;
+        int maxHealth = 15, minAttack = 2, maxAttack = 6, defense = 1, visionRadius = 9, invSize = 0, maxFullness = 750;
         Creature bat = new Creature(world, "bat", 'b', AsciiPanel.yellow,
                 maxHealth, minAttack, maxAttack, defense, visionRadius, invSize, maxFullness);
         world.addAtEmptyLocation(bat, layer);
         new BatAi(world, bat);
         return bat;
     }
+
+	public static Creature makeZombie(Creature player) {
+		int maxHealth = 30, minAttack = 2, maxAttack = 8, defense = 1, visionRadius = 7, invSize = 0, maxFullness = 0;
+		Creature zombie = new Creature (world, "zombie", 'z', AsciiPanel.cyan,
+				maxHealth, minAttack, maxAttack, defense, visionRadius, invSize, maxFullness);
+		world.addAtEmptyLocation(zombie, layer);
+		new ZombieAi(world, zombie, player);
+		return zombie;
+	}
 }

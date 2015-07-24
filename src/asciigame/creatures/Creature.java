@@ -48,6 +48,11 @@ public class Creature {
 	public Item getWeapon()					 { return weapon; }
 	public Item getArmor()					 { return armor; }
 
+	private boolean updated;
+
+	public boolean isUpdated() 		  { return updated; }
+	public void setUpdated(boolean u) { this.updated = u; }
+
 	public Creature(World world, String name, char glyph, Color color,
 					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize,
 					int maxFullness) {
@@ -64,6 +69,8 @@ public class Creature {
 		this.inventory = new Inventory(invSize);
 		this.maxFullness = maxFullness;
 		this.fullness = maxFullness * 85 / 100;
+
+		this.updated = false;
 	}
 
 	public void moveBy(int moveZ, int moveX, int moveY) {

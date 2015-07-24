@@ -143,8 +143,21 @@ public class World {
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
 					creature = creatures[z][x][y];
-					if (creature != null) {
+					if (creature != null && !creature.isUpdated()) {
 						creature.update();
+						creature.setUpdated(true);
+					}
+				}
+			}
+		}
+
+		// Flag all creatures as able to be updated again
+		for (int z = 0; z < depth; z++) {
+			for (int x = 0; x < width; x++) {
+				for (int y = 0; y < height; y++) {
+					creature = creatures[z][x][y];
+					if (creature != null) {
+						creature.setUpdated(false);
 					}
 				}
 			}
