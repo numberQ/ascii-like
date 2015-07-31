@@ -59,7 +59,9 @@ public class ZombieAi extends CreatureAi {
 		Node nextNode = path.getNextNode();
 
 		if (nextNode != null) {
-			creature.moveBy(target.getZ(), nextNode.getX(), nextNode.getY());
+			creature.moveBy(0, nextNode.getX() - creature.getX(), nextNode.getY() - creature.getY());
+		} else {
+			creature.sayAction("stay still");
 		}
 	}
 }
