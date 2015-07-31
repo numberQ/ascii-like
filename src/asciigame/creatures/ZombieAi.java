@@ -47,9 +47,7 @@ public class ZombieAi extends CreatureAi {
 		Path path = new Path(zombiePoint, goalPoint, creature);
 		Node nextNode = path.getNextNode();
 
-		if (nextNode == null) {
-			wander();
-		} else {
+		if (nextNode != null) {
 			creature.moveBy(0, nextNode.getX() - creature.getX(), nextNode.getY() - creature.getY());
 		}
 	}
@@ -60,9 +58,7 @@ public class ZombieAi extends CreatureAi {
 		Path path = new Path(zombiePoint, goalPoint, creature);
 		Node nextNode = path.getNextNode();
 
-		if (nextNode == null) {
-			wander();
-		} else {
+		if (nextNode != null) {
 			creature.moveBy(target.getZ(), nextNode.getX(), nextNode.getY());
 		}
 	}

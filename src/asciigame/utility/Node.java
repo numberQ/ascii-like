@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class Node extends Point implements Comparator<Node> {
+public class Node extends Point {
 
 	private Node parent;
 	public Node getParent() 		   { return parent; }
@@ -15,20 +15,15 @@ public class Node extends Point implements Comparator<Node> {
 	public int getRealCost()		  { return realCost; }
 	public void setRealCost(int cost) { this.realCost = cost;}
 
-	private int heuristicCost;
-	public void setHeuristicCost(int cost) { this.heuristicCost = cost; }
+	private double heuristicCost;
+	public void setHeuristicCost(double cost) { this.heuristicCost = cost; }
 
 	public Node(int z, int x, int y) {
 		super(z, x, y);
 	}
 
-	public int getTotalCost() {
+	public double getTotalCost() {
 		return realCost + heuristicCost;
-	}
-
-	@Override
-	public int compare(Node node1, Node node2) {
-		return node2.getTotalCost() - node1.getTotalCost();
 	}
 
 	public List<Node> getAdjacentAsNodes() {

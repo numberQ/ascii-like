@@ -23,15 +23,24 @@ public class PathFinder {
 		startNode.setHeuristicCost(getHeuristicDistance(startNode, endNode));
 		endNode.setHeuristicCost(0);
 
-		// Set up lists of checked and to-be-checked nodes
-		Comparator<Node> nodeComparator = (node1, node2) -> node1.getTotalCost() - node2.getTotalCost();
+		// Set up comparator for nodes
+		Comparator<Node> nodeComparator = (n1, n2) -> {
+			int prime = 13;
+
+			// Factor heuristic distances from doubles to ints,
+			// using a prime to retain uniqueness.
+
+			double heuristicCompare = n1.getTotalCost() * prime - n2.getTotalCost() * prime;
+			return (int)heuristicCompare;
+		};
+
 		open = new PriorityQueue<>(1, nodeComparator);
 		closed = new ArrayList<>();
 
 		open.add(startNode);
 	}
 
-	// Returns the start node, which can be followed through parents to construct the path
+	// Returns the end node, which can be followed through parents to construct the path
 	public static Node findPath(Creature creature) {
 		Node node = null;
 		int cost;
@@ -71,8 +80,13 @@ public class PathFinder {
 		return endNode;
 	}
 
-	private static int getHeuristicDistance(Node node1, Node node2) {
-		Line optimalPath = new Line(node1, node2).construct();
-		return optimalPath.size();
+	private static double getHeuristicDistance(Node n1, Node n2) {
+
+		// Create a true line, not a grid-based line.
+		// This will make straight paths preferable to wobbly ones.
+
+		int dx = Math.abs(n2.x - n1.x);
+		int dy = Math.abs(n2.y - n1.y);
+		return Math.sqrt(dx * dx + dy * dy);
 	}
 }
