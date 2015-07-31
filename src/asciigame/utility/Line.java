@@ -13,6 +13,7 @@ public class Line {
 	private List<Point> points;
 
 	public List<Point> getPoints() { return points; }
+	public int size() { return points.size(); }
 
 	public Line(Point p1, Point p2) {
 		this.z = p1.getZ();

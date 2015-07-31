@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Point {
 
-	private int z, x, y;
+	protected int z, x, y;
 
 	public int getZ() { return z; }
 	public int getX() { return x; }

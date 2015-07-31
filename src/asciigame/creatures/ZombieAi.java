@@ -1,5 +1,7 @@
 package asciigame.creatures;
 
+import asciigame.utility.Node;
+import asciigame.utility.Path;
 import asciigame.utility.Point;
 import asciigame.Rarity;
 import asciigame.World;
@@ -40,14 +42,36 @@ public class ZombieAi extends CreatureAi {
 	}
 
 	private void hunt(Creature target) {
-		int moveX = Integer.signum(target.getX() - creature.getX());
-		int moveY = Integer.signum(target.getY() - creature.getY());
-		creature.moveBy(target.getZ(), moveX, moveY);
+		/*int moveX = Integer.signum(target.getX() - creature.getX());
+		int moveY = Integer.signum(target.getY() - creature.getY());*/
+
+		Point zombiePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
+		Point goalPoint = new Point(target.getZ(), target.getX(), target.getY());
+		Path path = new Path(zombiePoint, goalPoint, creature);
+		Node nextNode = path.getNextNode();
+
+		if (nextNode == null) {
+			wander();
+		} else {
+			creature.sayAction("lumber towards " + target.getName());
+			creature.moveBy(target.getZ(), nextNode.getX(), nextNode.getY());
+		}
 	}
 
 	private void hunt(Point target) {
-		int moveX = Integer.signum(target.getX() - creature.getX());
-		int moveY = Integer.signum(target.getY() - creature.getY());
-		creature.moveBy(target.getZ(), moveX, moveY);
+		/*int moveX = Integer.signum(target.getX() - creature.getX());
+		int moveY = Integer.signum(target.getY() - creature.getY());*/
+
+		Point zombiePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
+		Point goalPoint = new Point(target.getZ(), target.getX(), target.getY());
+		Path path = new Path(zombiePoint, goalPoint, creature);
+		Node nextNode = path.getNextNode();
+
+		if (nextNode == null) {
+			wander();
+		} else {
+			creature.sayAction("lumber towards a point");
+			creature.moveBy(target.getZ(), nextNode.getX(), nextNode.getY());
+		}
 	}
 }

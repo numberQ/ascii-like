@@ -101,9 +101,8 @@ public class Creature {
 		}
 
 		moveZ = z + moveZ;
-		tile = world.getTile(moveZ, moveX, moveY);
 
-		ai.onEnter(moveZ, moveX, moveY, tile);
+		ai.onEnter(moveZ, moveX, moveY);
 	}
 
 	public void pickup(Item item) {
@@ -214,6 +213,10 @@ public class Creature {
 
 	public boolean canSee(int worldZ, int worldX, int worldY) {
 		return ai.canSee(worldZ, worldX, worldY);
+	}
+
+	public boolean canEnter(int worldZ, int worldX, int worldY) {
+		return ai.canEnter(worldZ, worldX, worldY);
 	}
 
 	public void update() {

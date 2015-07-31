@@ -24,12 +24,14 @@ public class CreatureAi {
 
 	public void onNotify(String message) { }
 
-	public void onEnter(int z, int x, int y, Tile tile) {
+	public void onEnter(int z, int x, int y) {
+		Tile tile = world.getTile(z, x, y);
+
 		if (world.getCreature(z, x, y) != null) {
 
 			// If the tile is a creature, attack it
 			attack(x, y);
-		} else if (tile.isWalkable()) {
+		} else if (canEnter(z, x, y)) {
 
 			// If the tile can be walked on, walk on it
 			world.moveCreature(creature, z, x, y);
@@ -118,5 +120,10 @@ public class CreatureAi {
 		}
 
 		return true;
+	}
+
+	public boolean canEnter(int z, int x, int y) {
+		Tile tile = world.getTile(z, x, y);
+		return tile.isWalkable();
 	}
 }
