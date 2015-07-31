@@ -20,7 +20,6 @@ public class PathFinder {
 		startNode.setRealCost(0);
 
 		// Set heuristic distances from end
-		Line optimalPath = new Line(start, end);
 		startNode.setHeuristicCost(getHeuristicDistance(startNode, endNode));
 		endNode.setHeuristicCost(0);
 
@@ -58,6 +57,13 @@ public class PathFinder {
 					n.setHeuristicCost(getHeuristicDistance(n, endNode));
 					open.add(n);
 					n.setParent(node);
+
+					// We've reached the end, so give endNode its properties
+					if (endNode.equals(n)) {
+						endNode.setRealCost(cost);
+						endNode.setHeuristicCost(0);
+						endNode.setParent(node);
+					}
 				}
 			}
 		}
@@ -66,7 +72,7 @@ public class PathFinder {
 	}
 
 	private static int getHeuristicDistance(Node node1, Node node2) {
-		Line optimalPath = new Line(node1, node2);
-		return optimalPath.size() - 1;
+		Line optimalPath = new Line(node1, node2).construct();
+		return optimalPath.size();
 	}
 }

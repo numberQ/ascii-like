@@ -42,9 +42,6 @@ public class ZombieAi extends CreatureAi {
 	}
 
 	private void hunt(Creature target) {
-		/*int moveX = Integer.signum(target.getX() - creature.getX());
-		int moveY = Integer.signum(target.getY() - creature.getY());*/
-
 		Point zombiePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
 		Point goalPoint = new Point(target.getZ(), target.getX(), target.getY());
 		Path path = new Path(zombiePoint, goalPoint, creature);
@@ -53,15 +50,11 @@ public class ZombieAi extends CreatureAi {
 		if (nextNode == null) {
 			wander();
 		} else {
-			creature.sayAction("lumber towards " + target.getName());
-			creature.moveBy(target.getZ(), nextNode.getX(), nextNode.getY());
+			creature.moveBy(0, nextNode.getX() - creature.getX(), nextNode.getY() - creature.getY());
 		}
 	}
 
 	private void hunt(Point target) {
-		/*int moveX = Integer.signum(target.getX() - creature.getX());
-		int moveY = Integer.signum(target.getY() - creature.getY());*/
-
 		Point zombiePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
 		Point goalPoint = new Point(target.getZ(), target.getX(), target.getY());
 		Path path = new Path(zombiePoint, goalPoint, creature);
@@ -70,7 +63,6 @@ public class ZombieAi extends CreatureAi {
 		if (nextNode == null) {
 			wander();
 		} else {
-			creature.sayAction("lumber towards a point");
 			creature.moveBy(target.getZ(), nextNode.getX(), nextNode.getY());
 		}
 	}

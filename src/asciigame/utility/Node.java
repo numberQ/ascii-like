@@ -12,7 +12,7 @@ public class Node extends Point implements Comparator<Node> {
 	public void setParent(Node parent) { this.parent = parent; }
 
 	private int realCost;
-	public int getRealCost()		   { return realCost; }
+	public int getRealCost()		  { return realCost; }
 	public void setRealCost(int cost) { this.realCost = cost;}
 
 	private int heuristicCost;
@@ -28,7 +28,7 @@ public class Node extends Point implements Comparator<Node> {
 
 	@Override
 	public int compare(Node node1, Node node2) {
-		return node1.getTotalCost() - node2.getTotalCost();
+		return node2.getTotalCost() - node1.getTotalCost();
 	}
 
 	public List<Node> getAdjacentAsNodes() {
