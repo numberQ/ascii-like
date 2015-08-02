@@ -15,6 +15,9 @@ public class PathFinder {
 		// Create start and end nodes
 		startNode = new Node(start.getZ(), start.getX(), start.getY());
 		endNode = new Node(end.getZ(), end.getX(), end.getY());
+	}
+
+	public static void initPathData(Comparator<Node> heuristicComparator) {
 
 		// Set exact distance from start
 		startNode.setRealCost(0);
@@ -23,18 +26,7 @@ public class PathFinder {
 		startNode.setHeuristicCost(getHeuristicDistance(startNode, endNode));
 		endNode.setHeuristicCost(0);
 
-		// Set up comparator for nodes
-		Comparator<Node> nodeComparator = (n1, n2) -> {
-			int prime = 13;
-
-			// Factor heuristic distances from doubles to ints,
-			// using a prime to retain uniqueness.
-
-			double heuristicCompare = n1.getTotalCost() * prime - n2.getTotalCost() * prime;
-			return (int)heuristicCompare;
-		};
-
-		open = new PriorityQueue<>(1, nodeComparator);
+		open = new PriorityQueue<>(1, heuristicComparator);
 		closed = new ArrayList<>();
 
 		open.add(startNode);
@@ -44,8 +36,16 @@ public class PathFinder {
 	public static Node findPath(Creature creature) {
 		Node node = null;
 		int cost;
+		int tries = 0, maxTries = 300;
 
 		while (!endNode.equals(node) && open.size() > 0) {
+
+			// Limit how long the path takes to be found
+			if (tries > maxTries) {
+				return null;
+			}
+			tries++;
+
 			node = open.remove();
 			closed.add(node);
 

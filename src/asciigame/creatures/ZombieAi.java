@@ -6,6 +6,8 @@ import asciigame.utility.Point;
 import asciigame.Rarity;
 import asciigame.World;
 
+import java.util.Comparator;
+
 public class ZombieAi extends CreatureAi {
 
 	private Creature player;
@@ -32,8 +34,8 @@ public class ZombieAi extends CreatureAi {
 		}
 
 		if (creature.canSee(player.getZ(), player.getX(), player.getY())) {
-			hunt(player);
 			lastKnownPlayerPoint = new Point(player.getZ(), player.getX(), player.getY());
+			hunt(lastKnownPlayerPoint);
 		} else if (lastKnownPlayerPoint != null) {
 			hunt(lastKnownPlayerPoint);
 		} else {
@@ -41,27 +43,28 @@ public class ZombieAi extends CreatureAi {
 		}
 	}
 
-	private void hunt(Creature target) {
-		Point zombiePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
-		Point goalPoint = new Point(target.getZ(), target.getX(), target.getY());
-		Path path = new Path(zombiePoint, goalPoint, creature);
-		Node nextNode = path.getNextNode();
-
-		if (nextNode != null) {
-			creature.moveBy(0, nextNode.getX() - creature.getX(), nextNode.getY() - creature.getY());
-		}
-	}
-
 	private void hunt(Point target) {
+
+		// Set up comparator for nodes
+		Comparator<Node> heuristicComparator = (n1, n2) -> {
+			int prime = 13;
+
+			// Factor heuristic distances from doubles to ints,
+			// using a prime to retain uniqueness.
+
+			double heuristicCompare = n1.getTotalCost() * prime - n2.getTotalCost() * prime;
+			return (int)heuristicCompare;
+		};
+
+		// Set zombie's path to the target
 		Point zombiePoint = new Point(creature.getZ(), creature.getX(), creature.getY());
 		Point goalPoint = new Point(target.getZ(), target.getX(), target.getY());
-		Path path = new Path(zombiePoint, goalPoint, creature);
+		Path path = new Path(zombiePoint, goalPoint, heuristicComparator, creature);
 		Node nextNode = path.getNextNode();
 
+		// Follow the path
 		if (nextNode != null) {
 			creature.moveBy(0, nextNode.getX() - creature.getX(), nextNode.getY() - creature.getY());
-		} else {
-			creature.sayAction("stay still");
 		}
 	}
 }
