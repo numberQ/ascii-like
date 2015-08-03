@@ -5,7 +5,6 @@ import asciigame.utility.Path;
 import asciigame.utility.Point;
 import asciigame.Rarity;
 import asciigame.World;
-
 import java.util.Comparator;
 
 public class ZombieAi extends CreatureAi {

@@ -4,6 +4,7 @@ import asciigame.utility.Line;
 import asciigame.utility.Point;
 import asciigame.Tile;
 import asciigame.World;
+
 public class CreatureAi {
 
 	protected Creature creature;

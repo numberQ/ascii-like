@@ -1,7 +1,6 @@
 package asciigame.utility;
 
 import asciigame.creatures.Creature;
-
 import java.util.Comparator;
 
 public class Path {
