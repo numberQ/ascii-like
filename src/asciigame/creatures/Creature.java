@@ -27,6 +27,8 @@ public class Creature {
 	private int fullness;
 	private Item weapon;
 	private Item armor;
+	private int xp;
+	private int level;
 
 	public int getZ()						 { return z; }
 	public void setZ(int z)					 { this.z = z; }
@@ -47,6 +49,8 @@ public class Creature {
 	public Inventory getInventory()			 { return inventory; }
 	public Item getWeapon()					 { return weapon; }
 	public Item getArmor()					 { return armor; }
+	public int getXp()						 { return xp; }
+	public int getLevel()					 { return level; }
 
 	private boolean updated;
 
@@ -69,6 +73,8 @@ public class Creature {
 		this.inventory = new Inventory(invSize);
 		this.maxFullness = maxFullness;
 		this.fullness = maxFullness * 85 / 100;
+		this.xp = 0;
+		this.level = 1;
 
 		this.updated = false;
 	}
@@ -251,6 +257,18 @@ public class Creature {
 
 		if (fullness > maxFullness && isPlayer()) {
 			fullness = maxFullness;
+		}
+	}
+
+	public void modifyXp(int amount) {
+		xp += amount;
+
+		notify("You " + (amount < 0 ? "lose " : "gain ") + amount + " experience.");
+
+		while (xp >= (int)(Math.pow(level, 1.5) * 20)) {
+			level++;
+			sayAction("advance to level " + level);
+			ai.onGainLevel();
 		}
 	}
 

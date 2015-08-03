@@ -52,6 +52,10 @@ public class CreatureAi {
 		}
 	}
 
+	public void onGainLevel() {
+
+	}
+
 	public void wander() {
 		int dx = (int)(Math.random() * 3) - 1;
         int dy = (int)(Math.random() * 3) - 1;
@@ -71,7 +75,7 @@ public class CreatureAi {
 			int subtractedDefense = other.getArmor() == null ? 0 : other.getArmor().getDefense();
 			subtractedDefense += other.getWeapon() == null ? 0 : other.getWeapon().getDefense();
 
-			damageDealt = (int) (Math.random() * (max - min)) + min;
+			damageDealt = (int)(Math.random() * (max - min)) + min;
 			damageDealt = damageDealt - other.getDefense();
 			damageDealt += addedAttack - subtractedDefense;
 			damageDealt = Math.max(0, damageDealt);
@@ -82,7 +86,19 @@ public class CreatureAi {
 
 			creature.modifyFood(-20);
 			other.modifyFood(-2);
+
+			// Gain experience
+			if (other.getHealth() <= 0) {
+				gainXp(other);
+			}
 		}
+	}
+
+	private void gainXp(Creature other) {
+		int attackAverage = (other.getMinAttack() + other.getMaxAttack()) / 2;
+		int amount = other.getMaxHealth() + attackAverage + other.getDefense() - creature.getLevel() * 2;
+		amount = Math.max(0, amount);
+		creature.modifyXp(amount);
 	}
 
 	public void dig(int z, int x, int y) {
