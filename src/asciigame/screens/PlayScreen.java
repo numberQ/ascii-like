@@ -26,6 +26,7 @@ public class PlayScreen implements Screen {
 	private Screen subscreen;
 
 	public PlayScreen() {
+
 		// Define screen vars
 		screenWidth = ApplicationMain.getScreenWidth();
 		screenHeight = ApplicationMain.getScreenHeight();
@@ -34,8 +35,7 @@ public class PlayScreen implements Screen {
 
 		// Define messages
 		messages = new ArrayList<>();
-		messages.add("HJKL to move your character, YUBN for diagonals. Move into enemies to attack. G to pick up items, D to drop them. " +
-				"Collect the MacGuffin and return with it to win!");
+		messages.add("Collect the MacGuffin and return with it to win!");
 
 		// Map shenanigans
 		createWorld();
@@ -52,7 +52,8 @@ public class PlayScreen implements Screen {
 		int top = getScrollY();
 		displayTiles(terminal, left, top);
 		displayMessages(terminal);
-		String stats = player.getHealth() + "/" + player.getMaxHealth() + " " + player.hungerLevel();
+		String stats = "Health: " + player.getHealth() + "/" + player.getMaxHealth() + " " + player.hungerLevel() +
+				" XP: " + player.getXp() + "/" + ((int)(Math.pow(player.getLevel(), 1.5) * 20) + ", level " + player.getLevel());
 		terminal.write(stats, 1, terminal.getHeightInCharacters() - 2);
 
 		// Display subscreen on top of current screen

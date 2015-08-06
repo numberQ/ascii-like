@@ -14,7 +14,7 @@ public class Path {
 	}
 
 	public Node getNextNode() {
-		if (node.getParent() == null) {
+		if (node == null || node.getParent() == null) {
 			return null;
 		}
 
