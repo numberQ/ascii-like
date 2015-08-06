@@ -272,6 +272,37 @@ public class Creature {
 		}
 	}
 
+	public void gainHealth() {
+		maxHealth += 10;
+		health += 10;
+		sayAction("look healthier");
+	}
+
+	public void gainMinAttack() {
+		minAttack += 2;
+		sayAction("look stronger");
+	}
+
+	public void gainMaxAttack() {
+		maxAttack += 2;
+		sayAction("look stronger");
+	}
+
+	public void gainDefense() {
+		defense += 2;
+		sayAction("look tougher");
+	}
+
+	public void gainVision() {
+		visionRadius += 1;
+		sayAction("look more aware");
+	}
+
+	public void gainFullness() {
+		maxFullness += 10;
+		sayAction("look hungrier");
+	}
+
 	private void dropLoot() {
 		int corpseNutrition = maxHealth * 10;
 		Item corpse = new Item('%', color, name + " corpse");
