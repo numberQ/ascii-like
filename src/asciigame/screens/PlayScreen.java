@@ -64,6 +64,10 @@ public class PlayScreen implements Screen {
 	@Override
 	public Screen respondToUserInputAndUpdate(KeyEvent key) {
 
+		// Decides whether the world gets updated.
+		// This will be set to true for key presses that update the world.
+		boolean doUpdate = false;
+
 		// Divert keyboard control to a subscreen if it exists
 		if (subscreen != null) {
 			subscreen = subscreen.respondToUserInputAndUpdate(key);
@@ -77,30 +81,43 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_LEFT:
 			case KeyEvent.VK_H:
 				player.moveBy(0, -1, 0);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_RIGHT:
 			case KeyEvent.VK_L:
 				player.moveBy(0, 1, 0);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_UP:
 			case KeyEvent.VK_J:
 				player.moveBy(0, 0, -1);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_DOWN:
 			case KeyEvent.VK_K:
 				player.moveBy(0, 0, 1);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_Y:
 				player.moveBy(0, -1, -1);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_U:
 				player.moveBy(0, 1, -1);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_B:
 				player.moveBy(0, -1, 1);
+				doUpdate = true;
 				break;
 			case KeyEvent.VK_N:
 				player.moveBy(0, 1, 1);
+				doUpdate = true;
+				break;
+
+			// Wait
+			case KeyEvent.VK_Z:
+				doUpdate = true;
 				break;
 
 			// Pick up items
@@ -111,21 +128,25 @@ public class PlayScreen implements Screen {
 				}
 				ItemPile items = world.getItems(player.getZ(), player.getX(), player.getY());
 				subscreen = new PickUpScreen(player, items);
+				doUpdate = true;
 				break;
 
 			// Drop items
 			case KeyEvent.VK_D:
 				subscreen = new DropScreen(player);
+				doUpdate = true;
 				break;
 
 			// Eat items
 			case KeyEvent.VK_E:
 				subscreen = new EatScreen(player);
+				doUpdate = true;
 				break;
 
 			// Equip/unequip items
 			case KeyEvent.VK_W:
 				subscreen = new EquipScreen(player);
+				doUpdate = true;
 				break;
 
 
@@ -138,7 +159,11 @@ public class PlayScreen implements Screen {
 				player.setZ(player.getZ() + 1);
 				break;
 			case KeyEvent.VK_BACK_SPACE:
-				player.getInventory().add(new Item ('/', AsciiPanel.brightGreen, "pick"));
+				int attack = 3;
+				Item pick = new Item ('/', AsciiPanel.brightGreen, "pick");
+				pick.setAttack(attack);
+				player.getInventory().add(pick);
+				break;
 		}
 
 		// For characters without KeyEvents (as far as I can tell)
@@ -148,14 +173,19 @@ public class PlayScreen implements Screen {
 					return playerExits();
 				} else {
 					player.moveBy(-1, 0, 0);
+					doUpdate = true;
 					break;
 				}
 			case '>':
 				player.moveBy(1, 0, 0);
+				doUpdate = true;
 				break;
 		}
 
-		return update();
+		if (doUpdate) {
+			return update();
+		}
+		return this;
 	}
 
 	private boolean playerIsExiting() {
