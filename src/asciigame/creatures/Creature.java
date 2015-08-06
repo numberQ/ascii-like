@@ -301,7 +301,7 @@ public class Creature {
 		}
 	}
 
-	private void notify(String message) {
+	public void notify(String message) {
 		ai.onNotify(message);
 	}
 

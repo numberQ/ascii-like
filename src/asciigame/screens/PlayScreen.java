@@ -169,7 +169,9 @@ public class PlayScreen implements Screen {
 		if (player.hasItem("MacGuffin")) {
 			return new WinScreen();
 		}
-		return new LoseScreen("You return from the cave empty-handed. Despair engulfs you. You die.");
+
+		player.notify("You cannot leave without the magic MacGuffin!");
+		return this;
 	}
 
 	private Screen update() {
