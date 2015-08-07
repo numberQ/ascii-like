@@ -72,6 +72,10 @@ public class LevelUp {
 		return max;
 	}
 
+	public static void invokeOption(Creature player, int option) {
+		options[option].invoke(player);
+	}
+
 	public static void autoLevelUp(Creature creature){
 		options[(int)(Math.random() * options.length)].invoke(creature);
 	}

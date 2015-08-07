@@ -22,7 +22,7 @@ public class LevelUpScreen implements Screen {
 	public void displayOutput(AsciiPanel terminal) {
 		int x = 5;
 		int y = 5;
-		String levelUpMessage = "Choose a level up bonus";
+		String levelUpMessage = "Choose " + numPicks + " level up bonus" + (numPicks > 1 ? "es" : "");
 
 		terminal.clear(' ', x - 1, y - 1, LevelUp.getLongestOptionName() + 6, optionNames.size() + 4);
 
@@ -40,6 +40,28 @@ public class LevelUpScreen implements Screen {
 
 	@Override
 	public Screen respondToUserInputAndUpdate(KeyEvent key) {
-		return this;
+		String choices = "";
+
+		// Build the list of choices. The string will be "1234...",
+		// essentially a list of all choice numbers.
+		for (int i = 0; i < optionNames.size(); i++) {
+			choices += (i + 1);
+		}
+
+		// The location in the choices string should correspond to the option selected
+		int option = choices.indexOf(key.getKeyChar());
+
+		// If the key pressed was not an option, do nothing
+		if (option < 0) {
+			return this;
+		}
+
+		LevelUp.invokeOption(player, option);
+
+		if (--numPicks < 1) {
+			return null;
+		} else {
+			return this;
+		}
 	}
 }
