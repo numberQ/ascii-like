@@ -7,42 +7,42 @@ import java.util.List;
 public class LevelUp {
 
 	private static LevelUpOption[] options = new LevelUpOption[] {
-			new LevelUpOption("Increased health") {
+			new LevelUpOption("Increase health") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainHealth();
 				}
 			},
 
-			new LevelUpOption("Increased minimum attack") {
+			new LevelUpOption("Increase minimum attack") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainMinAttack();
 				}
 			},
 
-			new LevelUpOption("Increased maximum attack") {
+			new LevelUpOption("Increase maximum attack") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainMaxAttack();
 				}
 			},
 
-			new LevelUpOption("Increased defense") {
+			new LevelUpOption("Increase defense") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainDefense();
 				}
 			},
 
-			new LevelUpOption("Increased vision") {
+			new LevelUpOption("Increase vision") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainVision();
 				}
 			},
 
-			new LevelUpOption("Increased maximum fullness") {
+			new LevelUpOption("Increase maximum fullness") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainFullness();
