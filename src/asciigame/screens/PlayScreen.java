@@ -56,7 +56,7 @@ public class PlayScreen implements Screen {
 		displayTiles(terminal, left, top);
 		displayMessages(terminal);
 		String stats = "Health: " + player.getHealth() + "/" + player.getMaxHealth() + " " + player.hungerLevel() +
-				" XP: " + player.getXp() + "/" + ((int)(Math.pow(player.getLevel(), 1.5) * 20) + ", level " + player.getLevel());
+				" XP: " + player.getXp() + "/" + player.nextXpThreshold() + ", level " + player.getLevel();
 		terminal.write(stats, 1, terminal.getHeightInCharacters() - 2);
 
 		// Display subscreen on top of current screen

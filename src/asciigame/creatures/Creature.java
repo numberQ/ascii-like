@@ -265,11 +265,15 @@ public class Creature {
 
 		notify("You " + (amount < 0 ? "lose " : "gain ") + amount + " experience.");
 
-		while (xp >= (int)(Math.pow(level, 1.5) * 20)) {
+		while (xp >= nextXpThreshold()) {
 			level++;
 			sayAction("advance to level " + level);
 			ai.onGainLevel();
 		}
+	}
+
+	public int nextXpThreshold() {
+		return ai.nextXpThreshold();
 	}
 
 	public void gainHealth() {

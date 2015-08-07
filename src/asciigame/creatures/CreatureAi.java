@@ -57,6 +57,10 @@ public class CreatureAi {
 		LevelUp.autoLevelUp(creature);
 	}
 
+	public int nextXpThreshold() {
+		return (int)(Math.pow(creature.getLevel(), 1.5) * 20);
+	}
+
 	public void wander() {
 		int dx = (int)(Math.random() * 3) - 1;
         int dy = (int)(Math.random() * 3) - 1;
