@@ -2,7 +2,6 @@ package asciigame.creatures;
 
 import asciigame.FieldOfView;
 import asciigame.World;
-
 import java.util.List;
 
 public class PlayerAi extends CreatureAi {
@@ -25,6 +24,9 @@ public class PlayerAi extends CreatureAi {
 	public void onNotify(String message) {
 		messages.add(message);
 	}
+
+	@Override
+	public void onGainLevel() { }
 
 	@Override
 	public boolean canSee(int z, int x, int y) {

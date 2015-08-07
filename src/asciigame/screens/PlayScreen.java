@@ -8,7 +8,10 @@ import asciigame.items.Item;
 import asciigame.items.ItemFactory;
 import asciigame.items.ItemPile;
 import asciigame.FieldOfView;
-
+import asciigame.screens.inventorybasedscreens.DropScreen;
+import asciigame.screens.inventorybasedscreens.EatScreen;
+import asciigame.screens.inventorybasedscreens.EquipScreen;
+import asciigame.screens.inventorybasedscreens.PickUpScreen;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,8 +68,11 @@ public class PlayScreen implements Screen {
 	@Override
 	public Screen respondToUserInputAndUpdate(KeyEvent key) {
 
-		// Decides whether the world gets updated.
-		// This will be set to true for key presses that update the world.
+		// Record user's level so we can compare and see if it changed later
+		int level = player.getLevel();
+
+		// Decides whether the world gets updated
+		// This will be set to true for key presses that update the world
 		boolean doUpdate = false;
 
 		// Divert keyboard control to a subscreen if it exists
@@ -181,6 +187,11 @@ public class PlayScreen implements Screen {
 				player.moveBy(1, 0, 0);
 				doUpdate = true;
 				break;
+		}
+
+		// Check for level up
+		if (player.getLevel() > level) {
+			subscreen = new LevelUpScreen(player, player.getLevel() - level);
 		}
 
 		if (doUpdate) {

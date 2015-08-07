@@ -1,6 +1,8 @@
 package asciigame.levelup;
 
 import asciigame.creatures.Creature;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LevelUp {
 
@@ -47,6 +49,28 @@ public class LevelUp {
 				}
 			}
 	};
+
+	public static List<String> getLevelUpOptions() {
+		List<String> optionNames = new ArrayList<>();
+
+		for (LevelUpOption option : options) {
+			optionNames.add(option.getName());
+		}
+
+		return optionNames;
+	}
+
+	public static int getLongestOptionName() {
+		int max = 0;
+
+		for (LevelUpOption option : options) {
+			if (option.getName().length() > max) {
+				max = option.getName().length();
+			}
+		}
+
+		return max;
+	}
 
 	public static void autoLevelUp(Creature creature){
 		options[(int)(Math.random() * options.length)].invoke(creature);

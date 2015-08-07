@@ -1,9 +1,11 @@
-package asciigame.screens;
+package asciigame.screens.inventorybasedscreens;
 
 import asciiPanel.AsciiPanel;
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
 import asciigame.items.ItemPile;
+import asciigame.screens.Screen;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;

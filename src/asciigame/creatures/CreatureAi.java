@@ -1,5 +1,6 @@
 package asciigame.creatures;
 
+import asciigame.levelup.LevelUp;
 import asciigame.utility.Line;
 import asciigame.utility.Point;
 import asciigame.Tile;
@@ -53,7 +54,7 @@ public class CreatureAi {
 	}
 
 	public void onGainLevel() {
-
+		LevelUp.autoLevelUp(creature);
 	}
 
 	public void wander() {

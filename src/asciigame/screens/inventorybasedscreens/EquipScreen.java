@@ -1,7 +1,8 @@
-package asciigame.screens;
+package asciigame.screens.inventorybasedscreens;
 
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
+import asciigame.screens.Screen;
 
 public class EquipScreen extends InventoryBasedScreen {
 

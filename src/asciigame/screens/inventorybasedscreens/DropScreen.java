@@ -1,27 +1,28 @@
-package asciigame.screens;
+package asciigame.screens.inventorybasedscreens;
 
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
+import asciigame.screens.Screen;
 
-public class EatScreen extends InventoryBasedScreen {
+public class DropScreen extends InventoryBasedScreen {
 
-	public EatScreen(Creature player) {
+	public DropScreen(Creature player) {
 		super(player);
 	}
 
 	@Override
 	protected String getVerb() {
-		return "eat";
+		return "drop";
 	}
 
 	@Override
 	protected boolean isRelevant(Item item) {
-		return item.getNutrition() > 0;
+		return true;
 	}
 
 	@Override
 	protected Screen use(Item item) {
-		player.eat(item);
+		player.drop(item);
 		return null;
 	}
 }

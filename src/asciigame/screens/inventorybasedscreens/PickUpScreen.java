@@ -1,8 +1,9 @@
-package asciigame.screens;
+package asciigame.screens.inventorybasedscreens;
 
 import asciigame.creatures.Creature;
 import asciigame.items.Item;
 import asciigame.items.ItemPile;
+import asciigame.screens.Screen;
 
 public class PickUpScreen extends InventoryBasedScreen {
 
