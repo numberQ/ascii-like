@@ -26,8 +26,11 @@ public class ItemFactory {
 
 	public static Item makePick() {
 		int attack = 3;
+		int durability = 250;
 		Item pick = new Item ('/', AsciiPanel.brightGreen, "pick");
 		pick.setAttack(attack);
+		pick.setDurability(durability);
+		pick.setDurabilityMax(durability);
 		world.addAtEmptyLocation(pick, layer);
 		return pick;
 	}
@@ -74,16 +77,22 @@ public class ItemFactory {
 
 	public static Item makeShortSword() {
 		int attack = 5;
+		int durability = 20;
 		Item dagger = new Item('/', AsciiPanel.white, "short sword");
 		dagger.setAttack(attack);
+		dagger.setDurability(durability);
+		dagger.setDurabilityMax(durability);
 		world.addAtEmptyLocation(dagger, layer);
 		return dagger;
 	}
 
 	public static Item makeLongSword() {
 		int attack = 10;
+		int durability = 50;
 		Item longSword = new Item('/', AsciiPanel.brightWhite, "long sword");
 		longSword.setAttack(attack);
+		longSword.setDurability(durability);
+		longSword.setDurabilityMax(durability);
 		world.addAtEmptyLocation(longSword, layer);
 		return longSword;
 	}
@@ -91,33 +100,45 @@ public class ItemFactory {
 	public static Item makeStaff() {
 		int attack = 5;
 		int defense = 3;
+		int durability = 50;
 		Item staff = new Item('/', AsciiPanel.yellow, "staff");
 		staff.setAttack(attack);
 		staff.setDefense(defense);
+		staff.setDurability(durability);
+		staff.setDurabilityMax(durability);
 		world.addAtEmptyLocation(staff, layer);
 		return staff;
 	}
 
 	public static Item makeTunic() {
 		int defense = 2;
+		int durability = 10;
 		Item tunic = new Item('[', AsciiPanel.brightGreen, "tunic");
 		tunic.setDefense(defense);
+		tunic.setDurability(durability);
+		tunic.setDurabilityMax(durability);
 		world.addAtEmptyLocation(tunic, layer);
 		return tunic;
 	}
 
 	public static Item makeChainmail() {
 		int defense = 4;
+		int durability = 50;
 		Item chainmail = new Item('[', AsciiPanel.white, "chainmail");
 		chainmail.setDefense(defense);
+		chainmail.setDurability(durability);
+		chainmail.setDurabilityMax(durability);
 		world.addAtEmptyLocation(chainmail, layer);
 		return chainmail;
 	}
 
 	public static Item makePlatemail() {
 		int defense = 7;
+		int durability = 100;
 		Item platemail = new Item('[', AsciiPanel.brightWhite, "platemail");
 		platemail.setDefense(defense);
+		platemail.setDurability(durability);
+		platemail.setDurabilityMax(durability);
 		world.addAtEmptyLocation(platemail, layer);
 		return platemail;
 	}
@@ -125,9 +146,12 @@ public class ItemFactory {
 	public static Item makeBaguette() {
 		int attack = 4;
 		int nutrition = 200;
+		int durability = 5;
 		Item baguette = new Item('/', AsciiPanel.yellow, "baguette");
 		baguette.setAttack(attack);
 		baguette.setNutrition(nutrition);
+		baguette.setDurability(durability);
+		baguette.setDurabilityMax(durability);
 		world.addAtEmptyLocation(baguette, layer);
 		return baguette;
 	}
