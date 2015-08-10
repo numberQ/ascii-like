@@ -90,7 +90,8 @@ public class CreatureAi {
 			// 5. can't go lower than 0
 			damageDealt = (int)(Math.random() * (max - min)) + min;
 			damageDealt -= other.getDefense();
-			damageDealt += addedAttack - subtractedDefense;
+			damageDealt += addedAttack;
+			damageDealt -= subtractedDefense;
 			damageDealt = Math.max(0, damageDealt);
 
 			// Damage enemy
@@ -123,6 +124,7 @@ public class CreatureAi {
 	}
 
 	public boolean canSee(int z, int x, int y) {
+
 		// Different floors trivially cannot see each other
 		if (creature.getZ() != z) {
 			return false;

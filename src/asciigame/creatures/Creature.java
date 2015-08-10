@@ -8,6 +8,7 @@ import java.awt.*;
 
 public class Creature {
 
+	// <editor-fold desc="Fields">
 	private World world;
 
 	private int z;
@@ -71,6 +72,7 @@ public class Creature {
 	private boolean updated;
 	public boolean isUpdated() { return updated; }
 	public void setUpdated(boolean u) { this.updated = u; }
+	// </editor-fold>
 
 	public Creature(World world, String name, char glyph, Color color,
 					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize,
