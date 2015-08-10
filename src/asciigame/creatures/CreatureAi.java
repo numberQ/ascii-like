@@ -75,20 +75,30 @@ public class CreatureAi {
 		if (other != null && !other.getName().equals(creature.getName())) {
 			int min = creature.getMinAttack();
 			int max = creature.getMaxAttack();
+
 			int addedAttack = creature.getWeapon() == null ? 0 : creature.getWeapon().getAttack();
 			addedAttack += creature.getArmor() == null ? 0 : creature.getArmor().getAttack();
+
 			int subtractedDefense = other.getArmor() == null ? 0 : other.getArmor().getDefense();
 			subtractedDefense += other.getWeapon() == null ? 0 : other.getWeapon().getDefense();
 
+			// Calculate damage
+			// 1. random number between min and max natural attack
+			// 2. subtract natural defense
+			// 3. add weapon attack
+			// 4. subtract armor defense
+			// 5. can't go lower than 0
 			damageDealt = (int)(Math.random() * (max - min)) + min;
-			damageDealt = damageDealt - other.getDefense();
+			damageDealt -= other.getDefense();
 			damageDealt += addedAttack - subtractedDefense;
 			damageDealt = Math.max(0, damageDealt);
 
-			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
-
+			// Damage enemy
 			other.modifyHealth(-damageDealt);
 
+			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
+
+			// Cause hunger
 			creature.modifyFood(-20);
 			other.modifyFood(-2);
 

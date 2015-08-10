@@ -12,9 +12,7 @@ public enum Rarity {
 	ULTRA_RARE (0.95);
 
 	private double rarity;
-	public double getRarity() {
-		return rarity;
-	}
+	public double getRarity() { return rarity; }
 
 	Rarity (double rarity) {
 		this.rarity = rarity;

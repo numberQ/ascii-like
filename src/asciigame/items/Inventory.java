@@ -3,10 +3,10 @@ package asciigame.items;
 public class Inventory {
 
 	private Item[] items;
+	public Item[] getItems() { return items; }
+
 	private int max;
 	private int load;
-
-	public Item[] getItems() { return items; }
 
 	public Inventory(int max) {
 		this.items = new Item[max];

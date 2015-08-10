@@ -8,16 +8,17 @@ import asciigame.utility.Point;
 public class World {
 
 	private Tile[][][] tiles;
+
 	private int depth;
 	private int width;
 	private int height;
-	private Creature[][][] creatures;
-	private ItemPile[][][] items;
-	private Point playerSpawn;
-
 	public int getDepth()  { return depth; }
 	public int getWidth()  { return width; }
 	public int getHeight() { return height; }
+
+	private Creature[][][] creatures;
+	private ItemPile[][][] items;
+	private Point playerSpawn;
 
 	public World(Tile[][][] tiles, Point playerSpawn) {
 		this.tiles = tiles;

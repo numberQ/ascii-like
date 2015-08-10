@@ -68,14 +68,17 @@ public abstract class InventoryBasedScreen implements Screen {
 		if (key.getKeyCode() == KeyEvent.VK_ESCAPE) {
 			return null;
 		}
+
 		// User did not enter a valid option
 		if (choice < 0 || choice >= items.length) {
 			return this;
 		}
+
 		// User selected empty inventory slot
 		if (items[choice] == null) {
 			return this;
 		}
+
 		// Selected item cannot be verbed
 		if (!isRelevant(items[choice])) {
 			return this;
@@ -93,9 +96,17 @@ public abstract class InventoryBasedScreen implements Screen {
 			itemToCheck = items[i];
 			if (itemToCheck != null && isRelevant(itemToCheck)) {
 				line = letters.charAt(i) + " - (" + itemToCheck.getGlyph() + ") " + itemToCheck.getName();
+
+				// Identify equipped items
 				if (player.getWeapon() == itemToCheck || player.getArmor() == itemToCheck) {
 					line += " (equipped)";
 				}
+
+				// Identify broken items
+				if (itemToCheck.getDurability() <= 0) {
+					line += " (broken)";
+				}
+
 				relevantItems.add(line);
 			}
 		}

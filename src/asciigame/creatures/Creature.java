@@ -9,52 +9,67 @@ import java.awt.*;
 public class Creature {
 
 	private World world;
+
 	private int z;
 	private int x;
 	private int y;
-	private char glyph;
-	private Color color;
-	private CreatureAi ai;
-	private int maxHealth;
-	private int health;
-	private int minAttack;
-	private int maxAttack;
-	private int defense;
+	public int getZ() { return z; }
+	public void setZ(int z)	{ this.z = z; }
+	public int getX() { return x; }
+	public void setX(int x) { this.x = x; }
+	public int getY() { return y; }
+	public void setY(int y)	{ this.y = y; }
+
 	private String name;
+	public String getName() { return name; }
+
+	private char glyph;
+	public char getGlyph() { return glyph; }
+
+	private Color color;
+	public Color getColor() { return color; }
+
+	private CreatureAi ai;
+	public void setCreatureAi(CreatureAi ai) { this.ai = ai; }
+
+	private int maxHealth;
+	public int getMaxHealth() { return maxHealth; }
+
+	private int health;
+	public int getHealth() { return health; }
+
+	private int minAttack;
+	public int getMinAttack() { return minAttack; }
+
+	private int maxAttack;
+	public int getMaxAttack() { return maxAttack; }
+
+	private int defense;
+	public int getDefense() { return defense; }
+
 	private int visionRadius;
+	public int getVisionRadius() { return visionRadius; }
+
 	private Inventory inventory;
+	public Inventory getInventory() { return inventory; }
+
 	private int maxFullness;
 	private int fullness;
-	private Item weapon;
-	private Item armor;
-	private int xp;
-	private int level;
 
-	public int getZ()						 { return z; }
-	public void setZ(int z)					 { this.z = z; }
-	public int getX() 						 { return x; }
-	public void setX(int x)					 { this.x = x; }
-	public int getY() 						 { return y; }
-	public void setY(int y)					 { this.y = y; }
-	public char getGlyph() 					 { return glyph; }
-	public Color getColor() 				 { return color; }
-	public void setCreatureAi(CreatureAi ai) { this.ai = ai; }
-	public int getMaxHealth()				 { return maxHealth; }
-	public int getHealth()					 { return health; }
-	public int getMinAttack()				 { return minAttack; }
-	public int getMaxAttack()				 { return maxAttack; }
-	public int getDefense()					 { return defense; }
-	public String getName()					 { return name; }
-	public int getVisionRadius()			 { return visionRadius; }
-	public Inventory getInventory()			 { return inventory; }
-	public Item getWeapon()					 { return weapon; }
-	public Item getArmor()					 { return armor; }
-	public int getXp()						 { return xp; }
-	public int getLevel()					 { return level; }
+	private int xp;
+	public int getXp() { return xp; }
+
+	private int level;
+	public int getLevel() { return level; }
+
+	private Item weapon;
+	public Item getWeapon() { return weapon; }
+
+	private Item armor;
+	public Item getArmor() { return armor; }
 
 	private boolean updated;
-
-	public boolean isUpdated() 		  { return updated; }
+	public boolean isUpdated() { return updated; }
 	public void setUpdated(boolean u) { this.updated = u; }
 
 	public Creature(World world, String name, char glyph, Color color,
@@ -75,7 +90,6 @@ public class Creature {
 		this.fullness = maxFullness * 85 / 100;
 		this.xp = 0;
 		this.level = 1;
-
 		this.updated = false;
 	}
 

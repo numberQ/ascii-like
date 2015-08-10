@@ -7,9 +7,9 @@ import asciigame.World;
 public class ItemFactory {
 
 	private static World world;
-	private static int layer;
-
 	public static void setWorld(World world) { ItemFactory.world = world; }
+
+	private static int layer;
 	public static void setLayer(int layer) { ItemFactory.layer = layer; }
 
 	public static Item makeVictoryItem() {

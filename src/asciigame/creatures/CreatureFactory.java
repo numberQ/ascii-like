@@ -8,9 +8,9 @@ import java.util.List;
 public class CreatureFactory {
 
 	private static World world;
-	private static int layer;
-
 	public static void setWorld(World world) { CreatureFactory.world = world; }
+
+	private static int layer;
 	public static void setLayer(int layer) { CreatureFactory.layer = layer; }
 
 	public static Creature makePlayer(List<String> messages, FieldOfView fov) {

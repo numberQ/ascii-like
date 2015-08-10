@@ -17,14 +17,10 @@ public enum Tile {
 	UNKNOWN(' ', AsciiPanel.brightBlack);
 
 	private char glyph;
-	public char getGlyph() {
-		return glyph;
-	}
+	public char getGlyph() { return glyph; }
 
 	private Color color;
-	public Color getColor() {
-		return color;
-	}
+	public Color getColor() { return color; }
 
 	Tile (char glyph, Color color) {
 		this.glyph = glyph;
