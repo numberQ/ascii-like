@@ -13,15 +13,15 @@ import java.awt.event.KeyListener;
  */
 public class ApplicationMain extends JFrame implements KeyListener {
 
-	private int screenWidth = 80;
-	public int getScreenWidth() { return screenWidth; }
+	private static int screenWidth = 80;
+	public static int getScreenWidth() { return screenWidth; }
 
-	private int screenHeight = 24;
-	public int getScreenHeight() { return screenHeight; }
+	private static int screenHeight = 24;
+	public static int getScreenHeight() { return screenHeight; }
 
 	private Screen screen;
 
-	private AsciiPanel terminal;
+	public AsciiPanel terminal;
 
 	public ApplicationMain(Screen screen){
 		super();
@@ -47,14 +47,10 @@ public class ApplicationMain extends JFrame implements KeyListener {
 	}
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-
-	}
+	public void keyTyped(KeyEvent e) { }
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-
-	}
+	public void keyReleased(KeyEvent e) { }
 
 	public static void main(String[] args) {
 		Screen screen = new StartScreen();

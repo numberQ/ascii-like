@@ -180,10 +180,10 @@ public class Creature {
 		if (hungerRatio < 0.2) {
 			return "Hungry";
 		}
-		if (hungerRatio < 0.5) {
+		if (hungerRatio < 0.4) {
 			return "Stomach rumbling";
 		}
-		if (hungerRatio < 0.8) {
+		if (hungerRatio < 0.5) {
 			return "Peckish";
 		}
 		if (hungerRatio < 0.9) {
@@ -265,10 +265,8 @@ public class Creature {
 
 		if (fullness <= 0 && maxFullness > 0) {
 			fullness = 0;
-			health = 0;
 			sayAction("starve to death");
-			dropLoot();
-			world.removeCreature(this);
+			modifyHealth(-health);
 		}
 
 		if (fullness > maxFullness && isPlayer()) {

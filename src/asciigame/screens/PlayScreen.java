@@ -156,9 +156,15 @@ public class PlayScreen implements Screen {
 				doUpdate = true;
 				break;
 
+			// Check character sheet
+			case KeyEvent.VK_C:
+				subscreen = new CharacterScreen(player);
+				doUpdate = false;
+				break;
 
 
-			// Debug - instant layer change
+
+			// Debug
 			case KeyEvent.VK_MINUS:
 				player.setZ(player.getZ() - 1);
 				break;
