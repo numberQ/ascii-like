@@ -328,6 +328,15 @@ public class Creature {
 		world.addAtLocation(corpse, z, x, y);
 	}
 
+	public void degradeItem(Item item, int degradeAmount) {
+		item.modifyDurability(degradeAmount);
+
+		if (item.isBroken()) {
+			sayAction("break your " + item.getName());
+			unequip(item);
+		}
+	}
+
 	public void sayAction(String message) {
 		Creature other;
 
@@ -362,9 +371,14 @@ public class Creature {
 		for (int i = 1; i < messageArr.length; i++) {
 			message += " " + messageArr[i];
 		}
-		message = message.replaceAll("the player", "you");
+
+		// Grammar changes
 		message = message.replaceAll("have", "has");
 		message = message.replaceAll("is", "are");
+		message = message.replaceAll("your", "its");
+
+		// Any references to the player should appear as 'you' in the message feed
+		message = message.replaceAll("the player", "you");
 
 		return message;
 	}

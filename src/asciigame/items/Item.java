@@ -50,4 +50,8 @@ public class Item {
 			durability = 0;
 		}
 	}
+
+	public boolean isBroken() {
+		return durability <= 0;
+	}
 }

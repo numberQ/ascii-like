@@ -1,10 +1,13 @@
 package asciigame.creatures;
 
+import asciigame.items.Item;
 import asciigame.levelup.LevelUp;
 import asciigame.utility.Line;
 import asciigame.utility.Point;
 import asciigame.Tile;
 import asciigame.World;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreatureAi {
 
@@ -95,9 +98,24 @@ public class CreatureAi {
 			damageDealt = Math.max(0, damageDealt);
 
 			// Damage enemy
+			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
 			other.modifyHealth(-damageDealt);
 
-			creature.sayAction("attack the " + other.getName() + " for " + damageDealt + " damage");
+			// Degrade attacker weapons
+			if (creature.getWeapon() != null && creature.getWeapon().getAttack() > 0) {
+				creature.degradeItem(creature.getWeapon(), -1);
+			}
+			if (creature.getArmor() != null && creature.getArmor().getAttack() > 0) {
+				creature.degradeItem(creature.getArmor(), -1);
+			}
+
+			// Degrade defender armor
+			if (other.getWeapon() != null && other.getWeapon().getDefense() > 0) {
+				other.degradeItem(other.getWeapon(), -5);
+			}
+			if (other.getArmor() != null && other.getArmor().getDefense() > 0) {
+				other.degradeItem(other.getArmor(), -5);
+			}
 
 			// Cause hunger
 			creature.modifyFood(-20);

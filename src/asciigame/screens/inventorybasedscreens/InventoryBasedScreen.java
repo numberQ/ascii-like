@@ -41,11 +41,11 @@ public abstract class InventoryBasedScreen implements Screen {
 		List<String> relevantItems = getRelevantItems();
 		int maxWidth = lengthOfLongestString(relevantItems) + 2;
 
-		int x = 1;
-		int y = 1;
+		int x = 0;
+		int y = 0;
 
 		String question = "What would you like to " + getVerb() + "?";
-		terminal.clear(' ', 0, 0, question.length(), 3);
+		terminal.clear(' ', x++, y++, question.length() + 2, 3);
 		terminal.write(question, x, y);
 
 		x = 1;
@@ -103,7 +103,7 @@ public abstract class InventoryBasedScreen implements Screen {
 				}
 
 				// Identify broken items
-				if (itemToCheck.getDurability() <= 0) {
+				if (itemToCheck.getDurability() <= 0 && itemToCheck.getDurabilityMax() > 0) {
 					line += " (broken)";
 				}
 
