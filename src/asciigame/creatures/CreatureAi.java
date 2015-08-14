@@ -79,12 +79,6 @@ public class CreatureAi {
 			int min = creature.getMinAttack();
 			int max = creature.getMaxAttack();
 
-			int addedAttack = creature.getWeapon() == null ? 0 : creature.getWeapon().getAttack();
-			addedAttack += creature.getArmor() == null ? 0 : creature.getArmor().getAttack();
-
-			int subtractedDefense = other.getArmor() == null ? 0 : other.getArmor().getDefense();
-			subtractedDefense += other.getWeapon() == null ? 0 : other.getWeapon().getDefense();
-
 			// Calculate damage
 			// 1. random number between min and max natural attack
 			// 2. subtract natural defense
@@ -93,8 +87,8 @@ public class CreatureAi {
 			// 5. can't go lower than 0
 			damageDealt = (int)(Math.random() * (max - min)) + min;
 			damageDealt -= other.getDefense();
-			damageDealt += addedAttack;
-			damageDealt -= subtractedDefense;
+			damageDealt += creature.getItemAttack();
+			damageDealt -= other.getItemDefense();
 			damageDealt = Math.max(0, damageDealt);
 
 			// Damage enemy

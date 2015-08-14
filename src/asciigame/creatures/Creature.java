@@ -233,6 +233,32 @@ public class Creature {
 		return inventory.find(itemName) > -1;
 	}
 
+	public int getItemAttack() {
+		int itemAttack = 0;
+
+		if (weapon != null) {
+			itemAttack += weapon.getAttack();
+		}
+		if (armor != null) {
+			itemAttack += armor.getAttack();
+		}
+
+		return itemAttack;
+	}
+
+	public int getItemDefense() {
+		int itemDefense = 0;
+
+		if (weapon != null) {
+			itemDefense += weapon.getDefense();
+		}
+		if (armor != null) {
+			itemDefense += armor.getDefense();
+		}
+
+		return itemDefense;
+	}
+
 	public boolean canSee(int worldZ, int worldX, int worldY) {
 		return ai.canSee(worldZ, worldX, worldY);
 	}
@@ -353,7 +379,7 @@ public class Creature {
 				if (other == this) {
 					other.notify("You " + message + ".");
 				} else if (other.canSee(z, x, y)) {
-					other.notify("The " + getName() + " " + makeSecondPerson(message) + ".");
+					other.notify("The " + getName() + " " + switchMessageSubject(message) + ".");
 				}
 			}
 		}
@@ -363,7 +389,10 @@ public class Creature {
 		ai.onNotify(message);
 	}
 
-	private String makeSecondPerson(String message) {
+	// All calls to sayAction() are written from the point of view of the player,
+	// and conjugates verbs to the pronoun 'you'.
+	// This switches the grammar for when the subject is not the player.
+	private String switchMessageSubject(String message) {
 		String[] messageArr;
 		messageArr = message.split(" ");
 

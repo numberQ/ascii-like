@@ -34,7 +34,23 @@ public class CharacterScreen implements Screen {
 			}
 		}
 
-		terminal.write("Character sheet", sheetWidthStart + 1, sheetHeightStart + 1);
+		// Write stats
+		int x = sheetWidthStart + 2;
+		int y = sheetHeightStart + 3;
+		terminal.write("Level " + player.getLevel() + ", " + player.getXp() + "/" + player.nextXpThreshold() + "xp", x, y++);
+		terminal.write("Health: " + player.getHealth() + "/" + player.getMaxHealth(), x, y++);
+		terminal.write("Hunger: " + player.hungerLevel(), x, y++);
+		terminal.write("Attack: " + player.getMinAttack() + " - " + player.getMaxAttack(), x, y++);
+		terminal.write("Item Attack Bonus: " + player.getItemAttack(), x, y++);
+		terminal.write("Defense: " + player.getDefense(), x, y++);
+		terminal.write("Item Defense Bonus: " + player.getItemDefense(), x, y++);
+		terminal.write("Vision: " + player.getVisionRadius(), x, y++);
+		terminal.write("Weapon: " + (player.getWeapon() != null ? player.getWeapon().getName() : "nothing"), x, y++);
+		terminal.write("Armor: " + (player.getArmor() != null ? player.getArmor().getName() : "nothing"), x, y);
+
+		terminal.write(player.getName() + " (", sheetWidthStart + 2, sheetHeightStart + 1);
+		terminal.write(player.getGlyph(), player.getColor());
+		terminal.write(")");
 		terminal.writeCenter("Press [escape] or [enter] to exit.", bylineY);
 	}
 
