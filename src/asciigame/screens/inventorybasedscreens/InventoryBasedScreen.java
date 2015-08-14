@@ -5,9 +5,9 @@ import asciigame.creatures.Creature;
 import asciigame.items.Item;
 import asciigame.items.ItemPile;
 import asciigame.screens.Screen;
-
+import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
 
 public abstract class InventoryBasedScreen implements Screen {
@@ -38,8 +38,7 @@ public abstract class InventoryBasedScreen implements Screen {
 
 	@Override
 	public void displayOutput(AsciiPanel terminal) {
-		List<String> relevantItems = getRelevantItems();
-		int maxWidth = lengthOfLongestString(relevantItems) + 2;
+		Map<String, Color> relevantItems = getRelevantItems();
 
 		int x = 0;
 		int y = 0;
@@ -48,13 +47,22 @@ public abstract class InventoryBasedScreen implements Screen {
 		terminal.clear(' ', x++, y++, question.length() + 2, 3);
 		terminal.write(question, x, y);
 
-		x = 1;
-		y = terminal.getHeightInCharacters() - relevantItems.size() - 2;
-
-		terminal.clear(' ', x, y, maxWidth, relevantItems.size() + 2);
-		for (String line : relevantItems) {
-			y++;
-			terminal.write(line, x, y);
+		if (relevantItems.isEmpty()) {
+			x = 1;
+			y = terminal.getHeightInCharacters() - 3;
+			String nothing = "No applicable items. Press [escape] to go back.";
+			terminal.clear(' ', x, y, nothing.length() + 2, 3);
+			terminal.write(nothing, x + 1, y + 1);
+		} else {
+			int maxWidth = lengthOfLongestString(relevantItems.keySet()) + 2;
+			x = 1;
+			y = terminal.getHeightInCharacters() - relevantItems.size() - 2;
+			terminal.clear(' ', x, y, maxWidth, relevantItems.size() + 2);
+			for (String line : relevantItems.keySet()) {
+				terminal.write(line.substring(0, 5), x, ++y);
+				terminal.write(line.charAt(5), relevantItems.get(line));
+				terminal.write(line.substring(6));
+			}
 		}
 
 		terminal.repaint();
@@ -87,8 +95,8 @@ public abstract class InventoryBasedScreen implements Screen {
 		return use(items[choice]);
 	}
 
-	private List<String> getRelevantItems() {
-		List<String> relevantItems = new ArrayList<>();
+	private Map<String, Color> getRelevantItems() {
+		Map<String, Color> relevantItems = new LinkedHashMap<>();
 		Item itemToCheck;
 		String line;
 
@@ -107,14 +115,14 @@ public abstract class InventoryBasedScreen implements Screen {
 					line += " (broken)";
 				}
 
-				relevantItems.add(line);
+				relevantItems.put(line, itemToCheck.getColor());
 			}
 		}
 
 		return relevantItems;
 	}
 
-	private int lengthOfLongestString(List<String> strings) {
+	private int lengthOfLongestString(Set<String> strings) {
 		int maxLength = 0, curLength;
 		for (String string : strings) {
 			curLength = string.length();
