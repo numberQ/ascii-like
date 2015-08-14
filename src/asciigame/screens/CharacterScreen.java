@@ -37,7 +37,7 @@ public class CharacterScreen implements Screen {
 		// Write stats
 		int x = sheetWidthStart + 2;
 		int y = sheetHeightStart + 3;
-		terminal.write("Level " + player.getLevel() + ", " + player.getXp() + "/" + player.nextXpThreshold() + "xp", x, y++);
+		terminal.write("Level " + player.getLevel() + ", " + player.getXp() + "/" + player.nextXpThreshold() + " xp", x, y++);
 		terminal.write("Health: " + player.getHealth() + "/" + player.getMaxHealth(), x, y++);
 		terminal.write("Hunger: " + player.hungerLevel(), x, y++);
 		terminal.write("Attack: " + player.getMinAttack() + " - " + player.getMaxAttack(), x, y++);

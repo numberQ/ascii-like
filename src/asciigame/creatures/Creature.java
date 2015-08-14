@@ -324,6 +324,9 @@ public class Creature {
 
 	public void gainMinAttack() {
 		minAttack += 2;
+		if (minAttack > maxAttack) {
+			minAttack = maxAttack;
+		}
 		sayAction("look stronger");
 	}
 
@@ -344,6 +347,7 @@ public class Creature {
 
 	public void gainFullness() {
 		maxFullness += 10;
+		fullness += 10;
 		sayAction("look hungrier");
 	}
 

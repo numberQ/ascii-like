@@ -15,7 +15,7 @@ public class LevelUpScreen implements Screen {
 	public LevelUpScreen(Creature player, int numPicks) {
 		this.player = player;
 		this.numPicks = numPicks;
-		this.optionNames = LevelUp.getLevelUpOptions();
+		this.optionNames = LevelUp.getLevelUpOptions(player);
 	}
 
 	@Override

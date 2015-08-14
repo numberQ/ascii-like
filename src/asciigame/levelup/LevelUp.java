@@ -50,11 +50,13 @@ public class LevelUp {
 			}
 	};
 
-	public static List<String> getLevelUpOptions() {
+	public static List<String> getLevelUpOptions(Creature creature) {
 		List<String> optionNames = new ArrayList<>();
 
-		for (LevelUpOption option : options) {
-			optionNames.add(option.getName());
+		for (LevelUpOption option : buildOptions(creature)) {
+			if (option != null) {
+				optionNames.add(option.getName());
+			}
 		}
 
 		return optionNames;
@@ -72,11 +74,34 @@ public class LevelUp {
 		return max;
 	}
 
-	public static void invokeOption(Creature player, int option) {
-		options[option].invoke(player);
+	public static void invokeOption(Creature creature, int option) {
+		buildOptions(creature)[option].invoke(creature);
 	}
 
 	public static void autoLevelUp(Creature creature){
-		options[(int)(Math.random() * options.length)].invoke(creature);
+		buildOptions(creature)[(int)(Math.random() * options.length)].invoke(creature);
+	}
+
+	private static LevelUpOption[] buildOptions(Creature creature) {
+		LevelUpOption[] builtOptions = new LevelUpOption[options.length];
+		int i = 0;
+
+		for (LevelUpOption option : options) {
+			if (isRelevant(option, creature)) {
+				builtOptions[i++] = option;
+			}
+		}
+
+		return builtOptions;
+	}
+
+	private static boolean isRelevant(LevelUpOption option, Creature creature) {
+		if (option.getName().equals("Increase minimum attack")) {
+			if (creature.getMinAttack() >= creature.getMaxAttack()) {
+				return false;
+			}
+		}
+
+		return true;
 	}
 }

@@ -48,12 +48,16 @@ public abstract class InventoryBasedScreen implements Screen {
 		terminal.write(question, x, y);
 
 		if (relevantItems.isEmpty()) {
+
+			// Just print an empty message
 			x = 1;
 			y = terminal.getHeightInCharacters() - 3;
 			String nothing = "No applicable items. Press [escape] to go back.";
 			terminal.clear(' ', x, y, nothing.length() + 2, 3);
 			terminal.write(nothing, x + 1, y + 1);
 		} else {
+
+			// Print out relevant items, aligned to the bottom of the screen
 			int maxWidth = lengthOfLongestString(relevantItems.keySet()) + 2;
 			x = 1;
 			y = terminal.getHeightInCharacters() - relevantItems.size() - 2;
