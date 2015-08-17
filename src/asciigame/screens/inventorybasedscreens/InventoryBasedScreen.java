@@ -63,6 +63,8 @@ public abstract class InventoryBasedScreen implements Screen {
 			y = terminal.getHeightInCharacters() - relevantItems.size() - 2;
 			terminal.clear(' ', x, y, maxWidth, relevantItems.size() + 2);
 			for (String line : relevantItems.keySet()) {
+
+				// This is pretty hack-y
 				terminal.write(line.substring(0, 5), x, ++y);
 				terminal.write(line.charAt(5), relevantItems.get(line));
 				terminal.write(line.substring(6));

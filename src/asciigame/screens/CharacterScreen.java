@@ -51,6 +51,7 @@ public class CharacterScreen implements Screen {
 		terminal.write(player.getName() + " (", sheetWidthStart + 2, sheetHeightStart + 1);
 		terminal.write(player.getGlyph(), player.getColor());
 		terminal.write(")");
+
 		terminal.writeCenter("Press [escape] or [enter] to exit.", bylineY);
 	}
 
