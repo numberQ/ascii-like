@@ -15,11 +15,33 @@ public class HelpScreen implements Screen {
 
 		terminal.writeCenter("Help", y++);
 
-		String message = "Can you make it to fifth level of the Caves of Slight Danger and recover the magical MacGuffin?";
+		String message = "Can you make it to the fifth level of the Caves of Slight Danger and recover the magical MacGuffin? " +
+				"Use what you find to destroy your enemies (by walking into them)! You'll need to balance health, stats, and hunger to survive.";
+		String origMessage;
 
-		printWrapAndReturnLines(message, x, ++y);
+		while (!message.isEmpty()) {
+			origMessage = message;
+			message = trimString(message, terminal.getWidthInCharacters() - 2);
 
-		terminal.write("[h] to move left", x, y++);
+			terminal.write(message, x, ++y);
+
+			message = origMessage.substring(message.length()).trim();
+		}
+
+		y++;
+
+		terminal.write("[?] to access this help menu", x, ++y);
+		terminal.write("[h] to move left, [l] to move right, [j] to move up, [k] to move down", x, ++y);
+		terminal.write("[y] to move up-left, [u] to move up-right", x, ++y);
+		terminal.write("[b] to move down-left, [n] to move down-right", x, ++y);
+		terminal.write("[z] to wait in place", x, ++y);
+		terminal.write("[<] to go upstairs", x, ++y);
+		terminal.write("[>] to go downstairs", x, ++y);
+		terminal.write("[c] to access character sheet", x, ++y);
+		terminal.write("[g] to pick up", x, ++y);
+		terminal.write("[d] to drop", x, ++y);
+		terminal.write("[w] to equip or unequip", x, ++y);
+		terminal.write("[e] to eat", x, ++y);
 	}
 
 	@Override
@@ -27,7 +49,29 @@ public class HelpScreen implements Screen {
 		return null;
 	}
 
-	private String printWrapAndReturnLines(String message, int x, int y) {
-		return message;
+	private String trimString(String message, int maxLength) {
+		message = message.trim();
+
+		// If the message is already short enough, return it
+		if (message.length() <= maxLength) {
+			return message;
+		}
+
+		// Truncate at maxLength and return if it ends at a word
+		message = message.substring(0, maxLength);
+		if (message.endsWith(" ")) {
+			return message.trim();
+		}
+
+		// Count backwards until we find the end of a word, then truncate there
+		int idx = maxLength;
+		while (--idx >= 0) {
+			if (message.charAt(idx) == ' ') {
+				return message.substring(0, idx).trim();
+			}
+		}
+
+		// This means we've counted to the start of the message and found no spaces - just return the message up to maxLength
+		return message.substring(0, maxLength);
 	}
 }

@@ -35,6 +35,7 @@ public class PlayScreen implements Screen {
 		screenHeight = ApplicationMain.getScreenHeight();
 		rightMapBorder = screenWidth * 2 / 3;
 		bottomMapBorder = screenHeight - 3;
+		subscreen = new HelpScreen();
 
 		// Define messages
 		messages = new ArrayList<>();
@@ -181,6 +182,8 @@ public class PlayScreen implements Screen {
 
 		// For characters without KeyEvents (as far as I can tell)
 		switch (key.getKeyChar()) {
+
+			// Stairs
 			case '<':
 				if (playerIsExiting()) {
 					return playerExits();
@@ -192,6 +195,12 @@ public class PlayScreen implements Screen {
 			case '>':
 				player.moveBy(1, 0, 0);
 				doUpdate = true;
+				break;
+
+			// Check help
+			case '?':
+				subscreen = new HelpScreen();
+				doUpdate = false;
 				break;
 		}
 
