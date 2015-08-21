@@ -44,7 +44,6 @@ public class PlayScreen implements Screen {
 		// Map shenanigans
 		createWorld();
 		CreatureFactory.setWorld(world);
-		ItemFactory.setWorld(world);
 		playerFov = new FieldOfView(world);
 		makeCreatures();
 		makeItems();
@@ -173,9 +172,7 @@ public class PlayScreen implements Screen {
 				player.setZ(player.getZ() + 1);
 				break;
 			case KeyEvent.VK_BACK_SPACE:
-				int attack = 3;
-				Item pick = new Item ('/', AsciiPanel.brightGreen, "pick");
-				pick.setAttack(attack);
+				Item pick = ItemFactory.makePick();
 				player.getInventory().add(pick);
 				break;
 		}
@@ -244,7 +241,7 @@ public class PlayScreen implements Screen {
 
 	private void createWorld() {
 		int depth = 5;
-		int width = (int)(rightMapBorder * 1.5);
+		int width = (int) (rightMapBorder * 1.5);
 		int height = bottomMapBorder * 2;
 
 		world = new WorldBuilder(depth, width, height)
@@ -256,29 +253,32 @@ public class PlayScreen implements Screen {
         int depth = world.getDepth();
         int fungusAmount = 8;
         int batAmount = 4;
-		int zombieAmount = 2;
+		int zombieAmount = 1;
+		Creature creature;
 
         // Make the player
-        CreatureFactory.setLayer(0);
         player = CreatureFactory.makePlayer(messages, playerFov);
+		world.addPlayer(player);
 
         for (int i = 0; i < depth; i++) {
-            CreatureFactory.setLayer(i);
             int j;
 
             // Make fungi
             for (j = 0; j < fungusAmount; j++) {
-                CreatureFactory.makeFungus();
+                creature = CreatureFactory.makeFungus();
+				world.addAtEmptyLocation(creature, i);
             }
 
             // Make bats
             for (j = 0; j < batAmount; j++) {
-                CreatureFactory.makeBat();
+                creature = CreatureFactory.makeBat();
+				world.addAtEmptyLocation(creature, i);
             }
 
 			// Make zombies
 			for (j = 0; j < zombieAmount + i; j++) {
-				CreatureFactory.makeZombie(player);
+				creature = CreatureFactory.makeZombie(player);
+				world.addAtEmptyLocation(creature, i);
 			}
         }
     }
@@ -290,43 +290,52 @@ public class PlayScreen implements Screen {
 		int foodAmount = worldSize / 80;
 		int weaponAmount = worldSize / 550;
 		int armorAmount = worldSize / 550;
+		Item item;
 
 		// Make victory item
-		ItemFactory.setLayer(depth);
-		ItemFactory.makeVictoryItem();
+		item = ItemFactory.makeVictoryItem();
+		world.addAtEmptyLocation(item, depth - 1);
 
 		for (int i = 0; i < depth; i++) {
-			ItemFactory.setLayer(i);
 			int j;
 
 			// Make rocks
 			for (j = 0; j < rockAmount; j++) {
-				ItemFactory.makeRock();
+				item = ItemFactory.makeRock();
+				world.addAtEmptyLocation(item, i);
 			}
 
 			// Make food
 			for (j = 0; j < foodAmount; j++) {
-				ItemFactory.makeRandomFood();
+				item = ItemFactory.makeRandomFood();
+				world.addAtEmptyLocation(item, i);
 			}
 
 			// Make weapons
 			for (j = 0; j < weaponAmount; j++) {
-				ItemFactory.makeRandomWeapon();
+				item = ItemFactory.makeRandomWeapon();
+				world.addAtEmptyLocation(item, i);
 			}
 
 			// Make armor
 			for (j = 0; j < armorAmount; j++) {
-				ItemFactory.makeRandomArmor();
+				item = ItemFactory.makeRandomArmor();
+				world.addAtEmptyLocation(item, i);
 			}
 		}
 
 		// Make pick
-		int pickAmount = (int)(Math.random() * (depth - 1)) + 1;
+		int pickAmount = (int) (Math.random() * (depth - 1)) + 1;
 		for (int j = 0; j < pickAmount; j++) {
 			depth = (int) (Math.random() * depth);
-			ItemFactory.setLayer(depth);
-			ItemFactory.makePick();
+			item = ItemFactory.makePick();
+			world.addAtEmptyLocation(item, depth);
 		}
+
+		// Make legendary great sword
+		depth = (int) (Math.random() * depth);
+		item = ItemFactory.makeLegendaryGreatSword();
+		world.addAtEmptyLocation(item, depth);
 	}
 
 	/**

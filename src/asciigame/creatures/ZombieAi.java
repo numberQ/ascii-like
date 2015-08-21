@@ -19,16 +19,16 @@ public class ZombieAi extends CreatureAi {
 
 	@Override
 	public void onUpdate() {
+		double forgetChance = Rarity.RARE.getRarity();
+		double idleChance = Rarity.UNCOMMON.getRarity();
 
 		// There's a chance each turn of not seeing the player the zombie will forget their location
-		double forgetChance = Rarity.UNCOMMON.getRarity();
-		if (Math.random() > forgetChance) {
+		if (Math.random() < forgetChance) {
 			lastKnownPlayerPoint = null;
 		}
 
 		// There's a chance each turn that the zombie will do nothing
-		double idleChance = Rarity.UNCOMMON.getRarity();
-		if (Math.random() > idleChance) {
+		if (Math.random() < idleChance) {
 			return;
 		}
 

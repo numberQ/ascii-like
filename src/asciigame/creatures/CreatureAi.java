@@ -61,7 +61,8 @@ public class CreatureAi {
 	}
 
 	public int nextXpThreshold() {
-		return (int)(Math.pow(creature.getLevel(), 1.5) * 20);
+		int threshold = (int)(Math.pow(creature.getLevel(), 1.5) * 20);
+		return threshold;
 	}
 
 	public void wander() {
@@ -125,7 +126,7 @@ public class CreatureAi {
 	private void gainXp(Creature other) {
 		int attackAverage = (other.getMinAttack() + other.getMaxAttack()) / 2;
 		int amount = other.getMaxHealth() + attackAverage + other.getDefense() - creature.getLevel() * 2;
-		amount = Math.max(0, amount);
+		amount = Math.max(1, amount);
 		creature.modifyXp(amount);
 	}
 

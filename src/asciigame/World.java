@@ -111,6 +111,12 @@ public class World {
 	}
 
 	public void addAtEmptyLocation(Item item, int z) {
+
+		// Ignore null cases
+		if (item == null) {
+			return;
+		}
+
 		int x, y;
 
 		do {
@@ -125,6 +131,12 @@ public class World {
 	}
 
 	public void addAtLocation(Item item, int z, int x, int y) {
+
+		// Ignore null cases
+		if (item == null) {
+			return;
+		}
+
 		if (items[z][x][y] == null) {
 			items[z][x][y] = new ItemPile();
 		}

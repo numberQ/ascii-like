@@ -37,11 +37,14 @@ public class HelpScreen implements Screen {
 		terminal.write("[z] to wait in place", x, ++y);
 		terminal.write("[<] to go upstairs", x, ++y);
 		terminal.write("[>] to go downstairs", x, ++y);
-		terminal.write("[c] to access character sheet", x, ++y);
 		terminal.write("[g] to pick up", x, ++y);
 		terminal.write("[d] to drop", x, ++y);
 		terminal.write("[w] to equip or unequip", x, ++y);
 		terminal.write("[e] to eat", x, ++y);
+		terminal.write("[x] to examine your inventory", x, ++y);
+		terminal.write("[;] to look around (not implemented)", x, ++y);
+		terminal.write("[c] to access character sheet", x, ++y);
+		terminal.write("[m] to access monster bestiary (not implemented)", x, ++y);
 	}
 
 	@Override

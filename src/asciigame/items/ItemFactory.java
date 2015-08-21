@@ -2,25 +2,16 @@ package asciigame.items;
 
 import asciiPanel.AsciiPanel;
 import asciigame.Rarity;
-import asciigame.World;
 
 public class ItemFactory {
 
-	private static World world;
-	public static void setWorld(World world) { ItemFactory.world = world; }
-
-	private static int layer;
-	public static void setLayer(int layer) { ItemFactory.layer = layer; }
-
 	public static Item makeVictoryItem() {
 		Item victoryItem = new Item('*', AsciiPanel.brightYellow, "MacGuffin");
-		world.addAtEmptyLocation(victoryItem, world.getDepth() - 1);
 		return victoryItem;
 	}
 
 	public static Item makeRock() {
 		Item rock = new Item(',', AsciiPanel.yellow, "rock");
-		world.addAtEmptyLocation(rock, layer);
 		return rock;
 	}
 
@@ -31,7 +22,6 @@ public class ItemFactory {
 		pick.setAttack(attack);
 		pick.setDurability(durability);
 		pick.setDurabilityMax(durability);
-		world.addAtEmptyLocation(pick, layer);
 		return pick;
 	}
 
@@ -39,7 +29,6 @@ public class ItemFactory {
 		int nutrition = 150;
 		Item cheeseSteak = new Item('c', AsciiPanel.brightCyan, "cheese steak");
 		cheeseSteak.setNutrition(nutrition);
-		world.addAtEmptyLocation(cheeseSteak, layer);
 		return cheeseSteak;
 	}
 
@@ -47,7 +36,6 @@ public class ItemFactory {
 		int nutrition = 140;
 		Item spaghetti = new Item('s', AsciiPanel.brightCyan, "spaghetti");
 		spaghetti.setNutrition(nutrition);
-		world.addAtEmptyLocation(spaghetti, layer);
 		return spaghetti;
 	}
 
@@ -55,7 +43,6 @@ public class ItemFactory {
 		int nutrition = 50;
 		Item granolaBar = new Item('g', AsciiPanel.brightCyan, "granola bar");
 		granolaBar.setNutrition(nutrition);
-		world.addAtEmptyLocation(granolaBar, layer);
 		return granolaBar;
 	}
 
@@ -63,7 +50,6 @@ public class ItemFactory {
 		int nutrition = 1000;
 		Item ambrosia = new Item('A', AsciiPanel.brightYellow, "ambrosia");
 		ambrosia.setNutrition(nutrition);
-		world.addAtEmptyLocation(ambrosia, layer);
 		return ambrosia;
 	}
 
@@ -71,7 +57,6 @@ public class ItemFactory {
 		int nutrition = 3;
 		Item tastyRock = new Item(',', AsciiPanel.brightCyan, "tasty rock");
 		tastyRock.setNutrition(nutrition);
-		world.addAtEmptyLocation(tastyRock, layer);
 		return tastyRock;
 	}
 
@@ -82,7 +67,6 @@ public class ItemFactory {
 		dagger.setAttack(attack);
 		dagger.setDurability(durability);
 		dagger.setDurabilityMax(durability);
-		world.addAtEmptyLocation(dagger, layer);
 		return dagger;
 	}
 
@@ -93,8 +77,19 @@ public class ItemFactory {
 		longSword.setAttack(attack);
 		longSword.setDurability(durability);
 		longSword.setDurabilityMax(durability);
-		world.addAtEmptyLocation(longSword, layer);
 		return longSword;
+	}
+
+	public static Item makeLegendaryGreatSword() {
+		int attack = 20;
+		int defense = 10;
+		int durability = 100;
+		Item legendaryGreatSword = new Item('/', AsciiPanel.brightYellow, "legendary great sword");
+		legendaryGreatSword.setAttack(attack);
+		legendaryGreatSword.setDefense(defense);
+		legendaryGreatSword.setDurability(durability);
+		legendaryGreatSword.setDurabilityMax(durability);
+		return legendaryGreatSword;
 	}
 
 	public static Item makeStaff() {
@@ -106,7 +101,6 @@ public class ItemFactory {
 		staff.setDefense(defense);
 		staff.setDurability(durability);
 		staff.setDurabilityMax(durability);
-		world.addAtEmptyLocation(staff, layer);
 		return staff;
 	}
 
@@ -117,7 +111,6 @@ public class ItemFactory {
 		tunic.setDefense(defense);
 		tunic.setDurability(durability);
 		tunic.setDurabilityMax(durability);
-		world.addAtEmptyLocation(tunic, layer);
 		return tunic;
 	}
 
@@ -128,7 +121,6 @@ public class ItemFactory {
 		chainmail.setDefense(defense);
 		chainmail.setDurability(durability);
 		chainmail.setDurabilityMax(durability);
-		world.addAtEmptyLocation(chainmail, layer);
 		return chainmail;
 	}
 
@@ -139,7 +131,6 @@ public class ItemFactory {
 		platemail.setDefense(defense);
 		platemail.setDurability(durability);
 		platemail.setDurabilityMax(durability);
-		world.addAtEmptyLocation(platemail, layer);
 		return platemail;
 	}
 
@@ -152,28 +143,27 @@ public class ItemFactory {
 		baguette.setNutrition(nutrition);
 		baguette.setDurability(durability);
 		baguette.setDurabilityMax(durability);
-		world.addAtEmptyLocation(baguette, layer);
 		return baguette;
 	}
 
 	public static Item makeRandomFood() {
 		double percent = Math.random();
 
-		if (percent > Rarity.ULTRA_RARE.getRarity()) {
+		if (percent < Rarity.ULTRA_RARE.getRarity()) {
 			return makeAmbrosia();
 		}
-		if (percent > Rarity.VERY_RARE.getRarity()) {
+		if (percent < Rarity.RARE.getRarity()) {
 			return makeTastyRock();
 		}
-		if (percent > Rarity.COMMON.getRarity()) {
+		if (percent < Rarity.COMMON.getRarity()) {
 			double p = Math.random();
-			if (p > Rarity.COMMON.getRarity()) {
+			if (p < Rarity.COMMON.getRarity()) {
 				return makeSpaghetti();
 			} else {
 				return makeCheeseSteak();
 			}
 		}
-		if (percent > Rarity.VERY_COMMON.getRarity()) {
+		if (percent < Rarity.VERY_COMMON.getRarity()) {
 			return makeGranolaBar();
 		}
 
@@ -183,18 +173,16 @@ public class ItemFactory {
 	public static Item makeRandomWeapon() {
 		double percent = Math.random();
 
-		if (percent > Rarity.VERY_RARE.getRarity()) {
+		if (percent < Rarity.VERY_RARE.getRarity()) {
 			return makeBaguette();
 		}
-		if (percent > Rarity.COMMON.getRarity()) {
-			double p = Math.random();
-			if (p > Rarity.RARE.getRarity()) {
-				return makeLongSword();
-			} else {
-				return makeStaff();
-			}
+		if (percent < Rarity.UNCOMMON.getRarity()) {
+			return makeStaff();
 		}
-		if (percent > Rarity.VERY_COMMON.getRarity()) {
+		if (percent < Rarity.COMMON.getRarity()) {
+			return makeLongSword();
+		}
+		if (percent < Rarity.VERY_COMMON.getRarity()) {
 			return makeShortSword();
 		}
 
@@ -204,13 +192,13 @@ public class ItemFactory {
 	public static Item makeRandomArmor() {
 		double percent = Math.random();
 
-		if (percent > Rarity.RARE.getRarity()) {
+		if (percent < Rarity.RARE.getRarity()) {
 			return makePlatemail();
 		}
-		if (percent > Rarity.UNCOMMON.getRarity()) {
+		if (percent < Rarity.UNCOMMON.getRarity()) {
 			return makeChainmail();
 		}
-		if (percent > Rarity.VERY_COMMON.getRarity()) {
+		if (percent < Rarity.VERY_COMMON.getRarity()) {
 			return makeTunic();
 		}
 
