@@ -100,6 +100,18 @@ public class LevelUp {
 				public boolean isRelevant(Creature creature) {
 					return creature.getName().equals("bat");
 				}
+			},
+
+			new LevelUpOption("Increase inventory size") {
+				@Override
+				public void invoke(Creature creature) {
+					creature.gainInventorySize();
+				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getInventory() != null;
+				}
 			}
 	};
 

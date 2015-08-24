@@ -89,7 +89,9 @@ public class Creature {
 		this.maxAttack = maxAttack;
 		this.defense = defense;
 		this.visionRadius = visionRadius;
-		this.inventory = new Inventory(invSize);
+		if (invSize > 0) {
+			this.inventory = new Inventory(invSize);
+		}
 		this.maxFullness = maxFullness;
 		this.fullness = maxFullness * 85 / 100;
 		this.xp = 0;
@@ -368,6 +370,11 @@ public class Creature {
 		sayAction("look faster");
 	}
 
+	public void gainInventorySize() {
+		inventory.increaseMax(2);
+		sayAction("look like you can carry more");
+	}
+
 	private void dropLoot() {
 		int corpseNutrition = maxHealth * 10;
 		Item corpse = new Item('%', color, name + " corpse");
@@ -426,6 +433,7 @@ public class Creature {
 		message = message.replaceAll("have", "has");
 		message = message.replaceAll("is", "are");
 		message = message.replaceAll("your", "its");
+		message = message.replaceAll("you", "it");
 
 		// Any references to the player should appear as 'you' in the message feed
 		message = message.replaceAll("the player", "you");

@@ -52,4 +52,39 @@ public class Inventory {
 	public boolean isFull() {
 		return load >= max;
 	}
+
+	public void increaseMax(int increase) {
+		Item[] temp = new Item[max + increase];
+
+		System.arraycopy(items, 0, temp, 0, max);
+
+		items = temp;
+		max += increase;
+	}
+
+	// Maybe this is unnecessary, if I only ever increase inventory size
+	/*public void setSize(int newSize) {
+
+		// No change
+		if (newSize == max) {
+			return;
+		}
+
+		// Size is increasing
+		if (newSize > max) {
+			Item[] temp = new Item[newSize];
+
+			for (int i = 0; i < max; i++) {
+				temp[i] = items[i];
+			}
+
+			items = temp;
+			max = newSize;
+		}
+
+		// Size is decreasing
+		if (newSize < max) {
+			// TODO
+		}
+	}*/
 }
