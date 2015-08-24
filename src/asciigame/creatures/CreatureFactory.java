@@ -26,14 +26,6 @@ public class CreatureFactory {
 		return fungus;
 	}
 
-	public static Creature makeFungus(int x, int y) {
-		int maxHealth = 5, minAttack = 1, maxAttack = 5, defense = 0, visionRadius = 0, invSize = 0, maxFullness = 0;
-		Creature fungus = new Creature(world, "fungus", 'f', AsciiPanel.green,
-				maxHealth, minAttack, maxAttack, defense, visionRadius, invSize, maxFullness);
-		new FungusAi(world, fungus);
-		return fungus;
-	}
-
     public static Creature makeBat() {
         int maxHealth = 15, minAttack = 2, maxAttack = 4, defense = 1, visionRadius = 9, invSize = 0, maxFullness = 750;
         Creature bat = new Creature(world, "bat", 'b', AsciiPanel.yellow,

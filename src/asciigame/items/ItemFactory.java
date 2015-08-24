@@ -163,7 +163,7 @@ public class ItemFactory {
 				return makeCheeseSteak();
 			}
 		}
-		if (percent < Rarity.VERY_COMMON.getRarity()) {
+		if (percent < Rarity.ULTRA_COMMON.getRarity()) {
 			return makeGranolaBar();
 		}
 
@@ -198,7 +198,7 @@ public class ItemFactory {
 		if (percent < Rarity.UNCOMMON.getRarity()) {
 			return makeChainmail();
 		}
-		if (percent < Rarity.VERY_COMMON.getRarity()) {
+		if (percent < Rarity.ULTRA_COMMON.getRarity()) {
 			return makeTunic();
 		}
 

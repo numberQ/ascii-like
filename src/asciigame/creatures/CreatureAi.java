@@ -1,13 +1,10 @@
 package asciigame.creatures;
 
-import asciigame.items.Item;
 import asciigame.levelup.LevelUp;
 import asciigame.utility.Line;
 import asciigame.utility.Point;
 import asciigame.Tile;
 import asciigame.World;
-import java.util.ArrayList;
-import java.util.List;
 
 public class CreatureAi {
 
@@ -173,4 +170,9 @@ public class CreatureAi {
 		Tile tile = world.getTile(z, x, y);
 		return tile.isWalkable();
 	}
+
+	// Empty level up methods that more specific AIs will handle
+	public void gainSpreadRate() { }
+	public void gainAttackRate() { }
+	public void gainSpeed() { }
 }

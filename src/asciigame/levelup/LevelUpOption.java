@@ -12,4 +12,8 @@ public abstract class LevelUpOption {
 	}
 
 	public abstract void invoke(Creature creature);
+
+	public boolean isRelevant(Creature creature) {
+		return true;
+	}
 }

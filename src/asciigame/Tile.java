@@ -8,13 +8,13 @@ public enum Tile {
 	// For abnormal characters, see:
 	// http://en.wikipedia.org/wiki/Code_page_437
 	// Ascii numbers correspond to codes on that page.
-	FLOOR ('.', AsciiPanel.brightWhite),
-	WALL ('#', AsciiPanel.brightWhite),
-	GLASS ('+', AsciiPanel.white),
-	STAIRS_UP ((char)24, AsciiPanel.brightYellow),
-	STAIRS_DOWN ((char)25, AsciiPanel.brightYellow),
-	BOUNDS ('X', AsciiPanel.brightBlack),
-	UNKNOWN (' ', AsciiPanel.brightBlack);
+	FLOOR('.', AsciiPanel.brightWhite),
+	WALL('#', AsciiPanel.brightWhite),
+	GLASS('+', AsciiPanel.white),
+	STAIRS_UP((char)24, AsciiPanel.brightYellow),
+	STAIRS_DOWN((char)25, AsciiPanel.brightYellow),
+	BOUNDS('X', AsciiPanel.brightBlack),
+	UNKNOWN(' ', AsciiPanel.brightBlack);
 
 	private char glyph;
 	public char getGlyph() { return glyph; }

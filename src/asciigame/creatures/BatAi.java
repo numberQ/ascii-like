@@ -5,10 +5,12 @@ import asciigame.World;
 public class BatAi extends CreatureAi {
 
     private int speed;
+	private double realSpeed;
 
     public BatAi(World world, Creature creature) {
         super(world, creature);
-        speed = 2;
+        realSpeed = 2;
+		speed = (int)(realSpeed);
     }
 
     @Override
@@ -17,4 +19,10 @@ public class BatAi extends CreatureAi {
             wander();
         }
     }
+
+	@Override
+	public void gainSpeed() {
+		realSpeed += 0.6;
+		speed = (int)(realSpeed);
+	}
 }

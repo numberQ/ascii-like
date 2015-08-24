@@ -1,6 +1,8 @@
 package asciigame.levelup;
 
 import asciigame.creatures.Creature;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +20,11 @@ public class LevelUp {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainMinAttack();
+				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getMinAttack() < creature.getMaxAttack();
 				}
 			},
 
@@ -40,12 +47,58 @@ public class LevelUp {
 				public void invoke(Creature creature) {
 					creature.gainVision();
 				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getVisionRadius() > 0;
+				}
 			},
 
 			new LevelUpOption("Increase maximum fullness") {
 				@Override
 				public void invoke(Creature creature) {
 					creature.gainFullness();
+				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getMaxFullness() > 0;
+				}
+			},
+
+			new LevelUpOption("Increase spread rate") {
+				@Override
+				public void invoke(Creature creature) {
+					creature.gainSpreadRate();
+				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getName().equals("fungus");
+				}
+			},
+
+			new LevelUpOption("Increase attack rate") {
+				@Override
+				public void invoke(Creature creature) {
+					creature.gainAttackRate();
+				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getName().equals("fungus");
+				}
+			},
+
+			new LevelUpOption("Increase movement speed") {
+				@Override
+				public void invoke(Creature creature) {
+					creature.gainSpeed();
+				}
+
+				@Override
+				public boolean isRelevant(Creature creature) {
+					return creature.getName().equals("bat");
 				}
 			}
 	};
@@ -62,10 +115,10 @@ public class LevelUp {
 		return optionNames;
 	}
 
-	public static int getLongestOptionName() {
+	public static int getLongestOptionName(Creature creature) {
 		int max = 0;
 
-		for (LevelUpOption option : options) {
+		for (LevelUpOption option : buildOptions(creature)) {
 			if (option.getName().length() > max) {
 				max = option.getName().length();
 			}
@@ -74,34 +127,26 @@ public class LevelUp {
 		return max;
 	}
 
-	public static void invokeOption(Creature creature, int option) {
-		buildOptions(creature)[option].invoke(creature);
+	public static void invokeOption(Creature creature, int optionIdx) {
+		List<LevelUpOption> builtOptions = buildOptions(creature);
+		builtOptions.get(optionIdx).invoke(creature);
 	}
 
-	public static void autoLevelUp(Creature creature){
-		buildOptions(creature)[(int)(Math.random() * options.length)].invoke(creature);
+	public static void autoLevelUp(Creature creature) {
+		List<LevelUpOption> builtOptions = buildOptions(creature);
+		int idx = (int)(Math.random() * builtOptions.size());
+		builtOptions.get(idx).invoke(creature);
 	}
 
-	private static LevelUpOption[] buildOptions(Creature creature) {
-		LevelUpOption[] builtOptions = new LevelUpOption[options.length];
-		int i = 0;
+	private static List<LevelUpOption> buildOptions(Creature creature) {
+		List<LevelUpOption> builtOptions = new ArrayList<>();
 
 		for (LevelUpOption option : options) {
-			if (isRelevant(option, creature)) {
-				builtOptions[i++] = option;
+			if (option.isRelevant(creature)) {
+				builtOptions.add(option);
 			}
 		}
 
 		return builtOptions;
-	}
-
-	private static boolean isRelevant(LevelUpOption option, Creature creature) {
-		if (option.getName().equals("Increase minimum attack")) {
-			if (creature.getMinAttack() >= creature.getMaxAttack()) {
-				return false;
-			}
-		}
-
-		return true;
 	}
 }

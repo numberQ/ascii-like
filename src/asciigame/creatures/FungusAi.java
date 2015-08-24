@@ -1,5 +1,6 @@
 package asciigame.creatures;
 
+import asciigame.Rarity;
 import asciigame.World;
 
 public class FungusAi extends CreatureAi {
@@ -12,11 +13,11 @@ public class FungusAi extends CreatureAi {
 
 	public FungusAi(World world, Creature creature) {
 		super(world, creature);
-		this.spreadMax = 3;
-		this.spreadCount = 0;
-		this.spreadRate = 0.003;
-		this.spreadRange = 5;
-		this.attackRate = 0.6;
+		spreadMax = 3;
+		spreadCount = 0;
+		spreadRate = Rarity.FUNGUS_SPAWN_RATE.getRarity();
+		spreadRange = 5;
+		attackRate = Rarity.VERY_COMMON.getRarity();
 	}
 
 	@Override
@@ -40,8 +41,8 @@ public class FungusAi extends CreatureAi {
 			return;
 		}
 
-		CreatureFactory.makeFungus(x, y);
-		world.addAtEmptyLocation(creature, z);
+		Creature spawn = CreatureFactory.makeFungus();
+		world.addAtLocation(spawn, z, x, y);
 		creature.sayAction("spawn a child");
 		spreadCount++;
 	}
@@ -52,5 +53,22 @@ public class FungusAi extends CreatureAi {
 				attack(creature.getX() + dx, creature.getY() + dy);
 			}
 		}
+	}
+
+	@Override
+	public int nextXpThreshold() {
+		int threshold = (int)(Math.pow(creature.getLevel(), 1.5));
+		return threshold;
+	}
+
+	@Override
+	public void gainSpreadRate() {
+		spreadCount += 2;
+		spreadRate += 0.01;
+	}
+
+	@Override
+	public void gainAttackRate() {
+		attackRate += 0.05;
 	}
 }

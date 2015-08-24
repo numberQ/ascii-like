@@ -55,6 +55,8 @@ public class Creature {
 	public Inventory getInventory() { return inventory; }
 
 	private int maxFullness;
+	public int getMaxFullness() { return maxFullness; }
+
 	private int fullness;
 
 	private int xp;
@@ -349,6 +351,21 @@ public class Creature {
 		maxFullness += 10;
 		fullness += 10;
 		sayAction("look hungrier");
+	}
+
+	public void gainSpreadRate() {
+		ai.gainSpreadRate();
+		sayAction("look more reproductive");
+	}
+
+	public void gainAttackRate() {
+		ai.gainAttackRate();
+		sayAction("look angrier");
+	}
+
+	public void gainSpeed() {
+		ai.gainSpeed();
+		sayAction("look faster");
 	}
 
 	private void dropLoot() {

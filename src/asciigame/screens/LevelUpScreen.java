@@ -24,7 +24,7 @@ public class LevelUpScreen implements Screen {
 		int y = 5;
 		String levelUpMessage = "Choose " + numPicks + " level up bonus" + (numPicks > 1 ? "es" : "");
 
-		terminal.clear(' ', x - 1, y - 1, LevelUp.getLongestOptionName() + 6, optionNames.size() + 4);
+		terminal.clear(' ', x - 1, y - 1, LevelUp.getLongestOptionName(player) + 6, optionNames.size() + 4);
 
 		terminal.write(levelUpMessage, x, y++);
 
