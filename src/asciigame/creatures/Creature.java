@@ -24,6 +24,8 @@ public class Creature {
 	private String name;
 	public String getName() { return name; }
 
+	private String article;
+
 	private char glyph;
 	public char getGlyph() { return glyph; }
 
@@ -76,11 +78,12 @@ public class Creature {
 	public void setUpdated(boolean u) { this.updated = u; }
 	// </editor-fold>
 
-	public Creature(World world, String name, char glyph, Color color,
+	public Creature(World world, String name, String article, char glyph, Color color,
 					int maxHealth, int minAttack, int maxAttack, int defense, int visionRadius, int invSize,
 					int maxFullness) {
 		this.world = world;
 		this.name = name;
+		this.article = article;
 		this.glyph = glyph;
 		this.color = color;
 		this.maxHealth = maxHealth;
@@ -377,7 +380,7 @@ public class Creature {
 
 	private void dropLoot() {
 		int corpseNutrition = maxHealth * 10;
-		Item corpse = new Item('%', color, name + " corpse");
+		Item corpse = new Item('%', color, name + " corpse", article);
 		corpse.setNutrition(corpseNutrition);
 		world.addAtLocation(corpse, z, x, y);
 	}

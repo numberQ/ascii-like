@@ -103,15 +103,15 @@ public class CreatureAi {
 
 			// Degrade defender armor
 			if (other.getWeapon() != null && other.getWeapon().getDefense() > 0) {
-				other.degradeItem(other.getWeapon(), -5);
+				other.degradeItem(other.getWeapon(), -3);
 			}
 			if (other.getArmor() != null && other.getArmor().getDefense() > 0) {
-				other.degradeItem(other.getArmor(), -5);
+				other.degradeItem(other.getArmor(), -3);
 			}
 
 			// Cause hunger
-			creature.modifyFood(-20);
-			other.modifyFood(-2);
+			creature.modifyFood(-10);
+			other.modifyFood(-15);
 
 			// Gain experience
 			if (other.getHealth() <= 0) {

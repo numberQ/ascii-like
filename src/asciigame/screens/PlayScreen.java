@@ -336,6 +336,11 @@ public class PlayScreen implements Screen {
 		depth = (int) (Math.random() * depth);
 		item = ItemFactory.makeLegendaryGreatSword();
 		world.addAtEmptyLocation(item, depth);
+
+		// Make dragonbone armor
+		depth = (int) (Math.random() * depth);
+		item = ItemFactory.makeDragonboneArmor();
+		world.addAtEmptyLocation(item, depth);
 	}
 
 	/**

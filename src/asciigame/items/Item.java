@@ -13,6 +13,8 @@ public class Item {
 	private String name;
 	public String getName()	{ return name; }
 
+	private String article;
+
 	private int nutrition;
 	public int getNutrition() { return nutrition; }
 	public void setNutrition(int nutrition) { this.nutrition = nutrition; }
@@ -33,10 +35,11 @@ public class Item {
 	public int getDurabilityMax() { return durabilityMax; }
 	public void setDurabilityMax(int durabilityMax) { this.durabilityMax = durabilityMax; }
 
-	public Item(char glyph, Color color, String name) {
+	public Item(char glyph, Color color, String name, String article) {
 		this.glyph = glyph;
 		this.color = color;
 		this.name = name;
+		this.article = article;
 	}
 
 	public void modifyDurability(int amount) {
@@ -53,5 +56,11 @@ public class Item {
 
 	public boolean isBroken() {
 		return durability <= 0;
+	}
+
+	public String details() {
+		String details = "It's " + article + " " + name + ".";
+
+		return details;
 	}
 }
