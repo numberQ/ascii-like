@@ -59,8 +59,13 @@ public class Item {
 	}
 
 	public String details() {
-		String details = "It's " + article + " " + name + ".";
+		String details = "It's ";
 
+		// Add article if it exists
+		if (!article.isEmpty()) {
+			details += article + " ";
+		}
+		details += name + ".";
 		return details;
 	}
 }

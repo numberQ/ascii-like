@@ -22,7 +22,7 @@ public class ExamineScreen extends InventoryBasedScreen {
 
 	@Override
 	protected Screen use(Item item) {
-		
+		player.notify(item.details());
 
 		return null;
 	}

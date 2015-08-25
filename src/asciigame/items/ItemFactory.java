@@ -48,7 +48,7 @@ public class ItemFactory {
 
 	public static Item makeAmbrosia() {
 		int nutrition = 1000;
-		Item ambrosia = new Item('A', AsciiPanel.brightYellow, "ambrosia", "a cup of");
+		Item ambrosia = new Item('A', AsciiPanel.brightYellow, "ambrosia", "");
 		ambrosia.setNutrition(nutrition);
 		return ambrosia;
 	}
@@ -117,7 +117,7 @@ public class ItemFactory {
 	public static Item makeChainmail() {
 		int defense = 4;
 		int durability = 50;
-		Item chainmail = new Item('[', AsciiPanel.white, "chainmail armor", "a set of");
+		Item chainmail = new Item('[', AsciiPanel.white, "chainmail armor", "");
 		chainmail.setDefense(defense);
 		chainmail.setDurability(durability);
 		chainmail.setDurabilityMax(durability);
@@ -127,7 +127,7 @@ public class ItemFactory {
 	public static Item makePlatemail() {
 		int defense = 7;
 		int durability = 100;
-		Item platemail = new Item('[', AsciiPanel.brightWhite, "platemail armor", "a set of");
+		Item platemail = new Item('[', AsciiPanel.brightWhite, "platemail armor", "");
 		platemail.setDefense(defense);
 		platemail.setDurability(durability);
 		platemail.setDurabilityMax(durability);
@@ -138,7 +138,7 @@ public class ItemFactory {
 		int defense = 20;
 		int attack = 10;
 		int durability = 150;
-		Item dragonboneArmor = new Item('[', AsciiPanel.brightYellow, "dragonbone armor", "a set of");
+		Item dragonboneArmor = new Item('[', AsciiPanel.brightYellow, "dragonbone armor", "");
 		dragonboneArmor.setDefense(defense);
 		dragonboneArmor.setAttack(attack);
 		dragonboneArmor.setDurability(durability);
