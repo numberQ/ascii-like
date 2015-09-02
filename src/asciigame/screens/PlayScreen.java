@@ -8,10 +8,8 @@ import asciigame.items.Item;
 import asciigame.items.ItemFactory;
 import asciigame.items.ItemPile;
 import asciigame.FieldOfView;
-import asciigame.screens.inventorybasedscreens.DropScreen;
-import asciigame.screens.inventorybasedscreens.EatScreen;
-import asciigame.screens.inventorybasedscreens.EquipScreen;
-import asciigame.screens.inventorybasedscreens.PickUpScreen;
+import asciigame.screens.inventorybasedscreens.*;
+
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -160,6 +158,12 @@ public class PlayScreen implements Screen {
 			case KeyEvent.VK_C:
 				subscreen = new CharacterScreen(player);
 				doUpdate = false;
+				break;
+
+			// Examine items
+			case KeyEvent.VK_X:
+				subscreen = new ExamineScreen(player);
+				doUpdate = true;
 				break;
 
 

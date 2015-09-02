@@ -5,13 +5,49 @@ import asciigame.Rarity;
 
 public class ItemFactory {
 
+	private static void setGenericDescription(Item item) {
+		String description = "";
+
+		// Attack value
+		if (item.getAttack() > 0) {
+			description += "It has attack power " + item.getAttack() + ". ";
+		}
+
+		// Defense value
+		if (item.getDefense() > 0) {
+			description += "Its defense rating is " + item.getDefense() + ". ";
+		}
+
+		// Food value
+		if (item.getNutrition() > 0) {
+			description += "It has " + item.getNutrition() + " nutrition points. ";
+		}
+
+		// Durability
+		if (item.getDurabilityMax() > 0) {
+			int percentDurability = item.getDurability() / item.getDurabilityMax();
+			percentDurability *= 100;
+			percentDurability = 100 - percentDurability;
+			description += "It is " + percentDurability + "% broken. ";
+		}
+
+		// No stats
+		if (description.isEmpty()) {
+			description = "There doesn't seem to be anything special about it.";
+		}
+
+		item.setDescription(description);
+	}
+
 	public static Item makeVictoryItem() {
 		Item victoryItem = new Item('*', AsciiPanel.brightYellow, "MacGuffin", "the");
+		victoryItem.setDescription("Quick, get it to the surface!");
 		return victoryItem;
 	}
 
 	public static Item makeRock() {
 		Item rock = new Item(',', AsciiPanel.yellow, "rock", "a");
+		setGenericDescription(rock);
 		return rock;
 	}
 
@@ -22,6 +58,7 @@ public class ItemFactory {
 		pick.setAttack(attack);
 		pick.setDurability(durability);
 		pick.setDurabilityMax(durability);
+		setGenericDescription(pick);
 		return pick;
 	}
 
@@ -29,6 +66,7 @@ public class ItemFactory {
 		int nutrition = 150;
 		Item cheeseSteak = new Item('c', AsciiPanel.brightCyan, "cheese steak", "a");
 		cheeseSteak.setNutrition(nutrition);
+		setGenericDescription(cheeseSteak);
 		return cheeseSteak;
 	}
 
@@ -36,6 +74,7 @@ public class ItemFactory {
 		int nutrition = 140;
 		Item spaghetti = new Item('s', AsciiPanel.brightCyan, "spaghetti", "a");
 		spaghetti.setNutrition(nutrition);
+		setGenericDescription(spaghetti);
 		return spaghetti;
 	}
 
@@ -43,6 +82,7 @@ public class ItemFactory {
 		int nutrition = 50;
 		Item granolaBar = new Item('g', AsciiPanel.brightCyan, "granola bar", "a");
 		granolaBar.setNutrition(nutrition);
+		setGenericDescription(granolaBar);
 		return granolaBar;
 	}
 
@@ -50,6 +90,7 @@ public class ItemFactory {
 		int nutrition = 1000;
 		Item ambrosia = new Item('A', AsciiPanel.brightYellow, "ambrosia", "");
 		ambrosia.setNutrition(nutrition);
+		setGenericDescription(ambrosia);
 		return ambrosia;
 	}
 
@@ -57,16 +98,18 @@ public class ItemFactory {
 		int nutrition = 3;
 		Item tastyRock = new Item(',', AsciiPanel.brightCyan, "tasty rock", "a");
 		tastyRock.setNutrition(nutrition);
+		setGenericDescription(tastyRock);
 		return tastyRock;
 	}
 
-	public static Item makeShortSword() {
+	public static Item makeDagger() {
 		int attack = 5;
 		int durability = 20;
-		Item dagger = new Item('/', AsciiPanel.white, "short sword", "a");
+		Item dagger = new Item('/', AsciiPanel.white, "dagger", "a");
 		dagger.setAttack(attack);
 		dagger.setDurability(durability);
 		dagger.setDurabilityMax(durability);
+		setGenericDescription(dagger);
 		return dagger;
 	}
 
@@ -77,6 +120,7 @@ public class ItemFactory {
 		longSword.setAttack(attack);
 		longSword.setDurability(durability);
 		longSword.setDurabilityMax(durability);
+		setGenericDescription(longSword);
 		return longSword;
 	}
 
@@ -89,6 +133,7 @@ public class ItemFactory {
 		legendaryGreatSword.setDefense(defense);
 		legendaryGreatSword.setDurability(durability);
 		legendaryGreatSword.setDurabilityMax(durability);
+		setGenericDescription(legendaryGreatSword);
 		return legendaryGreatSword;
 	}
 
@@ -101,6 +146,7 @@ public class ItemFactory {
 		staff.setDefense(defense);
 		staff.setDurability(durability);
 		staff.setDurabilityMax(durability);
+		setGenericDescription(staff);
 		return staff;
 	}
 
@@ -111,6 +157,7 @@ public class ItemFactory {
 		tunic.setDefense(defense);
 		tunic.setDurability(durability);
 		tunic.setDurabilityMax(durability);
+		setGenericDescription(tunic);
 		return tunic;
 	}
 
@@ -121,6 +168,7 @@ public class ItemFactory {
 		chainmail.setDefense(defense);
 		chainmail.setDurability(durability);
 		chainmail.setDurabilityMax(durability);
+		setGenericDescription(chainmail);
 		return chainmail;
 	}
 
@@ -131,6 +179,7 @@ public class ItemFactory {
 		platemail.setDefense(defense);
 		platemail.setDurability(durability);
 		platemail.setDurabilityMax(durability);
+		setGenericDescription(platemail);
 		return platemail;
 	}
 
@@ -143,6 +192,7 @@ public class ItemFactory {
 		dragonboneArmor.setAttack(attack);
 		dragonboneArmor.setDurability(durability);
 		dragonboneArmor.setDurabilityMax(durability);
+		setGenericDescription(dragonboneArmor);
 		return dragonboneArmor;
 	}
 
@@ -155,6 +205,7 @@ public class ItemFactory {
 		baguette.setNutrition(nutrition);
 		baguette.setDurability(durability);
 		baguette.setDurabilityMax(durability);
+		setGenericDescription(baguette);
 		return baguette;
 	}
 
@@ -195,7 +246,7 @@ public class ItemFactory {
 			return makeLongSword();
 		}
 		if (percent < Rarity.VERY_COMMON.getRarity()) {
-			return makeShortSword();
+			return makeDagger();
 		}
 
 		return null;

@@ -15,6 +15,9 @@ public class Item {
 
 	private String article;
 
+	private String description;
+	public void setDescription(String description) { this.description = description; }
+
 	private int nutrition;
 	public int getNutrition() { return nutrition; }
 	public void setNutrition(int nutrition) { this.nutrition = nutrition; }
@@ -66,6 +69,12 @@ public class Item {
 			details += article + " ";
 		}
 		details += name + ".";
+
+		// Add description if it exists
+		if (!description.isEmpty()) {
+			details += " " + description;
+		}
+
 		return details;
 	}
 }
