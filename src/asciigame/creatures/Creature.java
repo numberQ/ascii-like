@@ -4,6 +4,8 @@ import asciigame.Tile;
 import asciigame.World;
 import asciigame.items.Inventory;
 import asciigame.items.Item;
+import asciigame.items.ItemFactory;
+
 import java.awt.*;
 
 public class Creature {
@@ -382,6 +384,7 @@ public class Creature {
 		int corpseNutrition = maxHealth * 10;
 		Item corpse = new Item('%', color, name + " corpse", article);
 		corpse.setNutrition(corpseNutrition);
+		corpse.setDescription(ItemFactory.getGenericDescription(corpse) + " Disgusting!");
 		world.addAtLocation(corpse, z, x, y);
 	}
 
