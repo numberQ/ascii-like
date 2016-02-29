@@ -31,7 +31,7 @@ public class HelpScreen implements Screen {
 		y++;
 
 		terminal.write("[?] to access this help menu", x, ++y);
-		terminal.write("[h] to move left, [l] to move right, [j] to move up, [k] to move down", x, ++y);
+		terminal.write("[h] to move left, [l] to move right, [j] to move down, [k] to move up", x, ++y);
 		terminal.write("[y] to move up-left, [u] to move up-right", x, ++y);
 		terminal.write("[b] to move down-left, [n] to move down-right", x, ++y);
 		terminal.write("[z] to wait in place", x, ++y);

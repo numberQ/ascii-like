@@ -94,12 +94,12 @@ public class PlayScreen implements Screen {
 				doUpdate = true;
 				break;
 			case KeyEvent.VK_UP:
-			case KeyEvent.VK_J:
+			case KeyEvent.VK_K:
 				player.moveBy(0, 0, -1);
 				doUpdate = true;
 				break;
 			case KeyEvent.VK_DOWN:
-			case KeyEvent.VK_K:
+			case KeyEvent.VK_J:
 				player.moveBy(0, 0, 1);
 				doUpdate = true;
 				break;
@@ -139,31 +139,30 @@ public class PlayScreen implements Screen {
 			// Drop items
 			case KeyEvent.VK_D:
 				subscreen = new DropScreen(player);
-				doUpdate = true;
+//				doUpdate = true;
 				break;
 
 			// Eat items
 			case KeyEvent.VK_E:
 				subscreen = new EatScreen(player);
-				doUpdate = true;
+//				doUpdate = true;
 				break;
 
 			// Equip/unequip items
 			case KeyEvent.VK_W:
 				subscreen = new EquipScreen(player);
-				doUpdate = true;
+//				doUpdate = true;
 				break;
 
 			// Check character sheet
 			case KeyEvent.VK_C:
 				subscreen = new CharacterScreen(player);
-				doUpdate = false;
 				break;
 
 			// Examine items
 			case KeyEvent.VK_X:
 				subscreen = new ExamineScreen(player);
-				doUpdate = true;
+//				doUpdate = true;
 				break;
 
 

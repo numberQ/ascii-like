@@ -68,11 +68,47 @@ public class Item {
 		if (!article.isEmpty()) {
 			details += article + " ";
 		}
-		details += name + ".";
+		details += name + ". ";
 
-		// Add description if it exists
-		if (!description.isEmpty()) {
-			details += " " + description;
+		boolean special = false;
+
+		// Description
+		if (!description.isEmpty())
+		{
+			details += description + " ";
+			special = true;
+		}
+
+		// Attack value
+		if (getAttack() > 0) {
+			details += "It has attack power " + getAttack() + ". ";
+			special = true;
+		}
+
+		// Defense value
+		if (getDefense() > 0) {
+			details += "Its defense rating is " + getDefense() + ". ";
+			special = true;
+		}
+
+		// Food value
+		if (getNutrition() > 0) {
+			details += "It has " + getNutrition() + " nutrition points. ";
+			special = true;
+		}
+
+		// Durability
+		if (getDurabilityMax() > 0) {
+			double percentDurability = (double)getDurability() / getDurabilityMax();
+			percentDurability *= 100;
+			percentDurability = 100 - percentDurability;
+			details += "It is " + (int)percentDurability + "% broken. ";
+			special = true;
+		}
+
+		// No stats
+		if (!special) {
+			details = "There doesn't seem to be anything special about it. ";
 		}
 
 		return details;
